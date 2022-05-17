@@ -7,9 +7,9 @@
 
 
 void Cast(const Card card, Wizard &target) {
-  if (rng::acc_roll(rng::rng) <= card.accuracy)
+  if (rng::AccRoll() <= card.accuracy)
   {
-    int damage = target.DealDamage(card.damage + rng::damage_roll(rng::rng) * 10);
+    int damage = target.DealDamage(card.damage + rng::DamageRoll() * 10);
     std::cout << target.name << " took " << damage << " damage from " << card.name << "!\n";
     if (target.health == 0)
       std::cout << target.name << " has been defeated!\n";
@@ -31,7 +31,7 @@ int main()
   Wizard blue{ "blue", 449};
 
   std::vector<Wizard*> players;
-  if (rng::acc_roll(rng::rng) <= 50)
+  if (rng::AccRoll() <= 50)
   {
     players.push_back(&blue);
     players.push_back(&red);
