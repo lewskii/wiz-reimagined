@@ -3,21 +3,25 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <random>
 
 
 class Card {
 public:
   Card(
     const std::string name,
-    const int damage
+    const int damage,
+    const int accuracy
   )
     :
     name{ name },
-    damage{ damage }
+    damage{ damage },
+    accuracy{ accuracy }
   {}
 
   const std::string name;
   const int damage;
+  const int accuracy;
 };
 
 
@@ -46,13 +50,21 @@ public:
 };
 
 
+std::mt19937 rng{ std::random_device{}() };
+std::uniform_int_distribution acc_roll{ 1, 100 };
 
 
 void Cast(const Card card, Wizard &target) {
-  int damage = target.DealDamage(card.damage);
-  std::cout << target.name << " took " << damage << " damage from " << card.name << "!\n";
-  if (target.health == 0)
-    std::cout << target.name << " has been defeated!\n";
+  if (acc_roll(rng) <= card.accuracy)
+  {
+    int damage = target.DealDamage(card.damage);
+    std::cout << target.name << " took " << damage << " damage from " << card.name << "!\n";
+    if (target.health == 0)
+      std::cout << target.name << " has been defeated!\n";
+  }
+  else {
+    std::cout << card.name << " fizzled!\n";
+  }
 }
 
 
@@ -60,8 +72,11 @@ void Cast(const Card card, Wizard &target) {
 
 int main()
 {
-  Card fire_cat{ "fire cat", 100 };
-  Card thunder_snake{ "thunder snake", 125 };
+
+
+
+  Card fire_cat{ "fire cat", 100, 75 };
+  Card thunder_snake{ "thunder snake", 125, 70 };
 
   Wizard red{ "red", 491};
   Wizard blue{ "blue", 449};
