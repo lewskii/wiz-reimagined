@@ -63,7 +63,8 @@ void Cast(const Card card, Wizard &target) {
     if (target.health == 0)
       std::cout << target.name << " has been defeated!\n";
   }
-  else {
+  else
+  {
     std::cout << card.name << " fizzled!\n";
   }
 }
@@ -81,7 +82,18 @@ int main()
 
   Wizard red{ "red", 491};
   Wizard blue{ "blue", 449};
-  std::vector<Wizard*> players{ &red, &blue };
+
+  std::vector<Wizard*> players;
+  if (acc_roll(rng) <= 50) 
+ {
+    players.push_back(&blue);
+    players.push_back(&red);
+  }
+  else 
+ {
+    players.push_back(&red);
+    players.push_back(&blue);
+  }
 
   red.deck.push_back(fire_cat);
   blue.deck.push_back(thunder_snake);
