@@ -128,10 +128,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\battle.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\rng.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\battle.hpp" />
     <ClInclude Include="src\rng.hpp" />
     <ClInclude Include="src\wizard.hpp" />
   </ItemGroup>

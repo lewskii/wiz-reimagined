@@ -2,8 +2,7 @@
 
 #include <iostream>
 
-#include "wizard.hpp"
-#include "rng.hpp"
+#include "battle.hpp"
 
 
 void Cast(const Card card, Wizard &target) {
@@ -30,43 +29,10 @@ int main()
   Wizard red{ "red", 491};
   Wizard blue{ "blue", 449};
 
-  std::vector<Wizard*> players;
-  if (rng::AccRoll() <= 50)
-  {
-    players.push_back(&blue);
-    players.push_back(&red);
-  }
-  else 
-  {
-    players.push_back(&red);
-    players.push_back(&blue);
-  }
-
   red.deck.push_back(fire_cat);
   blue.deck.push_back(thunder_snake);
 
-
-  size_t player_count = players.size();
-
-  while (red.health > 0 && blue.health > 0) {
-    for (size_t i = 0; i < player_count; ++i) {
-      Wizard w = *players[i];
-      std::cout << w.name << "'s hp: " << w.health << "\n";
-    }
-
-    for (size_t i = 0; i < player_count; ++i) {
-      Wizard w = *players[i];
-      if (w.health > 0) {
-        Cast(w.deck[0], *players[(i + 1) % player_count]);
-      }
-    }
-
-    std::cin.ignore();
-  }
-
-  if (red.health > 0)
-    std::cout << "red wins!\n";
-  else
-    std::cout << "blue wins!\n";
+  Battle duel{ red, blue };
+  duel.Play();
 }
 

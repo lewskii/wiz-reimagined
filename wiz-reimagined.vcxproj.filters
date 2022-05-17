@@ -21,12 +21,18 @@
     <ClCompile Include="src\rng.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\battle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\rng.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\wizard.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\battle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
