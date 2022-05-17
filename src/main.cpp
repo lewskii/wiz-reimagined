@@ -85,12 +85,12 @@ int main()
 
   std::vector<Wizard*> players;
   if (acc_roll(rng) <= 50) 
- {
+  {
     players.push_back(&blue);
     players.push_back(&red);
   }
   else 
- {
+  {
     players.push_back(&red);
     players.push_back(&blue);
   }
@@ -118,8 +118,8 @@ int main()
   }
 
   if (red.health > 0)
-    std::cout << "red wins!";
+    std::cout << "red wins!\n";
   else
-    std::cout << "blue wins!";
+    std::cout << "blue wins!\n";
 }
 
