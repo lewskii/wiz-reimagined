@@ -27,11 +27,10 @@ class Wizard {
 public:
   static const int max_pips = 7;
 
-  Wizard(const std::string name, const int hp, const Card spell)
+  Wizard(const std::string name, const int hp)
     :
     name{ name },
-    health{ hp },
-    spell{ spell }
+    health{ hp }
   {}
 
   int DealDamage(int damage) {
@@ -43,7 +42,7 @@ public:
   const std::string name;
   int health;
 
-  Card spell;
+  std::vector<Card> deck;
 };
 
 
@@ -64,12 +63,15 @@ int main()
   Card fire_cat{ "fire cat", 100 };
   Card thunder_snake{ "thunder snake", 125 };
 
-  Wizard red{ "red", 491, fire_cat };
-  Wizard blue{ "blue", 449, thunder_snake };
-  Wizard* players[]{ &red, &blue };
+  Wizard red{ "red", 491};
+  Wizard blue{ "blue", 449};
+  std::vector<Wizard*> players{ &red, &blue };
+
+  red.deck.push_back(fire_cat);
+  blue.deck.push_back(thunder_snake);
 
 
-  size_t player_count = sizeof(players) / sizeof(players[0]);
+  size_t player_count = players.size();
 
   while (red.health > 0 && blue.health > 0) {
     for (size_t i = 0; i < player_count; ++i) {
@@ -80,7 +82,7 @@ int main()
     for (size_t i = 0; i < player_count; ++i) {
       Wizard w = *players[i];
       if (w.health > 0) {
-        Cast(w.spell, *players[(i + 1) % player_count]);
+        Cast(w.deck[0], *players[(i + 1) % player_count]);
       }
     }
 
