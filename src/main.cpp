@@ -52,12 +52,13 @@ public:
 
 std::mt19937 rng{ std::random_device{}() };
 std::uniform_int_distribution acc_roll{ 1, 100 };
+std::uniform_int_distribution damage_roll{ 0, 4 };
 
 
 void Cast(const Card card, Wizard &target) {
   if (acc_roll(rng) <= card.accuracy)
   {
-    int damage = target.DealDamage(card.damage);
+    int damage = target.DealDamage(card.damage + damage_roll(rng) * 10);
     std::cout << target.name << " took " << damage << " damage from " << card.name << "!\n";
     if (target.health == 0)
       std::cout << target.name << " has been defeated!\n";
@@ -75,8 +76,8 @@ int main()
 
 
 
-  Card fire_cat{ "fire cat", 100, 75 };
-  Card thunder_snake{ "thunder snake", 125, 70 };
+  Card fire_cat{ "fire cat", 80, 75 };
+  Card thunder_snake{ "thunder snake", 105, 70 };
 
   Wizard red{ "red", 491};
   Wizard blue{ "blue", 449};
