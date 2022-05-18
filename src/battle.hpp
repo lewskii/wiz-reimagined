@@ -32,7 +32,7 @@ public:
 private:
   void RoundSetup();
 
-  void Cast(const Card card, Wizard& target);
+  void Cast(Wizard& caster, const Card& card, Wizard& target);
 
   void PrintStats();
 

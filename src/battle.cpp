@@ -13,9 +13,9 @@ void Battle::Play()
     RoundSetup();
 
     for (size_t i = 0; i < player_count; ++i) {
-      Wizard w = players[i];
+      Wizard& w = players[i];
       if (w.health > 0) {
-        Cast(w.deck[0], players[(i + 1) % player_count]);
+        Cast(w, w.deck[0], players[(i + 1) % player_count]);
       }
     }
 
@@ -39,11 +39,13 @@ void Battle::RoundSetup()
   }
 }
 
-void Battle::Cast(const Card card, Wizard& target)
+void Battle::Cast(Wizard& caster, const Card& card, Wizard& target)
 {
   if (rng::AccRoll() <= card.accuracy)
   {
+    caster.pips -= card.pip_cost;
     target.DealDamage(card.damage + rng::DamageRoll() * 10);
+
     std::cout << target.name << " took " << card.damage << " damage from " << card.name << "!\n";
     if (target.health == 0)
       std::cout << "\n" << target.name << " has been defeated!\n\n";
