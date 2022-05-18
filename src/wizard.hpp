@@ -13,10 +13,8 @@ public:
     health{ hp }
   {}
 
-  int DealDamage(int damage) {
-    int dealt = std::min(damage, health);
-    health -= dealt;
-    return dealt;
+  void DealDamage(int damage) {
+    health = std::max(0, health - damage);
   }
 
   const std::string name;

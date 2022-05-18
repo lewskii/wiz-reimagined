@@ -43,8 +43,8 @@ void Battle::Cast(const Card card, Wizard& target)
 {
   if (rng::AccRoll() <= card.accuracy)
   {
-    int damage = target.DealDamage(card.damage + rng::DamageRoll() * 10);
-    std::cout << target.name << " took " << damage << " damage from " << card.name << "!\n";
+    target.DealDamage(card.damage + rng::DamageRoll() * 10);
+    std::cout << target.name << " took " << card.damage << " damage from " << card.name << "!\n";
     if (target.health == 0)
       std::cout << "\n" << target.name << " has been defeated!\n\n";
   }
