@@ -21,4 +21,9 @@ namespace rng {
     return damage_roll(rng);
   }
 
+  bool CoinToss()
+  {
+    return acc_roll(rng) > 50;
+  }
+
 }
