@@ -8,8 +8,8 @@
 
 int main()
 {
-  Card fire_cat{ "fire cat", 80, 75 };
-  Card thunder_snake{ "thunder snake", 105, 70 };
+  Card fire_cat{ "fire cat", 80, 75, 1 };
+  Card thunder_snake{ "thunder snake", 105, 70, 1 };
 
   Wizard red{ "red", 491};
   Wizard blue{ "blue", 449};
