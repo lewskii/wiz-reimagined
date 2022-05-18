@@ -41,11 +41,12 @@ void Battle::Cast(Wizard& caster, const Card& card, Wizard& target)
 {
   if (rng::AccRoll() <= card.accuracy)
   {
-    std::cout << caster.name << " casts " << card.name << " at " << target.name
-      << " for " << card.damage << " damage!\n";
-
     caster.pips -= card.pip_cost;
-    target.DealDamage(card.damage + rng::DamageRoll() * 10);
+    int damage = target.DealDamage(card.damage + rng::DamageRoll() * 10);
+
+    std::cout << caster.name << " casts " << card.name << " at " << target.name
+      << " for " << damage << " damage!\n";
+
     if (target.health == 0)
       std::cout << "\n" << target.name << " has been defeated!\n";
   }
