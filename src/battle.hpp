@@ -28,19 +28,9 @@ public:
 
 
 private:
-  void Cast(const Card card, Wizard& target) {
-    if (rng::AccRoll() <= card.accuracy)
-    {
-      int damage = target.DealDamage(card.damage + rng::DamageRoll() * 10);
-      std::cout << target.name << " took " << damage << " damage from " << card.name << "!\n";
-      if (target.health == 0)
-        std::cout << target.name << " has been defeated!\n";
-    }
-    else
-    {
-      std::cout << card.name << " fizzled!\n";
-    }
-  }
+  void Cast(const Card card, Wizard& target);
+
+  void PrintStats();
 
   size_t player_count;
   std::vector<Wizard> players;
