@@ -23,6 +23,7 @@ public:
 
   const std::string name;
   int health;
+  int pips = 0;
 
   std::vector<Card> deck;
 };
