@@ -18,6 +18,10 @@ public:
     return damage;
   }
 
+  Card& SelectSpell() {
+    return deck[0];
+  }
+
   const std::string name;
   int health;
   int pips = 0;

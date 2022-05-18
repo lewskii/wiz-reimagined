@@ -15,7 +15,7 @@ void Battle::Play()
     for (size_t i = 0; i < player_count; ++i) {
       Wizard& w = players[i];
       if (w.health > 0) {
-        Cast(w, w.deck[0], players[(i + 1) % player_count]);
+        Cast(w, w.SelectSpell(), players[(i + 1) % player_count]);
       }
     }
 
