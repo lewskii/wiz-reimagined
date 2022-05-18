@@ -7,8 +7,6 @@
 
 class Wizard {
 public:
-  static const int max_pips = 7;
-
   Wizard(const std::string name, const int hp)
     :
     name{ name },

@@ -35,7 +35,7 @@ void Battle::RoundSetup()
 {
   for (size_t i = 0; i < player_count; ++i) {
     Wizard w = players[i];
-    w.pips = std::min(w.pips + 1, 7);
+    w.pips = std::min(w.pips + 1, kMaxPips);
   }
 }
 

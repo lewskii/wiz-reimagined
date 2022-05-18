@@ -9,6 +9,8 @@
 class Battle final
 {
 public:
+  static const int kMaxPips = 7;
+
   Battle(Wizard red, Wizard blue)
     : player_count{ 2 }
   {
