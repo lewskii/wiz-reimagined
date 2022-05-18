@@ -6,11 +6,11 @@
 
 void Battle::Play()
 {
-  PrintStats();
 
   while (players[0].health > 0 && players[1].health > 0)
   {
     RoundSetup();
+    PrintStats();
 
     for (size_t i = 0; i < player_count; ++i) {
       Wizard& w = players[i];
@@ -18,8 +18,6 @@ void Battle::Play()
         Cast(w, w.deck[0], players[(i + 1) % player_count]);
       }
     }
-
-    PrintStats();
 
     std::cin.ignore();
   }
@@ -48,7 +46,7 @@ void Battle::Cast(Wizard& caster, const Card& card, Wizard& target)
 
     std::cout << target.name << " took " << card.damage << " damage from " << card.name << "!\n";
     if (target.health == 0)
-      std::cout << "\n" << target.name << " has been defeated!\n\n";
+      std::cout << "\n" << target.name << " has been defeated!\n";
   }
   else
   {
