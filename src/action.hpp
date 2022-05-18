@@ -5,7 +5,7 @@
 #include "card.hpp"
 
 
-struct Action {
+class Action {
 public:
   enum class Type {
     Spell,
@@ -14,18 +14,23 @@ public:
 
   Action(Card c)
     :
-    type{ Type::Spell },
-    card{ std::make_optional(c)}
+    type_{ Type::Spell },
+    card_{ std::make_optional(c)}
   {}
 
   Action(std::nullopt_t _)
     :
-    type{ Type::Pass },
-    card{ std::nullopt }
+    type_{ Type::Pass },
+    card_{ std::nullopt }
   {}
 
-  const Type type;
-  const std::optional<Card> card;
+  bool IsSpell() { return type_ == Type::Spell; }
+
+  Card card() { return card_.value(); }
+
+private:
+  const Type type_;
+  const std::optional<Card> card_;
 };
 
 namespace Pass {

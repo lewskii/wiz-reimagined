@@ -31,8 +31,8 @@ void Battle::Play()
       Wizard& w = players[i];
       if (w.health() > 0) {
         Action a = w.SelectAction();
-        if (a.type == Action::Type::Spell) {
-          Cast(w, a.card.value(), players[(i + 1) % player_count]);
+        if (a.IsSpell()) {
+          Cast(w, a.card(), players[(i + 1) % player_count]);
         }
         else {
           std::cout << w.name << " passes.\n";
