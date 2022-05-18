@@ -133,6 +133,7 @@
     <ClCompile Include="src\rng.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\action.hpp" />
     <ClInclude Include="src\battle.hpp" />
     <ClInclude Include="src\rng.hpp" />
     <ClInclude Include="src\wizard.hpp" />
