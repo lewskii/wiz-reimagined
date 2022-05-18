@@ -7,7 +7,7 @@
 Battle::Battle(Wizard red, Wizard blue)
   : player_count{ 2 }
 {
-  if (rng::AccRoll() <= 50)
+  if (rng::CoinToss())
   {
     players.push_back(blue);
     players.push_back(red);
