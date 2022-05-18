@@ -10,16 +10,32 @@ public:
   Wizard(const std::string name, const int hp)
     :
     name{ name },
-    health{ hp }
+    health_{ hp }
   {}
 
   int DealDamage(int damage) {
-    health = std::max(0, health - damage);
+    health_ = std::max(0, health_ - damage);
     return damage;
   }
 
+  int health() { return health_; }
+
+  int pips() { return pips_; }
+
+  void AddPip() {
+    pips_ = std::min(pips_ + 1, kMaxPips);
+  }
+
+  void UsePips(int n) {
+    pips_ = std::max(0, pips_ - n);
+  }
+
+  void AddSpell(Card c) {
+    deck.push_back(c);
+  }
+
   Card& SelectSpell() {
-    if (deck.size() > 1 && pips > 1) {
+    if (deck.size() > 1 && pips_ > 1) {
       return deck[1];
     }
     else {
@@ -28,8 +44,12 @@ public:
   }
 
   const std::string name;
-  int health;
-  int pips = 0;
+
+private:
+  static const int kMaxPips = 7;
+
+  int health_;
+  int pips_ = 0;
 
   std::vector<Card> deck;
 };
