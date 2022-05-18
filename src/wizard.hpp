@@ -40,7 +40,7 @@ public:
       return deck[1];
     }
     else {
-      return deck[0];
+      return Pass::pass;
     }
   }
 
