@@ -28,6 +28,8 @@ public:
 
 
 private:
+  void RoundSetup();
+
   void Cast(const Card card, Wizard& target);
 
   void PrintStats();

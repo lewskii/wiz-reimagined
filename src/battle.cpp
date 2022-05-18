@@ -10,6 +10,8 @@ void Battle::Play()
 
   while (players[0].health > 0 && players[1].health > 0)
   {
+    RoundSetup();
+
     for (size_t i = 0; i < player_count; ++i) {
       Wizard w = players[i];
       if (w.health > 0) {
@@ -29,7 +31,16 @@ void Battle::Play()
 }
 
 
-void Battle::Cast(const Card card, Wizard& target) {
+void Battle::RoundSetup()
+{
+  for (size_t i = 0; i < player_count; ++i) {
+    Wizard w = players[i];
+    w.pips = std::min(w.pips + 1, 7);
+  }
+}
+
+void Battle::Cast(const Card card, Wizard& target)
+{
   if (rng::AccRoll() <= card.accuracy)
   {
     int damage = target.DealDamage(card.damage + rng::DamageRoll() * 10);
