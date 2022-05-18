@@ -19,7 +19,12 @@ public:
   }
 
   Card& SelectSpell() {
-    return deck[0];
+    if (deck.size() > 1 && pips > 1) {
+      return deck[1];
+    }
+    else {
+      return deck[0];
+    }
   }
 
   const std::string name;
