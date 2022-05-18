@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "action.hpp"
 #include "card.hpp"
 
 
@@ -34,7 +35,7 @@ public:
     deck.push_back(c);
   }
 
-  Card& SelectSpell() {
+  Action SelectAction() {
     if (deck.size() > 1 && pips_ > 1) {
       return deck[1];
     }
