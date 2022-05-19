@@ -15,31 +15,7 @@ public:
     health_{ hp }
   {}
 
-  void Cast(const Card card, Wizard& target)
-  {
-    if (rng::AccRoll(card.accuracy))
-    {
-      UsePips(card.pip_cost);
-
-      switch (card.effect.type) {
-      case Effect::Type::Damage:
-        target.DealDamage(card.effect.strength + rng::DamageRoll() * 10);
-        break;
-      case Effect::Type::Heal:
-        Heal(card.effect.strength);
-        break;
-      }
-
-      std::cout << name << " casts " << card.name << "!\n";
-
-      if (target.health() == 0)
-        std::cout << "\n" << target.name << " has been defeated!\n";
-    }
-    else
-    {
-      std::cout << name << " fizzles!\n";
-    }
-  }
+  void Cast(const Card card, Wizard& target);
 
   int DealDamage(int damage) {
     health_ = std::max(0, health_ - damage);
@@ -69,15 +45,7 @@ public:
     deck.push_back(c);
   }
 
-  Action SelectAction() {
-    char c;
-    std::cout << "select card for " << name << ": ";
-    std::cin >> c;
-    if (isdigit(c) && c - '0' < deck.size())
-      return Action(deck[c - '0']);
-    else
-      return Pass::pass;
-  }
+  Action SelectAction();
 
   const std::string name;
 

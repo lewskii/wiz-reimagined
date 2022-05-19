@@ -131,6 +131,7 @@
     <ClCompile Include="src\battle.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\rng.cpp" />
+    <ClCompile Include="src\wizard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\action.hpp" />
