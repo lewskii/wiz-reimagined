@@ -13,8 +13,8 @@ namespace rng {
     static const std::uniform_int_distribution damage_roll{ 0, 4 };
   }
 
-  int AccRoll() {
-    return acc_roll(rng);
+  int AccRoll(int acc) {
+    return acc_roll(rng) <= acc;
   }
 
   int DamageRoll() {
