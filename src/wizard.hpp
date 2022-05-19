@@ -20,6 +20,11 @@ public:
     return damage;
   }
 
+  int Heal(int strength) {
+    health_ = std::min(max_health_, health_ + strength);
+    return strength;
+  }
+
   int max_health() { return max_health_; }
 
   int health() { return health_; }
