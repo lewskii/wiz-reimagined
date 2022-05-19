@@ -14,6 +14,7 @@ int main()
 
   red.AddSpell({ "fire cat", 75, 1, Effect::Damage(80) });
   red.AddSpell({ "fire bats", 75, 2, Effect::Damage(245) });
+  red.AddSpell({ "pixie", 100, 2, Effect::Heal(400) });
   blue.AddSpell({ "thunder snake", 70, 1, Effect::Damage(105) });
   blue.AddSpell({ "lightning bats", 70, 2, Effect::Damage(245) });
 
