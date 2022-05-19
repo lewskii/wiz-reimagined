@@ -65,38 +65,12 @@ void Battle::PlayActions()
     if (w.health() > 0) {
       Action a = actions[i];
       if (a.IsSpell()) {
-        Cast(w, a.card(), players[(i + 1) % player_count]);
+        w.Cast(a.card(), players[(i + 1) % player_count]);
       }
       else {
         std::cout << w.name << " passes.\n";
       }
     }
-  }
-}
-
-void Battle::Cast(Wizard& caster, const Card& card, Wizard& target)
-{
-  if (rng::AccRoll(card.accuracy))
-  {
-    caster.UsePips(card.pip_cost);
-
-    switch (card.effect.type) {
-    case Effect::Type::Damage:
-      target.DealDamage(card.effect.strength + rng::DamageRoll() * 10);
-      break;
-    case Effect::Type::Heal:
-      caster.Heal(card.effect.strength);
-      break;
-    }
-
-    std::cout << caster.name << " casts " << card.name << "!\n";
-
-    if (target.health() == 0)
-      std::cout << "\n" << target.name << " has been defeated!\n";
-  }
-  else
-  {
-    std::cout << caster.name << " fizzles!\n";
   }
 }
 
