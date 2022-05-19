@@ -15,9 +15,9 @@ public:
     : card_{ std::nullopt }
   {}
 
-  bool IsSpell() { return card_.has_value(); }
+  bool IsSpell() const { return card_.has_value(); }
 
-  Card card() { return card_.value(); }
+  Card card() const { return card_.value(); }
 
 private:
   const std::optional<Card> card_;

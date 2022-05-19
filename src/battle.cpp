@@ -75,7 +75,7 @@ void Battle::PlayActions()
 }
 
 
-void Battle::PrintStats()
+void Battle::PrintStats() const
 {
   for (size_t i = 0; i < player_count; ++i) {
     Wizard w = players[i];
