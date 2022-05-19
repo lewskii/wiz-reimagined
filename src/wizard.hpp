@@ -36,12 +36,13 @@ public:
   }
 
   Action SelectAction() {
-    if (deck.size() > 1 && pips_ > 1) {
-      return deck[1];
-    }
-    else {
+    char c;
+    std::cout << "select card for " << name << ": ";
+    std::cin >> c;
+    if (isdigit(c) && c - '0' < deck.size())
+      return Action(deck[c - '0']);
+    else
       return Pass::pass;
-    }
   }
 
   const std::string name;
