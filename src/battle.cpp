@@ -79,7 +79,7 @@ void Battle::Cast(Wizard& caster, const Card& card, Wizard& target)
   if (rng::AccRoll(card.accuracy))
   {
     caster.UsePips(card.pip_cost);
-    int damage = target.DealDamage(card.damage + rng::DamageRoll() * 10);
+    int damage = target.DealDamage(card.effect.strength + rng::DamageRoll() * 10);
 
     std::cout << caster.name << " casts " << card.name << " at " << target.name
       << " for " << damage << " damage!\n";
