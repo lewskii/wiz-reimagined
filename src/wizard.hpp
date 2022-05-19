@@ -11,6 +11,7 @@ public:
   Wizard(const std::string name, const int hp)
     :
     name{ name },
+    max_health_{ hp },
     health_{ hp }
   {}
 
@@ -18,6 +19,8 @@ public:
     health_ = std::max(0, health_ - damage);
     return damage;
   }
+
+  int max_health() { return max_health_; }
 
   int health() { return health_; }
 
@@ -50,6 +53,7 @@ public:
 private:
   static const int kMaxPips = 7;
 
+  int max_health_;
   int health_;
   int pips_ = 0;
 
