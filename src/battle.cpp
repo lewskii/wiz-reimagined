@@ -79,10 +79,17 @@ void Battle::Cast(Wizard& caster, const Card& card, Wizard& target)
   if (rng::AccRoll(card.accuracy))
   {
     caster.UsePips(card.pip_cost);
-    int damage = target.DealDamage(card.effect.strength + rng::DamageRoll() * 10);
 
-    std::cout << caster.name << " casts " << card.name << " at " << target.name
-      << " for " << damage << " damage!\n";
+    switch (card.effect.type) {
+    case Effect::Type::Damage:
+      target.DealDamage(card.effect.strength + rng::DamageRoll() * 10);
+      break;
+    case Effect::Type::Heal:
+      caster.Heal(card.effect.strength);
+      break;
+    }
+
+    std::cout << caster.name << " casts " << card.name << "!\n";
 
     if (target.health() == 0)
       std::cout << "\n" << target.name << " has been defeated!\n";

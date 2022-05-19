@@ -6,10 +6,17 @@
 class Effect {
 public:
   enum class Type {
-    Damage
+    Damage,
+    Heal,
   };
 
-  static Effect Damage(int strength) { return Effect{ Type::Damage, strength }; }
+  static Effect Damage(int strength) {
+    return Effect{ Type::Damage, strength };
+  }
+
+  static Effect Heal(int strength) { 
+   return Effect{ Type::Heal, strength };
+  }
 
 
   const Type type;
