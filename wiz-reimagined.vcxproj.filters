@@ -38,6 +38,9 @@
     <ClInclude Include="src\action.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\effect.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\card.hpp" />
