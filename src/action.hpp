@@ -7,29 +7,19 @@
 
 class Action {
 public:
-  enum class Type {
-    Spell,
-    Pass
-  };
-
   Action(Card c)
-    :
-    type_{ Type::Spell },
-    card_{ std::make_optional(c)}
+    : card_{ std::make_optional(c) }
   {}
 
   Action(std::nullopt_t _)
-    :
-    type_{ Type::Pass },
-    card_{ std::nullopt }
+    : card_{ std::nullopt }
   {}
 
-  bool IsSpell() { return type_ == Type::Spell; }
+  bool IsSpell() { return card_.has_value(); }
 
   Card card() { return card_.value(); }
 
 private:
-  const Type type_;
   const std::optional<Card> card_;
 };
 
