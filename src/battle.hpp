@@ -17,12 +17,17 @@ public:
 private:
   void RoundSetup();
 
+  void SelectActions();
+
+  void PlayActions();
+
   void Cast(Wizard& caster, const Card& card, Wizard& target);
 
   void PrintStats();
 
   size_t player_count;
   std::vector<Wizard> players;
+  std::vector<Action> actions;
 
 };
 

@@ -17,6 +17,8 @@ Battle::Battle(Wizard red, Wizard blue)
     players.push_back(red);
     players.push_back(blue);
   }
+
+  actions.reserve(player_count);
 }
 
 void Battle::Play()
@@ -27,18 +29,8 @@ void Battle::Play()
     RoundSetup();
     PrintStats();
 
-    for (size_t i = 0; i < player_count; ++i) {
-      Wizard& w = players[i];
-      if (w.health() > 0) {
-        Action a = w.SelectAction();
-        if (a.IsSpell()) {
-          Cast(w, a.card(), players[(i + 1) % player_count]);
-        }
-        else {
-          std::cout << w.name << " passes.\n";
-        }
-      }
-    }
+    SelectActions();
+    PlayActions();
 
     std::cin.ignore();
   }
@@ -55,6 +47,30 @@ void Battle::RoundSetup()
   for (size_t i = 0; i < player_count; ++i) {
     Wizard& w = players[i];
     w.AddPip();
+  }
+  actions.clear();
+}
+
+void Battle::SelectActions()
+{
+  for (size_t i = 0; i < player_count; ++i) {
+    actions.push_back(players[i].SelectAction());
+  }
+}
+
+void Battle::PlayActions()
+{
+  for (size_t i = 0; i < player_count; ++i) {
+    Wizard& w = players[i];
+    if (w.health() > 0) {
+      Action a = actions[i];
+      if (a.IsSpell()) {
+        Cast(w, a.card(), players[(i + 1) % player_count]);
+      }
+      else {
+        std::cout << w.name << " passes.\n";
+      }
+    }
   }
 }
 
