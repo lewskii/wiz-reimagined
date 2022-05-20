@@ -17,8 +17,8 @@ namespace rng {
     return acc_roll(rng) <= acc;
   }
 
-  int DamageRoll() {
-    return damage_roll(rng);
+  int DamageRoll(int increment) {
+    return damage_roll(rng) * increment;
   }
 
   bool CoinToss()

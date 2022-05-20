@@ -22,7 +22,7 @@ namespace Effect {
 
   int VariableDamage::strength() const
   {
-    return base_ + rng::DamageRoll() * increment_;
+    return base_ + rng::DamageRoll(increment_);
   }
 
 
