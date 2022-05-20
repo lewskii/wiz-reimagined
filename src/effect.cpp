@@ -27,6 +27,14 @@ namespace Effect {
 
 
 
+  FlatDamage::FlatDamage(int damage)
+    :
+    Effect{ Type::Damage },
+    damage_{ damage }
+  {}
+
+
+
   Heal::Heal(int heal)
     :
     Effect{ Type::Heal },

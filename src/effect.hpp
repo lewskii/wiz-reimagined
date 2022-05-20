@@ -34,6 +34,16 @@ namespace Effect {
     const int increment_;
   };
 
+  class FlatDamage final : public Effect {
+  public:
+    FlatDamage(int damage);
+
+    int strength() const override { return damage_; }
+
+  private:
+    const int damage_;
+  };
+
   class Heal final : public Effect {
   public:
     Heal(int heal);
