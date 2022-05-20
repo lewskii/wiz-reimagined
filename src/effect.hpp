@@ -13,7 +13,7 @@ namespace Effect {
   public:
     virtual ~Effect() = default;
 
-    virtual int strength() const { return 0; }
+    virtual int strength() const = 0;
 
     const Type type;
 
