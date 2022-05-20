@@ -8,7 +8,7 @@
 class Action {
 public:
   Action(const Card& c)
-    : card_{ std::make_optional(c) }
+    : card_{ c }
   {}
 
   Action(std::nullopt_t _)
