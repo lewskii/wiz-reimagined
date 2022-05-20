@@ -8,11 +8,13 @@
 
 class Card {
 public:
+  typedef std::shared_ptr<Effect::Effect> EffectPtr;
+
   Card(
     const std::string name,
     const int accuracy,
     const int pip_cost,
-    const std::initializer_list<Effect::Effect*> effects
+    const std::initializer_list<EffectPtr> effects
   )
     :
     name{ name },
@@ -24,5 +26,5 @@ public:
   const std::string name;
   const int accuracy;
   const int pip_cost;
-  const std::vector<Effect::Effect*> effects;
+  const std::vector<EffectPtr> effects;
 };
