@@ -3,6 +3,17 @@
 #include "wizard.hpp"
 #include "rng.hpp"
 
+Action Wizard::SelectAction()
+{
+  char c;
+  std::cout << "select card for " << name << ": ";
+  std::cin >> c;
+  if (isdigit(c) && c - '0' < deck.size())
+    return Action(deck[c - '0']);
+  else
+    return Pass::pass;
+}
+
 void Wizard::Cast(const Card& card, Wizard& target)
 {
   if (rng::AccRoll(card.accuracy))
@@ -27,15 +38,4 @@ void Wizard::Cast(const Card& card, Wizard& target)
   {
     std::cout << name << " fizzles!\n";
   }
-}
-
-Action Wizard::SelectAction()
-{
-  char c;
-  std::cout << "select card for " << name << ": ";
-  std::cin >> c;
-  if (isdigit(c) && c - '0' < deck.size())
-    return Action(deck[c - '0']);
-  else
-    return Pass::pass;
 }
