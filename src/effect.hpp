@@ -24,14 +24,14 @@ namespace Effect {
 
   class VariableDamage final : public Effect {
   public:
-    VariableDamage(int base, int increment);
+    VariableDamage(int base, int step);
     VariableDamage(int base);
 
     int strength() const override;
 
   private:
     const int base_;
-    const int increment_;
+    const int step_;
   };
 
   class FlatDamage final : public Effect {

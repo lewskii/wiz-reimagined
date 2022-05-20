@@ -6,7 +6,7 @@
 namespace rng {
 
   int AccRoll(int acc);
-  int DamageRoll(int increment);
+  int DamageRoll(int step);
   bool CoinToss();
 
 }

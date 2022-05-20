@@ -6,23 +6,23 @@
 
 namespace Effect {
 
-  VariableDamage::VariableDamage(int base, int increment)
+  VariableDamage::VariableDamage(int base, int step)
     :
     Effect{ Type::Damage },
     base_{ base },
-    increment_{ increment }
+    step_{ step }
   {}
 
   VariableDamage::VariableDamage(int base)
     :
     Effect{ Type::Damage },
     base_{ base },
-    increment_{ 10 }
+    step_{ 10 }
   {}
 
   int VariableDamage::strength() const
   {
-    return base_ + rng::DamageRoll(increment_);
+    return base_ + rng::DamageRoll(step_);
   }
 
 
