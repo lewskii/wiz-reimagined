@@ -3,29 +3,45 @@
 
 
 
-class Effect {
-public:
+namespace Effect {
   enum class Type {
     Damage,
     Heal,
   };
 
-  static Effect Damage(int strength) {
-    return Effect{ Type::Damage, strength };
-  }
+  class Effect {
+  public:
+    virtual ~Effect() = default;
 
-  static Effect Heal(int strength) { 
-   return Effect{ Type::Heal, strength };
-  }
+    virtual int strength() const { return 0; }
 
+    const Type type;
 
-  const Type type;
-  const int strength;
+  protected:
+    Effect(Type t) : type{ t }
+    {}
+  };
 
-private:
-  Effect(Type t, int strength)
-    :
-    type{ t },
-    strength{ strength }
-  {}
-};
+  class VariableDamage final : public Effect {
+  public:
+    VariableDamage(int base, int increment);
+    VariableDamage(int base);
+
+    int strength() const override;
+
+  private:
+    const int base_;
+    const int increment_;
+  };
+
+  class Heal final : public Effect {
+  public:
+    Heal(int heal);
+
+    int strength() const override { return heal_;  }
+
+  private:
+    const int heal_;
+  };
+
+}

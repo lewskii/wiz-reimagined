@@ -9,12 +9,12 @@ void Wizard::Cast(const Card card, Wizard& target)
   {
     UsePips(card.pip_cost);
 
-    switch (card.effect.type) {
+    switch (card.effects[0]->type) {
     case Effect::Type::Damage:
-      target.DealDamage(card.effect.strength + rng::DamageRoll() * 10);
+      target.DealDamage(card.effects[0]->strength());
       break;
     case Effect::Type::Heal:
-      Heal(card.effect.strength);
+      Heal(card.effects[0]->strength());
       break;
     }
 

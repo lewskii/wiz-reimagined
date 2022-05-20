@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #include "effect.hpp"
 
@@ -11,17 +12,17 @@ public:
     const std::string name,
     const int accuracy,
     const int pip_cost,
-    const Effect effect
+    const std::initializer_list<Effect::Effect*> effects
   )
     :
     name{ name },
     accuracy{ accuracy },
     pip_cost{ pip_cost },
-    effect{ effect }
+    effects{ effects }
   {}
 
   const std::string name;
   const int accuracy;
   const int pip_cost;
-  const Effect effect;
+  const std::vector<Effect::Effect*> effects;
 };

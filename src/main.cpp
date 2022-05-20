@@ -12,11 +12,16 @@ int main()
   Wizard red{ "red", 513};
   Wizard blue{ "blue", 465};
 
-  red.AddSpell({ "fire cat", 75, 1, Effect::Damage(80) });
-  red.AddSpell({ "fire bats", 75, 2, Effect::Damage(245) });
-  red.AddSpell({ "pixie", 100, 2, Effect::Heal(400) });
-  blue.AddSpell({ "thunder snake", 70, 1, Effect::Damage(105) });
-  blue.AddSpell({ "lightning bats", 70, 2, Effect::Damage(245) });
+  auto cat_damage = Effect::VariableDamage(80);
+  auto snake_damage = Effect::VariableDamage(105);
+  auto bat_damage = Effect::VariableDamage(245);
+  auto pixie_heal = Effect::Heal(400);
+
+  red.AddSpell({ "fire cat", 75, 1, {&cat_damage} });
+  red.AddSpell({ "fire bats", 75, 2, {&bat_damage} });
+  red.AddSpell({ "pixie", 100, 2, {&pixie_heal} });
+  blue.AddSpell({ "thunder snake", 70, 1, {&snake_damage} });
+  blue.AddSpell({ "lightning bats", 70, 2, {&bat_damage} });
 
   Battle duel{ red, blue };
   duel.Play();

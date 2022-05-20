@@ -27,11 +27,11 @@ public:
     return strength;
   }
 
-  int max_health() { return max_health_; }
+  int max_health() const { return max_health_; }
 
-  int health() { return health_; }
+  int health() const { return health_; }
 
-  int pips() { return pips_; }
+  int pips() const { return pips_; }
 
   void AddPip() {
     pips_ = std::min(pips_ + 1, kMaxPips);

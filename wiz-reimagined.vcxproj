@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\battle.cpp" />
+    <ClCompile Include="src\effect.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\rng.cpp" />
     <ClCompile Include="src\wizard.cpp" />
