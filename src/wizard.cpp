@@ -3,7 +3,7 @@
 #include "wizard.hpp"
 #include "rng.hpp"
 
-void Wizard::Cast(const Card card, Wizard& target)
+void Wizard::Cast(const Card& card, Wizard& target)
 {
   if (rng::AccRoll(card.accuracy))
   {

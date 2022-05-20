@@ -7,7 +7,7 @@
 
 class Action {
 public:
-  Action(Card c)
+  Action(const Card& c)
     : card_{ std::make_optional(c) }
   {}
 

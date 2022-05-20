@@ -15,7 +15,7 @@ public:
     health_{ hp }
   {}
 
-  void Cast(const Card card, Wizard& target);
+  void Cast(const Card& card, Wizard& target);
 
   int DealDamage(int damage) {
     health_ = std::max(0, health_ - damage);
@@ -41,7 +41,7 @@ public:
     pips_ = std::max(0, pips_ - n);
   }
 
-  void AddSpell(Card c) {
+  void AddSpell(const Card& c) {
     deck.push_back(c);
   }
 
