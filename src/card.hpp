@@ -6,7 +6,7 @@
 #include "effect.hpp"
 
 
-class Card {
+struct Card {
 public:
   typedef std::shared_ptr<Effect::Effect> EffectPtr;
 
