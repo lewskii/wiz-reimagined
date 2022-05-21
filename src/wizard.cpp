@@ -23,7 +23,7 @@ void Wizard::Cast(const Card& card, Wizard& target)
     Card::EffectPtr e = card.effects[0];
     switch (e->type) {
     case Effect::Type::Damage:
-      target.DealDamage(card.effects[0]->strength());
+      target.TakeDamage(card.effects[0]->strength());
       break;
     case Effect::Type::Heal:
       Heal(card.effects[0]->strength());

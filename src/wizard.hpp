@@ -19,7 +19,7 @@ public:
 
   void Cast(const Card& card, Wizard& target);
 
-  int DealDamage(int damage) {
+  int TakeDamage(int damage) {
     health_ = std::max(0, health_ - damage);
     return damage;
   }
