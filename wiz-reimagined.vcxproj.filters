@@ -47,6 +47,9 @@
     <ClInclude Include="src\effect.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\wizardstats.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\card.hpp" />

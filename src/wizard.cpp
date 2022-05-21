@@ -6,10 +6,10 @@
 Action Wizard::SelectAction()
 {
   char c;
-  std::cout << "select card for " << name << ": ";
+  std::cout << "select card for " << name() << ": ";
   std::cin >> c;
-  if (isdigit(c) && c - '0' < deck.size())
-    return Action(deck[c - '0']);
+  if (isdigit(c) && c - '0' < stats.deck.size())
+    return Action(stats.deck[c - '0']);
   else
     return Pass::pass;
 }
@@ -35,13 +35,13 @@ void Wizard::Cast(const Card& card, Wizard& target)
       break;
     }
 
-    std::cout << name << " casts " << card.name << "!\n";
+    std::cout << stats.name << " casts " << card.name << "!\n";
 
     if (target.health() == 0)
-      std::cout << "\n" << target.name << " has been defeated!\n";
+      std::cout << "\n" << target.name() << " has been defeated!\n";
   }
   else
   {
-    std::cout << name << " fizzles!\n";
+    std::cout << stats.name << " fizzles!\n";
   }
 }

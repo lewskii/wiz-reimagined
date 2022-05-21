@@ -36,9 +36,9 @@ void Battle::Play()
   }
 
   if (players[0].health() > 0)
-    std::cout << players[0].name << " wins!\n";
+    std::cout << players[0].name() << " wins!\n";
   else
-    std::cout << players[1].name << " wins!\n";
+    std::cout << players[1].name() << " wins!\n";
 }
 
 
@@ -68,7 +68,7 @@ void Battle::PlayActions()
         w.Cast(a.card(), players[(i + 1) % player_count]);
       }
       else {
-        std::cout << w.name << " passes.\n";
+        std::cout << w.name() << " passes.\n";
       }
     }
   }
@@ -79,7 +79,7 @@ void Battle::PrintStats() const
 {
   for (size_t i = 0; i < player_count; ++i) {
     Wizard w = players[i];
-    std::cout << w.name << ": " << w.health() << " hp, " << w.pips() << " pip(s)\n";
+    std::cout << w.name() << ": " << w.health() << " hp, " << w.pips() << " pip(s)\n";
   }
   std::cout << "\n";
 }

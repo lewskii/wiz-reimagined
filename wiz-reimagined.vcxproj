@@ -140,6 +140,7 @@
     <ClInclude Include="src\effect.hpp" />
     <ClInclude Include="src\rng.hpp" />
     <ClInclude Include="src\wizard.hpp" />
+    <ClInclude Include="src\wizardstats.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\card.hpp" />

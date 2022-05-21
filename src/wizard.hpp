@@ -3,16 +3,15 @@
 #include <vector>
 
 #include "action.hpp"
-#include "card.hpp"
+#include "wizardstats.hpp"
 
 
 class Wizard {
 public:
-  Wizard(const std::string name, const int hp)
+  Wizard(const WizardStats& stats)
     :
-    name{ name },
-    max_health_{ hp },
-    health_{ hp }
+    stats{ stats },
+    pips_{ 0 }
   {}
 
   Action SelectAction();
@@ -20,12 +19,12 @@ public:
   void Cast(const Card& card, Wizard& target);
 
   int TakeDamage(int damage) {
-    health_ = std::max(0, health_ - damage);
+    stats.health = std::max(0, stats.health - damage);
     return damage;
   }
 
   int Heal(int strength) {
-    health_ = std::min(max_health_, health_ + strength);
+    stats.health = std::min(stats.max_health, stats.health + strength);
     return strength;
   }
 
@@ -33,23 +32,19 @@ public:
 
   void UsePips(int n) { pips_ = std::max(0, pips_ - n); }
 
-  void AddSpell(const Card& c) { deck.push_back(c); }
+  int max_health() const { return stats.max_health; }
 
-  int max_health() const { return max_health_; }
-
-  int health() const { return health_; }
+  int health() const { return stats.health; }
 
   int pips() const { return pips_; }
 
-  const std::string name;
+  std::string name() { return stats.name; };
 
 private:
   static const int kMaxPips = 7;
 
-  int max_health_;
-  int health_;
-  int pips_ = 0;
+  int pips_;
 
-  std::vector<Card> deck;
+  WizardStats stats;
 };
 
