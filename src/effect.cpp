@@ -41,4 +41,20 @@ namespace Effect {
     heal_{ heal }
   {}
 
+
+
+  DoT::DoT(int damage, int turns)
+    :
+    Effect{ Type::DoT },
+    damage_{ damage },
+    turns_{ turns }
+  {}
+
+  DoT::DoT(int damage)
+    :
+    Effect{ Type::DoT },
+    damage_{ damage },
+    turns_{ 3 }
+  {}
+
 }

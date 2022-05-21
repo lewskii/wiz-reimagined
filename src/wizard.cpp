@@ -20,12 +20,18 @@ void Wizard::Cast(const Card& card, Wizard& target)
   {
     UsePips(card.pip_cost);
 
-    switch (card.effects[0]->type) {
+    Card::EffectPtr e = card.effects[0];
+    switch (e->type) {
     case Effect::Type::Damage:
       target.DealDamage(card.effects[0]->strength());
       break;
     case Effect::Type::Heal:
       Heal(card.effects[0]->strength());
+      break;
+    case Effect::Type::DoT:
+      auto dot = std::dynamic_pointer_cast<Effect::DoT>(e);
+      std::cout << "this should do " << dot->damage_
+        << " over " << dot->turns_ << " turns\n";
       break;
     }
 

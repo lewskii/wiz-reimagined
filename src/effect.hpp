@@ -6,6 +6,7 @@
 namespace Effect {
   enum class Type {
     Damage,
+    DoT,
     Heal,
   };
 
@@ -42,6 +43,17 @@ namespace Effect {
 
   private:
     const int damage_;
+  };
+
+  class DoT final : public Effect {
+  public:
+    DoT(int damage, int turns);
+    DoT(int damage);
+
+    int strength() const override { return damage_; }
+
+    const int damage_;
+    const int turns_;
   };
 
   class Heal final : public Effect {
