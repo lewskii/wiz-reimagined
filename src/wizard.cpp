@@ -18,6 +18,8 @@ void Wizard::Cast(const Card& card, Wizard& target)
 {
   if (rng::AccRoll(card.accuracy))
   {
+    std::cout << stats.name << " casts " << card.name << "!\n";
+
     UsePips(card.pip_cost);
 
     Card::EffectPtr e = card.effects[0];
@@ -34,8 +36,6 @@ void Wizard::Cast(const Card& card, Wizard& target)
       break;
     }
 
-    std::cout << stats.name << " casts " << card.name << "!\n";
-
     if (target.health() == 0)
       std::cout << "\n" << target.name() << " has been defeated!\n";
   }
@@ -47,17 +47,21 @@ void Wizard::Cast(const Card& card, Wizard& target)
 
 void Wizard::OverTimeTick()
 {
-  RemoveEndedOverTimes();
-
-  for (auto i = over_time_effects.begin(); i < over_time_effects.end(); ++i) {
+  auto i = over_time_effects.begin();
+  while (i < over_time_effects.end()) {
     auto effect = i->get();
-    --(effect->turns_left);
 
     switch (effect->type) {
     case Effect::Type::DoT:
       TakeDamage(effect->per_turn);
       break;
     }
+
+    --(effect->turns_left);
+    if (effect->turns_left <= 0)
+      i = over_time_effects.erase(i);
+    else
+      ++i;
   }
 }
 

@@ -46,7 +46,6 @@ void Battle::RoundSetup()
 {
   for (size_t i = 0; i < player_count; ++i) {
     Wizard& w = players[i];
-    w.OverTimeTick();
     w.AddPip();
   }
   actions.clear();
@@ -63,6 +62,12 @@ void Battle::PlayActions()
 {
   for (size_t i = 0; i < player_count; ++i) {
     Wizard& w = players[i];
+
+    w.OverTimeTick();
+    if (w.health() == 0) {
+      std::cout << "\n" << w.name() << " has been defeated!\n";
+    }
+
     if (w.health() > 0) {
       Action a = actions[i];
       if (a.IsSpell()) {
