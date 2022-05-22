@@ -46,6 +46,7 @@ void Battle::RoundSetup()
 {
   for (size_t i = 0; i < player_count; ++i) {
     Wizard& w = players[i];
+    w.OverTimeTick();
     w.AddPip();
   }
   actions.clear();

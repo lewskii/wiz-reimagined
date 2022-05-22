@@ -18,15 +18,11 @@ public:
 
   void Cast(const Card& card, Wizard& target);
 
-  int TakeDamage(int damage) {
-    stats.health = std::max(0, stats.health - damage);
-    return damage;
-  }
+  void OverTimeTick();
 
-  int Heal(int strength) {
-    stats.health = std::min(stats.max_health, stats.health + strength);
-    return strength;
-  }
+  int TakeDamage(int damage);
+
+  int Heal(int strength);
 
   void AddPip() { pips_ = std::min(pips_ + 1, kMaxPips); }
 
@@ -40,8 +36,12 @@ public:
 
   std::string name() { return stats.name; };
 
+  std::vector<std::shared_ptr<Effect::HangingOverTime>> over_time_effects;
+
 private:
   static const int kMaxPips = 7;
+
+  void RemoveEndedOverTimes();
 
   int pips_;
 

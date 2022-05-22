@@ -58,14 +58,15 @@ namespace Effect {
 
 
 
-  HangingOverTime::HangingOverTime(OverTime& base)
+  HangingOverTime::HangingOverTime(const OverTime& base, Type type)
     :
+    type{ type },
     per_turn{ base.strength_ / base.turns_ },
     turns_left{ base.turns_ }
   {}
 
-  HangingDoT::HangingDoT(DoT& base)
-    : HangingOverTime{ base }
+  HangingDoT::HangingDoT(const DoT& base)
+    : HangingOverTime{ base, Type::DoT }
   {}
 
 }
