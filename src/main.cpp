@@ -14,7 +14,11 @@ int main()
   WizardStats blue{ "blue", 465 };
 
   red.deck.push_back({ "fire cat", 75, 1, {std::make_shared<Effect::VariableDamage>(80)} });
-  red.deck.push_back({ "fire elf", 75, 2, {std::make_shared<Effect::DoT>(300)} });
+  red.deck.push_back({
+    "fire elf",
+    75,
+    2,
+    {std::make_shared<Effect::FlatDamage>(30), std::make_shared<Effect::DoT>(270)}});
   red.deck.push_back({ "pixie", 100, 2, {std::make_shared<Effect::Heal>(400)} });
   blue.deck.push_back({ "thunder snake", 70, 1, {std::make_shared<Effect::VariableDamage>(105)} });
   blue.deck.push_back({ "lightning bats", 70, 2, {std::make_shared<Effect::VariableDamage>(245)} });

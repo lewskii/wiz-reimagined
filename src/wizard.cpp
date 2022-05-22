@@ -22,18 +22,20 @@ void Wizard::Cast(const Card& card, Wizard& target)
 
     UsePips(card.pip_cost);
 
-    Card::EffectPtr e = card.effects[0];
-    switch (e->type) {
-    case Effect::Type::Damage:
-      target.TakeDamage(card.effects[0]->strength());
-      break;
-    case Effect::Type::Heal:
-      Heal(card.effects[0]->strength());
-      break;
-    case Effect::Type::DoT:
-      auto dot = std::dynamic_pointer_cast<Effect::DoT>(e);
-      target.over_time_effects.push_back(std::make_shared<Effect::HangingDoT>(*dot));
-      break;
+    for (auto i = card.effects.begin(); i < card.effects.end(); ++i) {
+      Card::EffectPtr effect = *i;
+      switch (effect->type) {
+      case Effect::Type::Damage:
+        target.TakeDamage(effect->strength());
+        break;
+      case Effect::Type::Heal:
+        Heal(card.effects[0]->strength());
+        break;
+      case Effect::Type::DoT:
+        auto dot = std::dynamic_pointer_cast<Effect::DoT>(effect);
+        target.over_time_effects.push_back(std::make_shared<Effect::HangingDoT>(*dot));
+        break;
+      }
     }
 
     if (target.health() == 0)
