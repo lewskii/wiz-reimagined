@@ -30,7 +30,7 @@ void Wizard::Cast(const Card& card, Wizard& target)
       break;
     case Effect::Type::DoT:
       auto dot = std::dynamic_pointer_cast<Effect::DoT>(e);
-      std::cout << "this should do " << dot->damage_
+      std::cout << "this should do " << dot->strength_
         << " over " << dot->turns_ << " turns\n";
       break;
     }

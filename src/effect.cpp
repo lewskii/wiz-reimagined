@@ -26,13 +26,11 @@ namespace Effect {
   }
 
 
-
   FlatDamage::FlatDamage(int damage)
     :
     Effect{ Type::Damage },
     damage_{ damage }
   {}
-
 
 
   Heal::Heal(int heal)
@@ -42,19 +40,32 @@ namespace Effect {
   {}
 
 
-
-  DoT::DoT(int damage, int turns)
+  OverTime::OverTime(int strength, int turns, Type type)
     :
-    Effect{ Type::DoT },
-    damage_{ damage },
+    Effect{ type },
+    strength_{ strength },
     turns_{ turns }
   {}
 
+
+  DoT::DoT(int damage, int turns)
+    : OverTime{ damage, turns, Type::DoT }
+  {}
+
   DoT::DoT(int damage)
+    : OverTime{ damage, 3, Type::DoT }
+  {}
+
+
+
+  HangingOverTime::HangingOverTime(OverTime& base)
     :
-    Effect{ Type::DoT },
-    damage_{ damage },
-    turns_{ 3 }
+    per_turn{ base.strength_ / base.turns_ },
+    turns_left{ base.turns_ }
+  {}
+
+  HangingDoT::HangingDoT(DoT& base)
+    : HangingOverTime{ base }
   {}
 
 }

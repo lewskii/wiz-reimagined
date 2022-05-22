@@ -45,15 +45,22 @@ namespace Effect {
     const int damage_;
   };
 
-  class DoT final : public Effect {
+  class OverTime : public Effect {
+  public:
+    OverTime(int strength, int turns, Type type);
+
+    virtual int strength() const = 0;
+
+    const int strength_;
+    const int turns_;
+  };
+
+  class DoT final : public OverTime {
   public:
     DoT(int damage, int turns);
     DoT(int damage);
 
-    int strength() const override { return damage_; }
-
-    const int damage_;
-    const int turns_;
+    int strength() const override { return strength_; }
   };
 
   class Heal final : public Effect {
@@ -64,6 +71,20 @@ namespace Effect {
 
   private:
     const int heal_;
+  };
+
+
+  class HangingOverTime {
+  public:
+    const int per_turn;
+    int turns_left;
+
+  protected:
+    HangingOverTime(OverTime& base);
+  };
+
+  class HangingDoT : public HangingOverTime {
+    HangingDoT(DoT& base);
   };
 
 }
