@@ -33,7 +33,7 @@ void Wizard::Cast(const Card& card, Wizard& target)
         break;
       case Effect::Type::DoT:
         auto dot = std::dynamic_pointer_cast<Effect::DoT>(effect);
-        target.over_time_effects.push_back(std::make_shared<Effect::HangingDoT>(*dot));
+        target.AddOverTimeEffect(std::make_shared<Effect::HangingDoT>(*dot));
         break;
       }
     }
@@ -77,6 +77,11 @@ inline int Wizard::Heal(int strength) {
   std::cout << name() << " heals " << strength << " hp!\n";
   stats.health = std::min(stats.max_health, stats.health + strength);
   return strength;
+}
+
+void Wizard::AddOverTimeEffect(std::shared_ptr<Effect::HangingOverTime> effect)
+{
+  over_time_effects.push_back(effect);
 }
 
 void Wizard::RemoveEndedOverTimes()

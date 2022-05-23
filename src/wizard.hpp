@@ -36,14 +36,16 @@ public:
 
   std::string name() { return stats.name; };
 
-  std::vector<std::shared_ptr<Effect::HangingOverTime>> over_time_effects;
-
 private:
   static const int kMaxPips = 7;
+
+  void AddOverTimeEffect(std::shared_ptr<Effect::HangingOverTime> effect);
 
   void RemoveEndedOverTimes();
 
   int pips_;
+
+  std::vector<std::shared_ptr<Effect::HangingOverTime>> over_time_effects;
 
   WizardStats stats;
 };
