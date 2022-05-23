@@ -20,7 +20,7 @@ namespace Effect {
     step_{ 10 }
   {}
 
-  int VariableDamage::strength() const
+  int VariableDamage::strength_() const
   {
     return base_ + rng::DamageRoll(step_);
   }

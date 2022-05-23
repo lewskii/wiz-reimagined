@@ -23,8 +23,9 @@ namespace Effect {
 
   class Instant : public Effect {
   public:
-    virtual int strength() const = 0;
+    int strength() { return strength_(); }
   protected:
+    virtual int strength_() const = 0;
     Instant(Type t) : Effect{ t } {}
   };
 
@@ -33,9 +34,9 @@ namespace Effect {
     VariableDamage(int base, int step);
     VariableDamage(int base);
 
-    int strength() const override;
-
   private:
+    int strength_() const override;
+
     const int base_;
     const int step_;
   };
@@ -44,9 +45,9 @@ namespace Effect {
   public:
     FlatDamage(int damage);
 
-    int strength() const override { return damage_; }
-
   private:
+    int strength_() const override { return damage_; }
+
     const int damage_;
   };
 
@@ -54,9 +55,9 @@ namespace Effect {
   public:
     Heal(int heal);
 
-    int strength() const override { return heal_; }
-
   private:
+    int strength_() const override { return heal_; }
+
     const int heal_;
   };
 
