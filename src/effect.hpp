@@ -73,22 +73,24 @@ namespace Effect {
     const int heal_;
   };
 
+}
 
+namespace HangingEffect {
   class HangingOverTime {
   public:
     virtual ~HangingOverTime() = default;
 
-    const Type type;
+    const Effect::Type type;
     const int per_turn;
     int turns_left;
 
   protected:
-    HangingOverTime(const OverTime& base, Type type);
+    HangingOverTime(const Effect::OverTime& base, Effect::Type type);
   };
 
   class HangingDoT : public HangingOverTime {
   public:
-    HangingDoT(const DoT& base);
+    HangingDoT(const Effect::DoT& base);
   };
 
 }

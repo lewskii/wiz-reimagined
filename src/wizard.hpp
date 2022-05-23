@@ -33,7 +33,7 @@ public:
 private:
   static const int kMaxPips = 7;
 
-  void AddOverTimeEffect(std::shared_ptr<Effect::HangingOverTime> effect);
+  void AddOverTimeEffect(std::shared_ptr<HangingEffect::HangingOverTime> effect);
 
   void UsePips(int n) { pips_ = std::max(0, pips_ - n); }
 
@@ -43,7 +43,7 @@ private:
 
   int pips_;
 
-  std::vector<std::shared_ptr<Effect::HangingOverTime>> over_time_effects;
+  std::vector<std::shared_ptr<HangingEffect::HangingOverTime>> over_time_effects;
 
   WizardStats stats;
 };

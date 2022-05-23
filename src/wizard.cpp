@@ -33,7 +33,7 @@ void Wizard::Cast(const Card& card, Wizard& target)
         break;
       case Effect::Type::DoT:
         auto dot = std::dynamic_pointer_cast<Effect::DoT>(effect);
-        target.AddOverTimeEffect(std::make_shared<Effect::HangingDoT>(*dot));
+        target.AddOverTimeEffect(std::make_shared<HangingEffect::HangingDoT>(*dot));
         break;
       }
     }
@@ -79,7 +79,7 @@ inline int Wizard::Heal(int strength) {
   return strength;
 }
 
-void Wizard::AddOverTimeEffect(std::shared_ptr<Effect::HangingOverTime> effect)
+void Wizard::AddOverTimeEffect(std::shared_ptr<HangingEffect::HangingOverTime> effect)
 {
   over_time_effects.push_back(effect);
 }
