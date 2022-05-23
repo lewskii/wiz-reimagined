@@ -8,14 +8,14 @@ namespace Effect {
 
   VariableDamage::VariableDamage(int base, int step)
     :
-    Effect{ Type::Damage },
+    Instant{ Type::Damage },
     base_{ base },
     step_{ step }
   {}
 
   VariableDamage::VariableDamage(int base)
     :
-    Effect{ Type::Damage },
+    Instant{ Type::Damage },
     base_{ base },
     step_{ 10 }
   {}
@@ -28,14 +28,14 @@ namespace Effect {
 
   FlatDamage::FlatDamage(int damage)
     :
-    Effect{ Type::Damage },
+    Instant{ Type::Damage },
     damage_{ damage }
   {}
 
 
   Heal::Heal(int heal)
     :
-    Effect{ Type::Heal },
+    Instant{ Type::Heal },
     heal_{ heal }
   {}
 

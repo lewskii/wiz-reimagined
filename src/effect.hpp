@@ -14,16 +14,21 @@ namespace Effect {
   public:
     virtual ~Effect() = default;
 
-    virtual int strength() const = 0;
-
     const Type type;
 
   protected:
-    Effect(Type t) : type{ t }
-    {}
+    Effect(Type t) : type{ t } {}
   };
 
-  class VariableDamage final : public Effect {
+
+  class Instant : public Effect {
+  public:
+    virtual int strength() const = 0;
+  protected:
+    Instant(Type t) : Effect{ t } {}
+  };
+
+  class VariableDamage final : public Instant {
   public:
     VariableDamage(int base, int step);
     VariableDamage(int base);
@@ -35,7 +40,7 @@ namespace Effect {
     const int step_;
   };
 
-  class FlatDamage final : public Effect {
+  class FlatDamage final : public Instant {
   public:
     FlatDamage(int damage);
 
@@ -45,11 +50,20 @@ namespace Effect {
     const int damage_;
   };
 
+  class Heal final : public Instant {
+  public:
+    Heal(int heal);
+
+    int strength() const override { return heal_; }
+
+  private:
+    const int heal_;
+  };
+
+
   class OverTime : public Effect {
   public:
     OverTime(int strength, int turns, Type type);
-
-    virtual int strength() const = 0;
 
     const int strength_;
     const int turns_;
@@ -59,18 +73,6 @@ namespace Effect {
   public:
     DoT(int damage, int turns);
     DoT(int damage);
-
-    int strength() const override { return strength_; }
-  };
-
-  class Heal final : public Effect {
-  public:
-    Heal(int heal);
-
-    int strength() const override { return heal_;  }
-
-  private:
-    const int heal_;
   };
 
 }

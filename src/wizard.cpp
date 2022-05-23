@@ -25,16 +25,21 @@ void Wizard::Cast(const Card& card, Wizard& target)
     for (auto i = card.effects.begin(); i < card.effects.end(); ++i) {
       Card::EffectPtr effect = *i;
       switch (effect->type) {
-      case Effect::Type::Damage:
-        target.TakeDamage(effect->strength());
+      case Effect::Type::Damage: {
+        const auto damage = std::dynamic_pointer_cast<Effect::Instant>(effect);
+        target.TakeDamage(damage->strength());
         break;
-      case Effect::Type::Heal:
-        Heal(card.effects[0]->strength());
+      }
+      case Effect::Type::Heal: {
+        const auto heal = std::dynamic_pointer_cast<Effect::Instant>(effect);
+        Heal(heal->strength());
         break;
-      case Effect::Type::DoT:
-        auto dot = std::dynamic_pointer_cast<Effect::DoT>(effect);
+      }
+      case Effect::Type::DoT: {
+        const auto dot = std::dynamic_pointer_cast<Effect::DoT>(effect);
         target.AddOverTimeEffect(std::make_shared<HangingEffect::DoT>(*dot));
         break;
+      }
       }
     }
 
