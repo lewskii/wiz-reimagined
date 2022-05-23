@@ -74,7 +74,7 @@ inline int Wizard::TakeDamage(int damage) {
 }
 
 inline int Wizard::Heal(int strength) {
-  std::cout << name() << " heals for " << strength << "!\n";
+  std::cout << name() << " heals " << strength << " hp!\n";
   stats.health = std::min(stats.max_health, stats.health + strength);
   return strength;
 }
