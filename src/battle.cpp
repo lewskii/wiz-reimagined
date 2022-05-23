@@ -61,6 +61,8 @@ void Battle::SelectActions()
 void Battle::PlayActions()
 {
   for (size_t i = 0; i < player_count; ++i) {
+    std::cout << '\n';
+
     Wizard& w = players[i];
 
     w.OverTimeTick();
@@ -83,6 +85,7 @@ void Battle::PlayActions()
 
 void Battle::PrintStats() const
 {
+  std::cout << '\n';
   for (size_t i = 0; i < player_count; ++i) {
     Wizard w = players[i];
     std::cout << w.name() << ": " << w.health() << " hp, " << w.pips() << " pip(s)\n";
