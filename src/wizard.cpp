@@ -68,13 +68,13 @@ void Wizard::OverTimeTick()
 }
 
 inline int Wizard::TakeDamage(int damage) {
-  std::cout << name() << " took " << damage << " damage!\n";
+  std::cout << name() << " takes " << damage << " damage!\n";
   stats.health = std::max(0, stats.health - damage);
   return damage;
 }
 
 inline int Wizard::Heal(int strength) {
-  std::cout << name() << " was healed for " << strength << "!\n";
+  std::cout << name() << " heals for " << strength << "!\n";
   stats.health = std::min(stats.max_health, stats.health + strength);
   return strength;
 }
