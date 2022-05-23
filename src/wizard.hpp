@@ -20,13 +20,7 @@ public:
 
   void OverTimeTick();
 
-  int TakeDamage(int damage);
-
-  int Heal(int strength);
-
   void AddPip() { pips_ = std::min(pips_ + 1, kMaxPips); }
-
-  void UsePips(int n) { pips_ = std::max(0, pips_ - n); }
 
   int max_health() const { return stats.max_health; }
 
@@ -41,7 +35,11 @@ private:
 
   void AddOverTimeEffect(std::shared_ptr<Effect::HangingOverTime> effect);
 
-  void RemoveEndedOverTimes();
+  void UsePips(int n) { pips_ = std::max(0, pips_ - n); }
+
+  int TakeDamage(int damage);
+
+  int Heal(int strength);
 
   int pips_;
 

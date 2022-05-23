@@ -83,14 +83,3 @@ void Wizard::AddOverTimeEffect(std::shared_ptr<Effect::HangingOverTime> effect)
 {
   over_time_effects.push_back(effect);
 }
-
-void Wizard::RemoveEndedOverTimes()
-{
-  auto iter = over_time_effects.begin();
-  while (iter < over_time_effects.end()) {
-    if (iter->get()->turns_left <= 0)
-      iter = over_time_effects.erase(iter);
-    else
-      ++iter;
-  }
-}
