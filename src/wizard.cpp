@@ -16,7 +16,7 @@ Action Wizard::SelectAction()
 
 void Wizard::Cast(const Card& card, Wizard& target)
 {
-  if (rng::AccRoll(card.accuracy))
+  if (rng::PercentChance(card.accuracy))
   {
     std::cout << stats.name << " casts " << card.name << "!\n";
 

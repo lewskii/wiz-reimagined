@@ -9,12 +9,12 @@ namespace rng {
     const std::seed_seq ss{ rd(), rd(), rd(), rd(), rd(), rd(), rd(), rd() };
     std::mt19937 rng{ ss };
 
-    const std::uniform_int_distribution acc_roll{ 1, 100 };
+    const std::uniform_int_distribution percent{ 1, 100 };
     const std::uniform_int_distribution damage_roll{ 0, 4 };
   }
 
-  int AccRoll(int acc) {
-    return acc_roll(rng) <= acc;
+  int PercentChance(int chance) {
+    return percent(rng) <= chance;
   }
 
   int DamageRoll(int step) {
@@ -23,7 +23,7 @@ namespace rng {
 
   bool CoinToss()
   {
-    return acc_roll(rng) > 50;
+    return percent(rng) > 50;
   }
 
 }
