@@ -56,6 +56,14 @@ namespace Effect {
     : OverTime{ damage, 3, Type::DoT }
   {}
 
+
+  Charm::Charm(int strength, CharmType type)
+    :
+    Effect{ Type::Charm },
+    strength{ strength },
+    type{ type }
+  {}
+
 }
 
 

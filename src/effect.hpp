@@ -81,9 +81,18 @@ namespace Effect {
   };
 
 
-  class Charm : public Effect {
+  enum class CharmType {
+    Damage,
+    Accuracy,
+    Heal
+  };
+
+  class Charm final : public Effect {
   public:
+    Charm(int strength, CharmType type);
+
     const int strength;
+    const CharmType type;
   };
 
 }
