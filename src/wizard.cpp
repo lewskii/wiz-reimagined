@@ -18,7 +18,7 @@ void Wizard::Cast(const Card& card, Wizard& target)
 {
   if (rng::PercentChance(card.accuracy))
   {
-    std::cout << stats.name << " casts " << card.name << "!\n";
+    std::cout << name() << " casts " << card.name << "!\n";
 
     UsePips(card.pip_cost);
 
@@ -75,11 +75,11 @@ void Wizard::OverTimeTick()
 
 inline int Wizard::TakeDamage(int damage) {
   std::cout << name() << " takes " << damage << " damage!\n";
-  stats.health = std::max(0, stats.health - damage);
+  stats.health = std::max(0, health() - damage);
 
-  if (stats.health == 0) {
+  if (health() == 0) {
     active_ = false;
-    std::cout << "\n" << stats.name << " has been defeated!\n";
+    std::cout << "\n" << name() << " has been defeated!\n";
   }
 
   return damage;
@@ -87,7 +87,7 @@ inline int Wizard::TakeDamage(int damage) {
 
 inline int Wizard::Heal(int strength) {
   std::cout << name() << " heals " << strength << " hp!\n";
-  stats.health = std::min(stats.max_health, stats.health + strength);
+  stats.health = std::min(max_health(), health() + strength);
   return strength;
 }
 
