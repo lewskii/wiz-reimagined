@@ -11,7 +11,8 @@ public:
   Wizard(const WizardStats& stats)
     :
     stats{ stats },
-    pips_{ 0 }
+    pips_{ 0 },
+    active_{ true }
   {}
 
   Action SelectAction();
@@ -23,12 +24,11 @@ public:
   void AddPip() { pips_ = std::min(pips_ + 1, kMaxPips); }
 
   int max_health() const { return stats.max_health; }
-
   int health() const { return stats.health; }
-
   int pips() const { return pips_; }
+  std::string name() const { return stats.name; };
 
-  std::string name() { return stats.name; };
+  bool IsActive() const { return active_; }
 
 private:
   static const int kMaxPips = 7;
@@ -38,10 +38,10 @@ private:
   void UsePips(int n) { pips_ = std::max(0, pips_ - n); }
 
   int TakeDamage(int damage);
-
   int Heal(int strength);
 
   int pips_;
+  bool active_;
 
   std::vector<std::shared_ptr<HangingEffect::OverTime>> over_time_effects;
 

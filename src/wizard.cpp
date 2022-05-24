@@ -26,8 +26,10 @@ void Wizard::Cast(const Card& card, Wizard& target)
       Card::EffectPtr effect = *i;
       switch (effect->type) {
       case Effect::Type::Damage: {
-        const auto damage = std::dynamic_pointer_cast<Effect::Instant>(effect);
-        target.TakeDamage(damage->strength());
+        if (target.IsActive()) {
+          const auto damage = std::dynamic_pointer_cast<Effect::Instant>(effect);
+          target.TakeDamage(damage->strength());
+        }
         break;
       }
       case Effect::Type::Heal: {
@@ -36,15 +38,14 @@ void Wizard::Cast(const Card& card, Wizard& target)
         break;
       }
       case Effect::Type::DoT: {
-        const auto dot = std::dynamic_pointer_cast<Effect::DoT>(effect);
-        target.AddOverTimeEffect(std::make_shared<HangingEffect::DoT>(*dot));
+        if (target.IsActive()) {
+          const auto dot = std::dynamic_pointer_cast<Effect::DoT>(effect);
+          target.AddOverTimeEffect(std::make_shared<HangingEffect::DoT>(*dot));
+        }
         break;
       }
       }
     }
-
-    if (target.health() == 0)
-      std::cout << "\n" << target.name() << " has been defeated!\n";
   }
   else
   {
@@ -75,6 +76,12 @@ void Wizard::OverTimeTick()
 inline int Wizard::TakeDamage(int damage) {
   std::cout << name() << " takes " << damage << " damage!\n";
   stats.health = std::max(0, stats.health - damage);
+
+  if (stats.health == 0) {
+    active_ = false;
+    std::cout << "\n" << stats.name << " has been defeated!\n";
+  }
+
   return damage;
 }
 

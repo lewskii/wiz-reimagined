@@ -66,11 +66,8 @@ void Battle::PlayActions()
     Wizard& w = players[i];
 
     w.OverTimeTick();
-    if (w.health() == 0) {
-      std::cout << "\n" << w.name() << " has been defeated!\n";
-    }
 
-    if (w.health() > 0) {
+    if (w.IsActive()) {
       Action a = actions[i];
       if (a.IsSpell()) {
         w.Cast(a.card(), players[(i + 1) % player_count]);
