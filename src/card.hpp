@@ -8,7 +8,7 @@
 
 struct Card {
 public:
-  typedef std::shared_ptr<Effect::Effect> EffectPtr;
+  typedef std::shared_ptr<CardEffect> EffectPtr;
 
   Card(
     const std::string name,

@@ -4,78 +4,72 @@
 #include "rng.hpp"
 
 
-namespace Effect {
+VariableDamage::VariableDamage(int base, int step)
+  :
+  InstantEffect{ EffectType::Damage },
+  base_{ base },
+  step_{ step }
+{}
 
-  VariableDamage::VariableDamage(int base, int step)
-    :
-    Instant{ Type::Damage },
-    base_{ base },
-    step_{ step }
-  {}
+VariableDamage::VariableDamage(int base)
+  :
+  InstantEffect{ EffectType::Damage },
+  base_{ base },
+  step_{ 10 }
+{}
 
-  VariableDamage::VariableDamage(int base)
-    :
-    Instant{ Type::Damage },
-    base_{ base },
-    step_{ 10 }
-  {}
-
-  int VariableDamage::strength_() const
-  {
-    return base_ + rng::DamageRoll(step_);
-  }
-
-
-  FlatDamage::FlatDamage(int damage)
-    :
-    Instant{ Type::Damage },
-    damage_{ damage }
-  {}
-
-
-  Heal::Heal(int heal)
-    :
-    Instant{ Type::Heal },
-    heal_{ heal }
-  {}
-
-
-  OverTime::OverTime(int strength, int turns, Type type)
-    :
-    Effect{ type },
-    strength{ strength },
-    turns{ turns }
-  {}
-
-
-  DoT::DoT(int damage, int turns)
-    : OverTime{ damage, turns, Type::DoT }
-  {}
-
-  DoT::DoT(int damage)
-    : OverTime{ damage, 3, Type::DoT }
-  {}
-
-
-  Charm::Charm(int strength, CharmType type)
-    :
-    Effect{ Type::Charm },
-    strength{ strength },
-    type{ type }
-  {}
-
+int VariableDamage::strength_() const
+{
+  return base_ + rng::DamageRoll(step_);
 }
 
 
-namespace HangingEffect {
-  OverTime::OverTime(const Effect::OverTime& base, Effect::Type type)
-    :
-    type{ type },
-    per_turn{ base.strength / base.turns },
-    turns_left{ base.turns }
-  {}
+FlatDamage::FlatDamage(int damage)
+  :
+  InstantEffect{ EffectType::Damage },
+  damage_{ damage }
+{}
 
-  DoT::DoT(const Effect::DoT& base)
-    : OverTime{ base, Effect::Type::DoT }
-  {}
-}
+
+Heal::Heal(int heal)
+  :
+  InstantEffect{ EffectType::Heal },
+  heal_{ heal }
+{}
+
+
+OverTimeEffect::OverTimeEffect(int strength, int turns, EffectType type)
+  :
+  CardEffect{ type },
+  strength{ strength },
+  turns{ turns }
+{}
+
+
+DoT::DoT(int damage, int turns)
+  : OverTimeEffect{ damage, turns, EffectType::DoT }
+{}
+
+DoT::DoT(int damage)
+  : OverTimeEffect{ damage, 3, EffectType::DoT }
+{}
+
+
+Charm::Charm(int strength, CharmType type)
+  :
+  CardEffect{ EffectType::Charm },
+  strength{ strength },
+  type{ type }
+{}
+
+
+HangingOverTime::HangingOverTime(const OverTimeEffect& base, EffectType type)
+  :
+  type{ type },
+  per_turn{ base.strength / base.turns },
+  turns_left{ base.turns }
+{}
+
+HangingDoT::HangingDoT(const DoT& base)
+  : HangingOverTime{ base, EffectType::DoT }
+{}

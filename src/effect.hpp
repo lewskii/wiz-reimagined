@@ -3,117 +3,115 @@
 
 
 
-namespace Effect {
-  enum class Type {
-    Damage,
-    DoT,
-    Heal,
-    Charm
-  };
+enum class EffectType {
+  Damage,
+  DoT,
+  Heal,
+  Charm
+};
 
-  class Effect {
-  public:
-    virtual ~Effect() = default;
+class CardEffect {
+public:
+  virtual ~CardEffect() = default;
 
-    const Type type;
+  const EffectType type;
 
-  protected:
-    Effect(Type t) : type{ t } {}
-  };
-
-
-  class Instant : public Effect {
-  public:
-    int strength() { return strength_(); }
-
-  protected:
-    Instant(Type t) : Effect{ t } {}
-
-    virtual int strength_() const = 0;
-  };
-
-  class VariableDamage final : public Instant {
-  public:
-    VariableDamage(int base, int step);
-    VariableDamage(int base);
-
-  private:
-    int strength_() const override;
-
-    const int base_;
-    const int step_;
-  };
-
-  class FlatDamage final : public Instant {
-  public:
-    FlatDamage(int damage);
-
-  private:
-    int strength_() const override { return damage_; }
-
-    const int damage_;
-  };
-
-  class Heal final : public Instant {
-  public:
-    Heal(int heal);
-
-  private:
-    int strength_() const override { return heal_; }
-
-    const int heal_;
-  };
+protected:
+  CardEffect(EffectType t) : type{ t } {}
+};
 
 
-  class OverTime : public Effect {
-  public:
-    const int strength;
-    const int turns;
+class InstantEffect : public CardEffect {
+public:
+  int strength() { return strength_(); }
 
-  protected:
-    OverTime(int strength, int turns, Type type);
-  };
+protected:
+  InstantEffect(EffectType t) : CardEffect{ t } {}
 
-  class DoT final : public OverTime {
-  public:
-    DoT(int damage, int turns);
-    DoT(int damage);
-  };
+  virtual int strength_() const = 0;
+};
+
+class VariableDamage final : public InstantEffect {
+public:
+  VariableDamage(int base, int step);
+  VariableDamage(int base);
+
+private:
+  int strength_() const override;
+
+  const int base_;
+  const int step_;
+};
+
+class FlatDamage final : public InstantEffect {
+public:
+  FlatDamage(int damage);
+
+private:
+  int strength_() const override { return damage_; }
+
+  const int damage_;
+};
+
+class Heal final : public InstantEffect {
+public:
+  Heal(int heal);
+
+private:
+  int strength_() const override { return heal_; }
+
+  const int heal_;
+};
 
 
-  enum class CharmType {
-    Damage,
-    Accuracy,
-    Heal
-  };
 
-  class Charm final : public Effect {
-  public:
-    Charm(int strength, CharmType type);
+class OverTimeEffect : public CardEffect {
+public:
+  const int strength;
+  const int turns;
 
-    const int strength;
-    const CharmType type;
-  };
+protected:
+  OverTimeEffect(int strength, int turns, EffectType type);
+};
 
-}
+class DoT final : public OverTimeEffect {
+public:
+  DoT(int damage, int turns);
+  DoT(int damage);
+};
 
-namespace HangingEffect {
 
-  class OverTime {
-  public:
-    virtual ~OverTime() = default;
 
-    const Effect::Type type;
-    const int per_turn;
-    int turns_left;
+enum class CharmType {
+  Damage,
+  Accuracy,
+  Heal
+};
 
-  protected:
-    OverTime(const Effect::OverTime& base, Effect::Type type);
-  };
+class Charm final : public CardEffect {
+public:
+  Charm(int strength, CharmType type);
 
-  class DoT : public OverTime {
-  public:
-    DoT(const Effect::DoT& base);
-  };
+  const int strength;
+  const CharmType type;
+};
 
-}
+
+
+
+class HangingOverTime {
+public:
+  virtual ~HangingOverTime() = default;
+
+  const EffectType type;
+  const int per_turn;
+  int turns_left;
+
+protected:
+  HangingOverTime(const OverTimeEffect& base, EffectType type);
+};
+
+class HangingDoT : public HangingOverTime {
+public:
+  HangingDoT(const DoT& base);
+};

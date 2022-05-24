@@ -25,22 +25,22 @@ void Wizard::Cast(const Card& card, Wizard& target)
     for (auto i = card.effects.begin(); i < card.effects.end(); ++i) {
       Card::EffectPtr effect = *i;
       switch (effect->type) {
-      case Effect::Type::Damage: {
+      case EffectType::Damage: {
         if (target.IsActive()) {
-          const auto damage = std::dynamic_pointer_cast<Effect::Instant>(effect);
+          const auto damage = std::dynamic_pointer_cast<InstantEffect>(effect);
           target.TakeDamage(damage->strength());
         }
         break;
       }
-      case Effect::Type::Heal: {
-        const auto heal = std::dynamic_pointer_cast<Effect::Instant>(effect);
+      case EffectType::Heal: {
+        const auto heal = std::dynamic_pointer_cast<InstantEffect>(effect);
         Heal(heal->strength());
         break;
       }
-      case Effect::Type::DoT: {
+      case EffectType::DoT: {
         if (target.IsActive()) {
-          const auto dot = std::dynamic_pointer_cast<Effect::DoT>(effect);
-          target.AddOverTimeEffect(std::make_shared<HangingEffect::DoT>(*dot));
+          const auto dot = std::dynamic_pointer_cast<DoT>(effect);
+          target.AddOverTimeEffect(std::make_shared<HangingDoT>(*dot));
         }
         break;
       }
@@ -60,7 +60,7 @@ void Wizard::OverTimeTick()
     auto effect = i->get();
 
     switch (effect->type) {
-    case Effect::Type::DoT:
+    case EffectType::DoT:
       TakeDamage(effect->per_turn);
       break;
     }
@@ -91,7 +91,7 @@ inline int Wizard::Heal(int strength) {
   return strength;
 }
 
-void Wizard::AddOverTimeEffect(std::shared_ptr<HangingEffect::OverTime> effect)
+void Wizard::AddOverTimeEffect(std::shared_ptr<HangingOverTime> effect)
 {
   over_time_effects.push_back(effect);
 }
