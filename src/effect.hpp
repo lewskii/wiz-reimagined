@@ -8,6 +8,7 @@ namespace Effect {
     Damage,
     DoT,
     Heal,
+    Charm
   };
 
   class Effect {
@@ -24,9 +25,11 @@ namespace Effect {
   class Instant : public Effect {
   public:
     int strength() { return strength_(); }
+
   protected:
-    virtual int strength_() const = 0;
     Instant(Type t) : Effect{ t } {}
+
+    virtual int strength_() const = 0;
   };
 
   class VariableDamage final : public Instant {
@@ -66,8 +69,8 @@ namespace Effect {
   public:
     OverTime(int strength, int turns, Type type);
 
-    const int strength_;
-    const int turns_;
+    const int strength;
+    const int turns;
   };
 
   class DoT final : public OverTime {
@@ -79,6 +82,7 @@ namespace Effect {
 }
 
 namespace HangingEffect {
+
   class OverTime {
   public:
     virtual ~OverTime() = default;

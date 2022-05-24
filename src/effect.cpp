@@ -43,8 +43,8 @@ namespace Effect {
   OverTime::OverTime(int strength, int turns, Type type)
     :
     Effect{ type },
-    strength_{ strength },
-    turns_{ turns }
+    strength{ strength },
+    turns{ turns }
   {}
 
 
@@ -63,8 +63,8 @@ namespace HangingEffect {
   OverTime::OverTime(const Effect::OverTime& base, Effect::Type type)
     :
     type{ type },
-    per_turn{ base.strength_ / base.turns_ },
-    turns_left{ base.turns_ }
+    per_turn{ base.strength / base.turns },
+    turns_left{ base.turns }
   {}
 
   DoT::DoT(const Effect::DoT& base)
