@@ -79,6 +79,12 @@ namespace Effect {
     DoT(int damage);
   };
 
+
+  class Charm : public Effect {
+  public:
+    const int strength;
+  };
+
 }
 
 namespace HangingEffect {
