@@ -31,8 +31,6 @@ void Battle::Play()
 
     SelectActions();
     PlayActions();
-
-    std::cin.ignore();
   }
 
   if (players[0].health() > 0)
