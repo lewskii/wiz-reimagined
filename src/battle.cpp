@@ -83,7 +83,10 @@ void Battle::PrintStats() const
   std::cout << '\n';
   for (size_t i = 0; i < player_count; ++i) {
     Wizard w = players[i];
-    std::cout << w.name() << ": " << w.health() << " hp, " << w.pips() << " pip(s)\n";
+    std::cout << w.name() << ": "
+      << w.health() << " hp, "
+      << w.pips() << " pip(s)"
+      << '\n';
   }
   std::cout << "\n";
 }
