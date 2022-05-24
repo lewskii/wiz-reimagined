@@ -67,10 +67,11 @@ namespace Effect {
 
   class OverTime : public Effect {
   public:
-    OverTime(int strength, int turns, Type type);
-
     const int strength;
     const int turns;
+
+  protected:
+    OverTime(int strength, int turns, Type type);
   };
 
   class DoT final : public OverTime {
