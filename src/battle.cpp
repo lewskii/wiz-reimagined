@@ -36,9 +36,9 @@ void Battle::Play()
   }
 
   if (players[0].health() > 0)
-    std::cout << players[0].name() << " wins!\n";
+    std::cout << '\n' << players[0].name() << " wins!\n";
   else
-    std::cout << players[1].name() << " wins!\n";
+    std::cout << '\n' << players[1].name() << " wins!\n";
 }
 
 
