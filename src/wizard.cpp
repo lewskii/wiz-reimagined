@@ -16,36 +16,81 @@ Action Wizard::SelectAction()
 
 void Wizard::Cast(const Card& card, Wizard& target)
 {
-  if (rng::PercentChance(card.accuracy))
+  int accuracy_modifier = 0;
+
+  auto charm_i = charms.begin();
+  while (charm_i < charms.end()) {
+    auto charm = *charm_i;
+    if (charm->type == CharmType::Accuracy) {
+      accuracy_modifier += charm->strength;
+      std::cout << name() << ": +" << charm->strength << "% acc\n";
+      charm_i = charms.erase(charm_i);
+    }
+    else {
+      ++charm_i;
+    }
+  }
+
+  if (rng::PercentChance(card.accuracy + accuracy_modifier))
   {
     std::cout << name() << " casts " << card.name << "!\n";
 
     UsePips(card.pip_cost);
 
+    double damage_modifier = 1;
+
+    auto charm_i = charms.begin();
+    while (charm_i < charms.end()) {
+      auto charm = *charm_i;
+      if (charm->type == CharmType::Damage) {
+        damage_modifier *= charm->strength / 100.0 + 1.0;
+        std::cout << name() << ": +" << charm->strength << "% dmg\n";
+        charm_i = charms.erase(charm_i);
+      }
+      else {
+        ++charm_i;
+      }
+    }
+
     for (auto i = card.effects.begin(); i < card.effects.end(); ++i) {
       Card::EffectPtr effect = *i;
+
       switch (effect->type) {
+
       case EffectType::Damage: {
         if (target.IsActive()) {
           const auto damage = std::dynamic_pointer_cast<InstantEffect>(effect);
-          target.TakeDamage(damage->strength());
+          target.TakeDamage(std::lround(damage->strength() * damage_modifier));
         }
         break;
       }
+
+      case EffectType::DoT: {
+        if (target.IsActive()) {
+          const auto dot = std::dynamic_pointer_cast<DoT>(effect);
+          const DoT modified_dot{
+            std::lround(dot->strength * damage_modifier),
+            dot->turns
+          };
+          target.AddOverTimeEffect(std::make_shared<HangingDoT>(modified_dot));
+        }
+        break;
+      }
+
       case EffectType::Heal: {
         const auto heal = std::dynamic_pointer_cast<InstantEffect>(effect);
         Heal(heal->strength());
         break;
       }
-      case EffectType::DoT: {
-        if (target.IsActive()) {
-          const auto dot = std::dynamic_pointer_cast<DoT>(effect);
-          target.AddOverTimeEffect(std::make_shared<HangingDoT>(*dot));
-        }
+      
+      case EffectType::Charm: {
+        const auto charm = std::dynamic_pointer_cast<Charm>(effect);
+        charms.push_back(charm);
         break;
       }
-      }
-    }
+
+      } // switch
+    } // for
   }
   else
   {
@@ -57,7 +102,7 @@ void Wizard::OverTimeTick()
 {
   auto i = over_time_effects.begin();
   while (i < over_time_effects.end()) {
-    auto effect = i->get();
+    auto effect = *i;
 
     switch (effect->type) {
     case EffectType::DoT:

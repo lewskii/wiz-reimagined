@@ -44,6 +44,7 @@ private:
   bool active_;
 
   std::vector<std::shared_ptr<HangingOverTime>> over_time_effects;
+  std::vector<std::shared_ptr<Charm>> charms;
 
   WizardStats stats;
 };
