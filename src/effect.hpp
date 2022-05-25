@@ -10,6 +10,9 @@ enum class EffectType {
   Charm
 };
 
+bool IsDamageType(EffectType type);
+bool IsHealType(EffectType type);
+
 class CardEffect {
 public:
   virtual ~CardEffect() = default;

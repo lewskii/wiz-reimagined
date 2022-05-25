@@ -4,6 +4,18 @@
 #include "rng.hpp"
 
 
+bool IsDamageType(EffectType type)
+{
+  return type == EffectType::Damage
+    || type == EffectType::DoT;
+}
+
+bool IsHealType(EffectType type)
+{
+  return type == EffectType::Heal;
+}
+
+
 VariableDamage::VariableDamage(int base, int step)
   :
   InstantEffect{ EffectType::Damage },
