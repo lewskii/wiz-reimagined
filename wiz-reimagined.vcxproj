@@ -138,6 +138,7 @@
   <ItemGroup>
     <ClInclude Include="src\action.hpp" />
     <ClInclude Include="src\battle.hpp" />
+    <ClInclude Include="src\tools.hpp" />
     <ClInclude Include="src\effect.hpp" />
     <ClInclude Include="src\rng.hpp" />
     <ClInclude Include="src\wizard.hpp" />
