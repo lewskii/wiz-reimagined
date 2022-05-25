@@ -1,12 +1,13 @@
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
 #include "effect.hpp"
 
 
-struct Card {
+class Card {
 public:
   typedef std::shared_ptr<CardEffect> EffectPtr;
 
@@ -22,6 +23,9 @@ public:
     pip_cost{ pip_cost },
     effects{ effects }
   {}
+
+  bool HasDamage() const;
+  bool HasHealing() const;
 
   const std::string name;
   const int accuracy;
