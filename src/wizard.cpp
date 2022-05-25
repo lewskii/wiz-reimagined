@@ -16,20 +16,7 @@ Action Wizard::SelectAction()
 
 void Wizard::Cast(const Card& card, Wizard& target)
 {
-  int accuracy_modifier = 0;
-
-  auto charm_i = charms.begin();
-  while (charm_i < charms.end()) {
-    auto charm = *charm_i;
-    if (charm->type == CharmType::Accuracy) {
-      accuracy_modifier += charm->strength;
-      std::cout << name() << ": +" << charm->strength << "% acc\n";
-      charm_i = charms.erase(charm_i);
-    }
-    else {
-      ++charm_i;
-    }
-  }
+  int accuracy_modifier = UseAdditiveCharms(CharmType::Accuracy);
 
   if (rng::PercentChance(card.accuracy + accuracy_modifier))
   {
@@ -38,19 +25,12 @@ void Wizard::Cast(const Card& card, Wizard& target)
     UsePips(card.pip_cost);
 
     double damage_modifier = 1;
-
-    auto charm_i = charms.begin();
-    while (charm_i < charms.end()) {
-      auto charm = *charm_i;
-      if (charm->type == CharmType::Damage) {
-        damage_modifier *= charm->strength / 100.0 + 1.0;
-        std::cout << name() << ": +" << charm->strength << "% dmg\n";
-        charm_i = charms.erase(charm_i);
-      }
-      else {
-        ++charm_i;
-      }
-    }
+    double heal_modifier = 1;
+    
+    if (card.HasDamage())
+      damage_modifier = UseMultiplicativeCharms(CharmType::Damage);
+    if (card.HasHealing())
+      heal_modifier = UseMultiplicativeCharms(CharmType::Heal);
 
     for (auto i = card.effects.begin(); i < card.effects.end(); ++i) {
       Card::EffectPtr effect = *i;
@@ -96,6 +76,47 @@ void Wizard::Cast(const Card& card, Wizard& target)
   {
     std::cout << stats.name << " fizzles!\n";
   }
+}
+
+double Wizard::UseMultiplicativeCharms(CharmType type)
+{
+  double fold = 1;
+
+  auto i = charms.begin();
+  while (i < charms.end()) {
+    auto &charm = *i;
+    if (charm->type == type) {
+      fold *= charm->strength / 100.0 + 1.0;
+      std::cout << name() << ": +" << charm->strength << "%\n";
+      i = charms.erase(i);
+    }
+    else {
+      ++i;
+    }
+  }
+
+  return fold;
+}
+
+int Wizard::UseAdditiveCharms(CharmType type)
+{
+  int fold = 0;
+
+  auto charm_i = charms.begin();
+
+  while (charm_i < charms.end()) {
+    auto &charm = *charm_i;
+    if (charm->type == type) {
+      fold += charm->strength;
+      std::cout << name() << ": +" << charm->strength << "% acc\n";
+      charm_i = charms.erase(charm_i);
+    }
+    else {
+      ++charm_i;
+    }
+  }
+
+  return fold;
 }
 
 void Wizard::OverTimeTick()

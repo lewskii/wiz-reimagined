@@ -33,9 +33,12 @@ public:
 private:
   static const int kMaxPips = 7;
 
-  void AddOverTimeEffect(std::shared_ptr<HangingOverTime> effect);
-
   void UsePips(int n) { pips_ = std::max(0, pips() - n); }
+
+  int UseAdditiveCharms(CharmType type);
+  double UseMultiplicativeCharms(CharmType type);
+
+  void AddOverTimeEffect(std::shared_ptr<HangingOverTime> effect);
 
   int TakeDamage(int damage);
   int Heal(int strength);
