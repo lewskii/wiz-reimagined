@@ -13,6 +13,13 @@ int main()
   WizardStats red{ "red", 513 };
   WizardStats blue{ "blue", 465 };
 
+  Card pixie{
+    "pixie",
+    100,
+    2,
+    {std::make_shared<Heal>(400)}
+  };
+
   red.deck.push_back({
     "fire cat",
     75,
@@ -26,12 +33,14 @@ int main()
     {std::make_shared<FlatDamage>(30),
     std::make_shared<DoT>(270)}
     });
+  red.deck.push_back(pixie);
   red.deck.push_back({
-    "pixie",
+    "fireblade",
     100,
-    2,
-    {std::make_shared<Heal>(400)}
+    0,
+    {std::make_shared<Charm>(35, CharmType::Damage)}
     });
+
   blue.deck.push_back({
     "thunder snake",
     70,
@@ -44,11 +53,12 @@ int main()
     2,
     {std::make_shared<VariableDamage>(245)}
     });
+  blue.deck.push_back(pixie);
   blue.deck.push_back({
-    "spark",
+    "lightning strike",
     100,
     0,
-    {std::make_shared<FlatDamage>(50)}
+    {std::make_shared<Charm>(25, CharmType::Accuracy)}
     });
 
   Battle duel{ red, blue };
