@@ -7,6 +7,7 @@ enum class EffectType {
   Damage,
   DoT,
   Heal,
+  HoT,
   Charm
 };
 
@@ -83,6 +84,12 @@ public:
   DoT(int damage);
 };
 
+class HoT final : public OverTimeEffect {
+public:
+  HoT(int heal, int turns);
+  HoT(int heal);
+};
+
 
 
 enum class CharmType {
@@ -117,4 +124,9 @@ protected:
 class HangingDoT : public HangingOverTime {
 public:
   HangingDoT(const DoT& base);
+};
+
+class HangingHoT : public HangingOverTime {
+public:
+  HangingHoT(const HoT& base);
 };

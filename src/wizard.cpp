@@ -62,6 +62,16 @@ void Wizard::Cast(const Card& card, Wizard& target)
         Heal(heal->strength());
         break;
       }
+
+      case EffectType::HoT: {
+        const auto hot = std::dynamic_pointer_cast<HoT>(effect);
+        const HoT modified_hot{
+          std::lround(hot->strength * heal_modifier),
+          hot->turns
+        };
+        AddOverTimeEffect(std::make_shared<HangingHoT>(modified_hot));
+        break;
+      }
       
       case EffectType::Charm: {
         const auto charm = std::dynamic_pointer_cast<Charm>(effect);
@@ -128,6 +138,9 @@ void Wizard::OverTimeTick()
     switch (effect->type) {
     case EffectType::DoT:
       TakeDamage(effect->per_turn);
+      break;
+    case EffectType::HoT:
+      Heal(effect->per_turn);
       break;
     }
 

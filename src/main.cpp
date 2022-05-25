@@ -60,6 +60,13 @@ int main()
     0,
     {std::make_shared<Charm>(25, CharmType::Accuracy)}
     });
+  blue.deck.push_back({
+    "sprite",
+    100,
+    1,
+    {std::make_shared<Heal>(30),
+    std::make_shared<HoT>(270)}
+    });
 
   Battle duel{ red, blue };
   duel.Play();

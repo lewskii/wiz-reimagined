@@ -66,6 +66,14 @@ DoT::DoT(int damage)
   : OverTimeEffect{ damage, 3, EffectType::DoT }
 {}
 
+HoT::HoT(int heal, int turns)
+  : OverTimeEffect{ heal, turns, EffectType::HoT }
+{}
+
+HoT::HoT(int heal)
+  : OverTimeEffect{ heal, 3, EffectType::HoT }
+{}
+
 
 Charm::Charm(int strength, CharmType type)
   :
@@ -84,4 +92,8 @@ HangingOverTime::HangingOverTime(const OverTimeEffect& base, EffectType type)
 
 HangingDoT::HangingDoT(const DoT& base)
   : HangingOverTime{ base, EffectType::DoT }
+{}
+
+HangingHoT::HangingHoT(const HoT& base)
+  : HangingOverTime{ base, EffectType::HoT }
 {}
