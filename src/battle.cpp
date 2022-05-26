@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "battle.hpp"
+#include "display.hpp"
 
 Battle::Battle(Wizard red, Wizard blue)
   : player_count{ 2 }
@@ -27,7 +28,7 @@ void Battle::Play()
   while (players[0].health() > 0 && players[1].health() > 0)
   {
     RoundSetup();
-    PrintStats();
+    display::PrintStats(players);
 
     SelectActions();
     PlayActions();
@@ -71,22 +72,8 @@ void Battle::PlayActions()
         w.Cast(a.card(), players[(i + 1) % player_count]);
       }
       else {
-        std::cout << w.name() << " passes.\n";
+        display::PrintPass(w);
       }
     }
   }
-}
-
-
-void Battle::PrintStats() const
-{
-  std::cout << '\n';
-  for (size_t i = 0; i < player_count; ++i) {
-    Wizard w = players[i];
-    std::cout << w.name() << ": "
-      << w.health() << " hp, "
-      << w.pips() << " pip(s)"
-      << '\n';
-  }
-  std::cout << "\n";
 }

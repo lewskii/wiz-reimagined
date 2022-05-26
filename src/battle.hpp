@@ -21,8 +21,6 @@ private:
 
   void PlayActions();
 
-  void PrintStats() const;
-
   size_t player_count;
   std::vector<Wizard> players;
   std::vector<Action> actions;
