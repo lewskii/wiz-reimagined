@@ -2,7 +2,7 @@
 
 #include <string>
 
-std::string SignedNumString(int n)
+static std::string SignedNumString(int n)
 {
   if (n < 0)
     return std::to_string(n);
