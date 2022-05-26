@@ -8,7 +8,7 @@
 
 namespace display {
 
-  static void PrintStats(const std::vector<Wizard>& players);
+  void PrintStats(const std::vector<Wizard>& players);
 
   static void PrintCast(const Wizard& w, const Card& card)
   {
