@@ -8,35 +8,35 @@
 
 namespace display {
 
-  void PrintStats(const std::vector<Wizard>& players);
+  void Stats(const std::vector<Wizard>& players);
 
-  static void PrintCast(const Wizard& w, const Card& card)
+  static void Cast(const Wizard& w, const Card& card)
   {
     std::cout << w.name() << " casts " << card.name << "!\n";
   }
-  static void PrintFizzle(const Wizard& w)
+  static void Fizzle(const Wizard& w)
   {
     std::cout << w.name() << " fizzles!\n";
   }
-  static void PrintPass(const Wizard& w)
+  static void Pass(const Wizard& w)
   {
     std::cout << w.name() << " passes.\n";
   }
 
-  static void PrintDamage(const Wizard& w, int damage)
+  static void Damage(const Wizard& w, int damage)
   {
     std::cout << w.name() << " takes " << damage << " damage!\n";
   }
-  static void PrintHealing(const Wizard& w, int heal)
+  static void Healing(const Wizard& w, int heal)
   {
     std::cout << w.name() << " recovers " << heal << " hp!\n";
   }
-  static void PrintDefeat(const Wizard& w)
+  static void Defeat(const Wizard& w)
   {
     std::cout << "\n" << w.name() << " has been defeated!\n";
   }
 
-  static void PrintUsedCharmOrWard(const HangingEffect& effect)
+  static void UsedCharmOrWard(const HangingEffect& effect)
   {
     std::cout << SignedNumString(effect.strength) << "%\n";
   }

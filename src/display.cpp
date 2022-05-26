@@ -3,7 +3,7 @@
 #include "display.hpp"
 
 
-void display::PrintStats(const std::vector<Wizard>& players)
+void display::Stats(const std::vector<Wizard>& players)
 {
   std::cout << '\n';
   for (size_t i = 0; i < players.size(); ++i) {
