@@ -94,6 +94,7 @@ double Wizard::UseMultiplicativeCharms(CharmType type)
   double fold = 1;
 
   auto i = charms.begin();
+
   while (i < charms.end()) {
     auto &charm = *i;
     if (charm->type == type) {
@@ -113,17 +114,17 @@ int Wizard::UseAdditiveCharms(CharmType type)
 {
   int fold = 0;
 
-  auto charm_i = charms.begin();
+  auto i = charms.begin();
 
-  while (charm_i < charms.end()) {
-    auto &charm = *charm_i;
+  while (i < charms.end()) {
+    auto &charm = *i;
     if (charm->type == type) {
       fold += charm->strength;
       display::UsedCharmOrWard(*charm);
-      charm_i = charms.erase(charm_i);
+      i = charms.erase(i);
     }
     else {
-      ++charm_i;
+      ++i;
     }
   }
 
