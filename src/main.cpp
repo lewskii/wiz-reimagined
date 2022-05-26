@@ -20,6 +20,14 @@ int main()
     {std::make_shared<Heal>(400)}
   };
 
+  Card sprite{
+    "sprite",
+    100,
+    1,
+    {std::make_shared<Heal>(30),
+    std::make_shared<HoT>(270)}
+  };
+
   red.deck.push_back({
     "fire cat",
     75,
@@ -40,6 +48,7 @@ int main()
     0,
     {std::make_shared<Charm>(35, CharmType::Damage)}
     });
+  red.deck.push_back(sprite);
 
   blue.deck.push_back({
     "thunder snake",
@@ -60,13 +69,7 @@ int main()
     0,
     {std::make_shared<Charm>(25, CharmType::Accuracy)}
     });
-  blue.deck.push_back({
-    "sprite",
-    100,
-    1,
-    {std::make_shared<Heal>(30),
-    std::make_shared<HoT>(270)}
-    });
+  blue.deck.push_back(sprite);
 
   Battle duel{ red, blue };
   duel.Play();
