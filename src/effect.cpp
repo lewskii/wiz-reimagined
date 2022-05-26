@@ -75,7 +75,7 @@ HoT::HoT(int heal)
 {}
 
 
-Charm::Charm(int strength, CharmType type)
+HangingEffect::HangingEffect(int strength, CharmType type)
   :
   CardEffect{ EffectType::Charm },
   strength{ strength },

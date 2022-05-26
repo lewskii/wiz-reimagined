@@ -98,12 +98,18 @@ enum class CharmType {
   Heal
 };
 
-class Charm final : public CardEffect {
+class HangingEffect : public CardEffect {
 public:
-  Charm(int strength, CharmType type);
-
   const int strength;
   const CharmType type;
+
+protected:
+  HangingEffect(int strength, CharmType type);
+};
+
+class Charm final : public HangingEffect {
+public:
+  Charm(int strength, CharmType type) : HangingEffect{ strength, type } {}
 };
 
 
