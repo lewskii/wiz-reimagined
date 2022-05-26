@@ -43,6 +43,7 @@ private:
   int TakeDamage(int damage);
   void Die();
   int Heal(int strength);
+  void Revive();
 
   int pips_;
   bool active_;

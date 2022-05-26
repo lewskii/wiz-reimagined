@@ -179,8 +179,19 @@ inline void Wizard::Die()
 
 inline int Wizard::Heal(int strength) {
   display::Healing(*this, strength);
+
+  if (health() == 0) {
+    Revive();
+  }
+
   stats.health = std::min(max_health(), health() + strength);
   return strength;
+}
+
+void Wizard::Revive()
+{
+  display::Revive(*this);
+  active_ = true;
 }
 
 void Wizard::AddOverTimeEffect(std::shared_ptr<HangingOverTime> effect)

@@ -35,6 +35,10 @@ namespace display {
   {
     std::cout << "\n" << w.name() << " has been defeated!\n";
   }
+  static void Revive(const Wizard& w)
+  {
+    std::cout << w.name() << " has been revived!\n";
+  }
 
   static void UsedCharmOrWard(const HangingEffect& effect)
   {
