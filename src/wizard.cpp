@@ -2,6 +2,7 @@
 
 #include "wizard.hpp"
 #include "rng.hpp"
+#include "display.hpp"
 
 Action Wizard::SelectAction()
 {
@@ -20,7 +21,7 @@ void Wizard::Cast(const Card& card, Wizard& target)
 
   if (rng::PercentChance(card.accuracy + accuracy_modifier))
   {
-    std::cout << name() << " casts " << card.name << "!\n";
+    display::PrintCast(*this, card);
 
     UsePips(card.pip_cost);
 
@@ -84,7 +85,7 @@ void Wizard::Cast(const Card& card, Wizard& target)
   }
   else
   {
-    std::cout << stats.name << " fizzles!\n";
+    display::PrintFizzle(*this);
   }
 }
 
@@ -97,7 +98,7 @@ double Wizard::UseMultiplicativeCharms(CharmType type)
     auto &charm = *i;
     if (charm->type == type) {
       fold *= charm->strength / 100.0 + 1.0;
-      std::cout << name() << ": +" << charm->strength << "%\n";
+      display::PrintUsedCharmOrWard(*charm);
       i = charms.erase(i);
     }
     else {
@@ -118,7 +119,7 @@ int Wizard::UseAdditiveCharms(CharmType type)
     auto &charm = *charm_i;
     if (charm->type == type) {
       fold += charm->strength;
-      std::cout << name() << ": +" << charm->strength << "% acc\n";
+      display::PrintUsedCharmOrWard(*charm);
       charm_i = charms.erase(charm_i);
     }
     else {
@@ -153,19 +154,19 @@ void Wizard::OverTimeTick()
 }
 
 inline int Wizard::TakeDamage(int damage) {
-  std::cout << name() << " takes " << damage << " damage!\n";
+  display::PrintDamage(*this, damage);
   stats.health = std::max(0, health() - damage);
 
   if (health() == 0) {
     active_ = false;
-    std::cout << "\n" << name() << " has been defeated!\n";
+    display::PrintDefeat(*this);
   }
 
   return damage;
 }
 
 inline int Wizard::Heal(int strength) {
-  std::cout << name() << " heals " << strength << " hp!\n";
+  display::PrintHealing(*this, strength);
   stats.health = std::min(max_health(), health() + strength);
   return strength;
 }
