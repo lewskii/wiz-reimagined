@@ -41,6 +41,7 @@ private:
   void AddOverTimeEffect(std::shared_ptr<HangingOverTime> effect);
 
   int TakeDamage(int damage);
+  void Die();
   int Heal(int strength);
 
   int pips_;

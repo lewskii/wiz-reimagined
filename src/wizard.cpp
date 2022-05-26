@@ -146,6 +146,9 @@ void Wizard::OverTimeTick()
       break;
     }
 
+    if (!IsActive())
+      break;
+
     --(effect->turns_left);
     if (effect->turns_left <= 0)
       i = over_time_effects.erase(i);
@@ -159,11 +162,19 @@ inline int Wizard::TakeDamage(int damage) {
   stats.health = std::max(0, health() - damage);
 
   if (health() == 0) {
-    active_ = false;
-    display::Defeat(*this);
+    Die();
   }
 
   return damage;
+}
+
+inline void Wizard::Die()
+{
+  display::Defeat(*this);
+  active_ = false;
+  pips_ = 0;
+  over_time_effects.clear();
+  charms.clear();
 }
 
 inline int Wizard::Heal(int strength) {
