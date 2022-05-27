@@ -27,6 +27,9 @@ std::ostream& operator<<(std::ostream& out, const CharmType& t)
   case CharmType::Heal:
     return out << "heal";
     break;
+  default:
+    return out << "unknown";
+    break;
   }
 }
 
@@ -87,6 +90,14 @@ HoT::HoT(int heal, int turns)
 
 HoT::HoT(int heal)
   : OverTimeEffect{ heal, 3, EffectType::HoT }
+{}
+
+
+Charm::Charm(int strength, CharmType type)
+  :
+  CardEffect{ EffectType::Charm },
+  strength{ strength },
+  type{ type }
 {}
 
 

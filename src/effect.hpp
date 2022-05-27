@@ -100,6 +100,15 @@ enum class CharmType {
 
 std::ostream& operator<<(std::ostream& out, const CharmType& t);
 
+class Charm final : public CardEffect {
+public:
+  Charm(int strength, CharmType type);
+
+  const int strength;
+  const CharmType type;
+};
+
+
 class HangingEffect : public CardEffect {
 public:
   const int strength;
@@ -109,9 +118,10 @@ protected:
   HangingEffect(int strength, CharmType type);
 };
 
-class Charm final : public HangingEffect {
+class HangingCharm final : public HangingEffect {
 public:
-  Charm(int strength, CharmType type) : HangingEffect{ strength, type } {}
+  HangingCharm(int strength, CharmType type) : HangingEffect{ strength, type } {}
+  HangingCharm(Charm c) : HangingEffect{ c.strength, c.type } {}
 };
 
 
