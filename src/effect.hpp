@@ -103,7 +103,7 @@ public:
 enum class HangingEffectDomain {
   Damage,
   Accuracy,
-  Heal
+  Healing
 };
 
 std::ostream& operator<<(std::ostream& out, const HangingEffectDomain& t);

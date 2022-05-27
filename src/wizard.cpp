@@ -31,7 +31,7 @@ void Wizard::Cast(const Card& card, Wizard& target)
     if (card.HasDamage())
       damage_modifier = UseMultiplicativeCharms(HangingEffectDomain::Damage);
     if (card.HasHealing())
-      heal_modifier = UseMultiplicativeCharms(HangingEffectDomain::Heal);
+      heal_modifier = UseMultiplicativeCharms(HangingEffectDomain::Healing);
 
     for (auto i = card.effects.begin(); i < card.effects.end(); ++i) {
       Card::EffectPtr effect = *i;

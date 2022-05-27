@@ -25,8 +25,8 @@ std::ostream& operator<<(std::ostream& out, const HangingEffectDomain& t)
   case HangingEffectDomain::Damage:
     return out << "damage";
     break;
-  case HangingEffectDomain::Heal:
-    return out << "heal";
+  case HangingEffectDomain::Healing:
+    return out << "healing";
     break;
   default:
     return out << "unknown";
