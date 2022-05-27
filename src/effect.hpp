@@ -100,31 +100,31 @@ public:
 
 
 
-enum class CharmType {
+enum class HangingEffectDomain {
   Damage,
   Accuracy,
   Heal
 };
 
-std::ostream& operator<<(std::ostream& out, const CharmType& t);
+std::ostream& operator<<(std::ostream& out, const HangingEffectDomain& t);
 
 class Charm final : public CardEffect {
 public:
-  Charm(int strength, CharmType type)
+  Charm(int strength, HangingEffectDomain type)
     : CardEffect{ EffectType::Charm }, strength{ strength }, type{ type } {}
 
   const int strength;
-  const CharmType type;
+  const HangingEffectDomain type;
 };
 
 
 class HangingEffect : public CardEffect {
 public:
   const int strength;
-  const CharmType type;
+  const HangingEffectDomain type;
 
 protected:
-  HangingEffect(int strength, CharmType type)
+  HangingEffect(int strength, HangingEffectDomain type)
     : CardEffect{ EffectType::Charm }, strength{ strength }, type{ type } {}
 };
 

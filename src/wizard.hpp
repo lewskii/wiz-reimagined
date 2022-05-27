@@ -35,8 +35,8 @@ private:
 
   void UsePips(int n) { pips_ = std::max(0, pips() - n); }
 
-  int UseAdditiveCharms(CharmType type);
-  double UseMultiplicativeCharms(CharmType type);
+  int UseAdditiveCharms(HangingEffectDomain type);
+  double UseMultiplicativeCharms(HangingEffectDomain type);
 
   void AddOverTimeEffect(std::shared_ptr<HangingOverTime> effect);
 

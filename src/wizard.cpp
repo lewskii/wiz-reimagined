@@ -17,7 +17,7 @@ Action Wizard::SelectAction()
 
 void Wizard::Cast(const Card& card, Wizard& target)
 {
-  int accuracy_modifier = UseAdditiveCharms(CharmType::Accuracy);
+  int accuracy_modifier = UseAdditiveCharms(HangingEffectDomain::Accuracy);
 
   if (rng::PercentChance(card.accuracy + accuracy_modifier))
   {
@@ -29,9 +29,9 @@ void Wizard::Cast(const Card& card, Wizard& target)
     double heal_modifier = 1;
     
     if (card.HasDamage())
-      damage_modifier = UseMultiplicativeCharms(CharmType::Damage);
+      damage_modifier = UseMultiplicativeCharms(HangingEffectDomain::Damage);
     if (card.HasHealing())
-      heal_modifier = UseMultiplicativeCharms(CharmType::Heal);
+      heal_modifier = UseMultiplicativeCharms(HangingEffectDomain::Heal);
 
     for (auto i = card.effects.begin(); i < card.effects.end(); ++i) {
       Card::EffectPtr effect = *i;
@@ -89,7 +89,7 @@ void Wizard::Cast(const Card& card, Wizard& target)
   }
 }
 
-double Wizard::UseMultiplicativeCharms(CharmType type)
+double Wizard::UseMultiplicativeCharms(HangingEffectDomain type)
 {
   double fold = 1;
 
@@ -110,7 +110,7 @@ double Wizard::UseMultiplicativeCharms(CharmType type)
   return fold;
 }
 
-int Wizard::UseAdditiveCharms(CharmType type)
+int Wizard::UseAdditiveCharms(HangingEffectDomain type)
 {
   int fold = 0;
 

@@ -46,7 +46,7 @@ int main()
     "fireblade",
     100,
     0,
-    {std::make_shared<Charm>(35, CharmType::Damage)}
+    {std::make_shared<Charm>(35, HangingEffectDomain::Damage)}
     });
   red.deck.push_back(sprite);
 
@@ -67,7 +67,7 @@ int main()
     "lightning strike",
     100,
     0,
-    {std::make_shared<Charm>(25, CharmType::Accuracy)}
+    {std::make_shared<Charm>(25, HangingEffectDomain::Accuracy)}
     });
   blue.deck.push_back(sprite);
 

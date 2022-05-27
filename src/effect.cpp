@@ -15,16 +15,16 @@ bool IsHealType(EffectType type)
   return type == EffectType::Heal;
 }
 
-std::ostream& operator<<(std::ostream& out, const CharmType& t)
+std::ostream& operator<<(std::ostream& out, const HangingEffectDomain& t)
 {
   switch (t) {
-  case CharmType::Accuracy:
+  case HangingEffectDomain::Accuracy:
     return out << "accuracy";
     break;
-  case CharmType::Damage:
+  case HangingEffectDomain::Damage:
     return out << "damage";
     break;
-  case CharmType::Heal:
+  case HangingEffectDomain::Heal:
     return out << "heal";
     break;
   default:
