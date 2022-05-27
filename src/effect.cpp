@@ -12,7 +12,8 @@ bool IsDamageType(EffectType type)
 
 bool IsHealType(EffectType type)
 {
-  return type == EffectType::Heal;
+  return type == EffectType::Heal
+    || type == EffectType::HoT;
 }
 
 std::ostream& operator<<(std::ostream& out, const HangingEffectDomain& t)
