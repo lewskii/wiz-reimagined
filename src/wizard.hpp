@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <deque>
 
 #include "action.hpp"
 #include "wizardstats.hpp"
@@ -48,8 +48,8 @@ private:
   int pips_;
   bool active_;
 
-  std::vector<std::shared_ptr<HangingOverTime>> over_time_effects;
-  std::vector<std::shared_ptr<HangingCharm>> charms;
+  std::deque<std::shared_ptr<HangingOverTime>> over_time_effects;
+  std::deque<std::shared_ptr<HangingCharm>> charms;
 
   WizardStats stats;
 };

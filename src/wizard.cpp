@@ -76,7 +76,7 @@ void Wizard::Cast(const Card& card, Wizard& target)
       
       case EffectType::Charm: {
         const auto charm = std::dynamic_pointer_cast<Charm>(effect);
-        charms.push_back(std::make_shared<HangingCharm>(*charm));
+        charms.push_front(std::make_shared<HangingCharm>(*charm));
         break;
       }
 
@@ -196,5 +196,5 @@ void Wizard::Revive()
 
 void Wizard::AddOverTimeEffect(std::shared_ptr<HangingOverTime> effect)
 {
-  over_time_effects.push_back(effect);
+  over_time_effects.push_front(effect);
 }
