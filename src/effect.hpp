@@ -120,7 +120,6 @@ protected:
 
 class HangingCharm final : public HangingEffect {
 public:
-  HangingCharm(int strength, CharmType type) : HangingEffect{ strength, type } {}
   HangingCharm(Charm c) : HangingEffect{ c.strength, c.type } {}
 };
 
