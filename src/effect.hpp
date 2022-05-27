@@ -37,8 +37,10 @@ protected:
 
 class VariableDamage final : public InstantEffect {
 public:
-  VariableDamage(int base, int step);
-  VariableDamage(int base);
+  VariableDamage(int base, int step)
+    : InstantEffect{ EffectType::Damage }, base_{ base }, step_{ step } {}
+  VariableDamage(int base)
+    : InstantEffect{ EffectType::Damage },  base_{ base }, step_{ 10 } {}
 
 private:
   int strength_() const override;
@@ -49,7 +51,8 @@ private:
 
 class FlatDamage final : public InstantEffect {
 public:
-  FlatDamage(int damage);
+  FlatDamage(int damage)
+    : InstantEffect{ EffectType::Damage }, damage_{ damage } {}
 
 private:
   int strength_() const override { return damage_; }
@@ -59,7 +62,7 @@ private:
 
 class Heal final : public InstantEffect {
 public:
-  Heal(int heal);
+  Heal(int heal) : InstantEffect{ EffectType::Heal }, heal_{ heal } {}
 
 private:
   int strength_() const override { return heal_; }
@@ -75,19 +78,24 @@ public:
   const int turns;
 
 protected:
-  OverTimeEffect(int strength, int turns, EffectType type);
+  OverTimeEffect(int strength, int turns, EffectType type)
+    : CardEffect{ type }, strength{ strength }, turns{ turns }
+  {}
 };
 
 class DoT final : public OverTimeEffect {
 public:
-  DoT(int damage, int turns);
-  DoT(int damage);
+  DoT(int damage, int turns)
+    : OverTimeEffect{ damage, turns, EffectType::DoT } {}
+  DoT(int damage)
+    : OverTimeEffect{ damage, 3, EffectType::DoT } {}
 };
 
 class HoT final : public OverTimeEffect {
 public:
-  HoT(int heal, int turns);
-  HoT(int heal);
+  HoT(int heal, int turns) : OverTimeEffect{ heal, turns, EffectType::HoT } {}
+
+  HoT(int heal) : OverTimeEffect{ heal, 3, EffectType::HoT } {}
 };
 
 
@@ -102,7 +110,8 @@ std::ostream& operator<<(std::ostream& out, const CharmType& t);
 
 class Charm final : public CardEffect {
 public:
-  Charm(int strength, CharmType type);
+  Charm(int strength, CharmType type)
+    : CardEffect{ EffectType::Charm }, strength{ strength }, type{ type } {}
 
   const int strength;
   const CharmType type;
@@ -115,7 +124,8 @@ public:
   const CharmType type;
 
 protected:
-  HangingEffect(int strength, CharmType type);
+  HangingEffect(int strength, CharmType type)
+    : CardEffect{ EffectType::Charm }, strength{ strength }, type{ type } {}
 };
 
 class HangingCharm final : public HangingEffect {
@@ -135,15 +145,19 @@ public:
   int turns_left;
 
 protected:
-  HangingOverTime(const OverTimeEffect& base, EffectType type);
+  HangingOverTime(const OverTimeEffect& base, EffectType type)
+    : type{ type },
+    per_turn{ base.strength / base.turns },
+    turns_left{ base.turns }
+  {}
 };
 
 class HangingDoT : public HangingOverTime {
 public:
-  HangingDoT(const DoT& base);
+  HangingDoT(const DoT& base) : HangingOverTime{ base, EffectType::DoT } {}
 };
 
 class HangingHoT : public HangingOverTime {
 public:
-  HangingHoT(const HoT& base);
+  HangingHoT(const HoT& base) : HangingOverTime{ base, EffectType::HoT } {}
 };
