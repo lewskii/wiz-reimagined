@@ -43,7 +43,7 @@ namespace display {
   static void UsedCharmOrWard(const HangingEffect& effect)
   {
     std::cout << SignedNumString(effect.strength) << "% "
-      << effect.type << "\n";
+      << effect.domain << "\n";
   }
 
 }

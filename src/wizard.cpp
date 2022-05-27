@@ -97,7 +97,7 @@ double Wizard::UseMultiplicativeCharms(HangingEffectDomain type)
 
   while (i < charms.end()) {
     auto &charm = *i;
-    if (charm->type == type) {
+    if (charm->domain == type) {
       fold *= charm->strength / 100.0 + 1.0;
       display::UsedCharmOrWard(*charm);
       i = charms.erase(i);
@@ -118,7 +118,7 @@ int Wizard::UseAdditiveCharms(HangingEffectDomain type)
 
   while (i < charms.end()) {
     auto &charm = *i;
-    if (charm->type == type) {
+    if (charm->domain == type) {
       fold += charm->strength;
       display::UsedCharmOrWard(*charm);
       i = charms.erase(i);

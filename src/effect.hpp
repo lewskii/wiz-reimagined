@@ -110,27 +110,29 @@ std::ostream& operator<<(std::ostream& out, const HangingEffectDomain& t);
 
 class Charm final : public CardEffect {
 public:
-  Charm(int strength, HangingEffectDomain type)
-    : CardEffect{ EffectType::Charm }, strength{ strength }, type{ type } {}
+  Charm(int strength, HangingEffectDomain domain)
+    : CardEffect{ EffectType::Charm }, strength{ strength }, domain{ domain } {}
 
   const int strength;
-  const HangingEffectDomain type;
+  const HangingEffectDomain domain;
 };
 
 
-class HangingEffect : public CardEffect {
+class HangingEffect {
 public:
+  const EffectType type;
   const int strength;
-  const HangingEffectDomain type;
+  const HangingEffectDomain domain;
 
 protected:
-  HangingEffect(int strength, HangingEffectDomain type)
-    : CardEffect{ EffectType::Charm }, strength{ strength }, type{ type } {}
+  HangingEffect(EffectType type, int strength, HangingEffectDomain domain)
+    : type{ type }, strength{ strength }, domain{ domain } {}
 };
 
 class HangingCharm final : public HangingEffect {
 public:
-  HangingCharm(Charm c) : HangingEffect{ c.strength, c.type } {}
+  HangingCharm(Charm c)
+    : HangingEffect{ EffectType::Charm, c.strength, c.domain } {}
 };
 
 
