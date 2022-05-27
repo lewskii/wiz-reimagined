@@ -98,6 +98,8 @@ enum class CharmType {
   Heal
 };
 
+std::ostream& operator<<(std::ostream& out, const CharmType& t);
+
 class HangingEffect : public CardEffect {
 public:
   const int strength;
