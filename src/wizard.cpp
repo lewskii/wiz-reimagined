@@ -157,7 +157,7 @@ void Wizard::OverTimeTick()
   }
 }
 
-inline int Wizard::TakeDamage(int damage) {
+int Wizard::TakeDamage(int damage) {
   display::Damage(*this, damage);
   stats.health = std::max(0, health() - damage);
 
@@ -168,7 +168,7 @@ inline int Wizard::TakeDamage(int damage) {
   return damage;
 }
 
-inline void Wizard::Die()
+void Wizard::Die()
 {
   display::Defeat(*this);
   active_ = false;
@@ -177,7 +177,7 @@ inline void Wizard::Die()
   charms.clear();
 }
 
-inline int Wizard::Heal(int strength) {
+int Wizard::Heal(int strength) {
   display::Healing(*this, strength);
 
   if (health() == 0) {
