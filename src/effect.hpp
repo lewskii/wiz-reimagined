@@ -123,16 +123,19 @@ public:
   const EffectType type;
   const int strength;
   const HangingEffectDomain domain;
+  std::string id;
 
 protected:
-  HangingEffect(EffectType type, int strength, HangingEffectDomain domain)
-    : type{ type }, strength{ strength }, domain{ domain } {}
+  HangingEffect(
+    EffectType type, int strength, HangingEffectDomain domain, std::string id
+  )
+    : type{ type }, strength{ strength }, domain{ domain }, id{ id } {}
 };
 
 class HangingCharm final : public HangingEffect {
 public:
-  HangingCharm(Charm c)
-    : HangingEffect{ EffectType::Charm, c.strength, c.domain } {}
+  HangingCharm(Charm c, std::string id)
+    : HangingEffect{ EffectType::Charm, c.strength, c.domain, id } {}
 };
 
 

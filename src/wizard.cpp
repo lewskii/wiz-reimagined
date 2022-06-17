@@ -1,4 +1,5 @@
 #include <iostream>
+#include <set>
 
 #include "wizard.hpp"
 #include "rng.hpp"
@@ -76,7 +77,7 @@ void Wizard::Cast(const Card& card, Wizard& target)
       
       case EffectType::Charm: {
         const auto charm = std::dynamic_pointer_cast<Charm>(effect);
-        charms.push_front(std::make_shared<HangingCharm>(*charm));
+        charms.push_front(std::make_shared<HangingCharm>(*charm, card.name));
         break;
       }
 
@@ -91,13 +92,14 @@ void Wizard::Cast(const Card& card, Wizard& target)
 
 double Wizard::UseMultiplicativeCharms(HangingEffectDomain type)
 {
+  std::set<std::string> used_ids;
   double fold = 1;
 
   auto i = charms.begin();
 
   while (i < charms.end()) {
     auto &charm = *i;
-    if (charm->domain == type) {
+    if (charm->domain == type && used_ids.insert(charm->id).second) {
       fold *= charm->strength / 100.0 + 1.0;
       display::UsedCharmOrWard(*charm);
       i = charms.erase(i);
@@ -112,13 +114,14 @@ double Wizard::UseMultiplicativeCharms(HangingEffectDomain type)
 
 int Wizard::UseAdditiveCharms(HangingEffectDomain type)
 {
+  std::set<std::string> used_ids;
   int fold = 0;
 
   auto i = charms.begin();
 
   while (i < charms.end()) {
     auto &charm = *i;
-    if (charm->domain == type) {
+    if (charm->domain == type && used_ids.insert(charm->id).second) {
       fold += charm->strength;
       display::UsedCharmOrWard(*charm);
       i = charms.erase(i);
