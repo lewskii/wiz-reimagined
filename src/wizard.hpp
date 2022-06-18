@@ -44,6 +44,8 @@ private:
 
   void UsePips(int n) { pips_ = std::max(0, pips() - n); }
 
+  template <typename T>
+  T UseCharms(HangingEffectDomain type, T(*NextFold)(T, int));
   int UseAdditiveCharms(HangingEffectDomain type);
   double UseMultiplicativeCharms(HangingEffectDomain type);
 
@@ -62,4 +64,3 @@ private:
 
   WizardStats stats;
 };
-

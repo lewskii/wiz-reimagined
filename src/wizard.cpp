@@ -105,17 +105,29 @@ void Wizard::ResolveCardEffects(
   } // for
 }
 
-double Wizard::UseMultiplicativeCharms(HangingEffectDomain type)
+
+static int AdditiveFold(int fold, int next)
+{
+  return fold + next;
+}
+
+static double MultiplicativeFold(double fold, int next)
+{
+  return fold * (next / 100.0 + 1.0);
+}
+
+template <typename T>
+T Wizard::UseCharms(HangingEffectDomain type, T (*NextFold)(T, int))
 {
   std::set<std::string> used_ids;
-  double fold = 1;
+  T fold = 1;
 
   auto i = charms.begin();
 
   while (i < charms.end()) {
-    auto &charm = *i;
+    auto& charm = *i;
     if (charm->domain == type && used_ids.insert(charm->id).second) {
-      fold *= charm->strength / 100.0 + 1.0;
+      fold = NextFold(fold, charm->strength);
       display::UsedCharmOrWard(*charm);
       i = charms.erase(i);
     }
@@ -127,26 +139,14 @@ double Wizard::UseMultiplicativeCharms(HangingEffectDomain type)
   return fold;
 }
 
+double Wizard::UseMultiplicativeCharms(HangingEffectDomain type)
+{
+  return UseCharms(type, &MultiplicativeFold);
+}
+
 int Wizard::UseAdditiveCharms(HangingEffectDomain type)
 {
-  std::set<std::string> used_ids;
-  int fold = 0;
-
-  auto i = charms.begin();
-
-  while (i < charms.end()) {
-    auto &charm = *i;
-    if (charm->domain == type && used_ids.insert(charm->id).second) {
-      fold += charm->strength;
-      display::UsedCharmOrWard(*charm);
-      i = charms.erase(i);
-    }
-    else {
-      ++i;
-    }
-  }
-
-  return fold;
+  return UseCharms(type, &AdditiveFold);
 }
 
 void Wizard::OverTimeTick()
