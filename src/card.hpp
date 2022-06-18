@@ -13,12 +13,14 @@ public:
 
   Card(
     const std::string name,
+    const School school,
     const int accuracy,
     const int pip_cost,
     const std::initializer_list<EffectPtr> effects
   )
     :
     name{ name },
+    school{ school },
     accuracy{ accuracy },
     pip_cost{ pip_cost },
     effects{ effects }
@@ -28,6 +30,7 @@ public:
   bool HasHealing() const;
 
   const std::string name;
+  const School school;
   const int accuracy;
   const int pip_cost;
   const std::vector<EffectPtr> effects;
