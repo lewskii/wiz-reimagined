@@ -45,9 +45,9 @@ private:
   void UsePips(int n) { pips_ = std::max(0, pips() - n); }
 
   template <typename T>
-  T UseCharms(HangingEffectDomain type, T(*NextFold)(T, int));
-  int UseAdditiveCharms(HangingEffectDomain type);
-  double UseMultiplicativeCharms(HangingEffectDomain type);
+  T UseCharms(HangingEffectDomain type, School school, T(*NextFold)(T, int));
+  int UseAdditiveCharms(HangingEffectDomain type, School school);
+  double UseMultiplicativeCharms(HangingEffectDomain type, School school);
 
   void AddOverTimeEffect(std::shared_ptr<HangingOverTime> effect);
 

@@ -18,7 +18,8 @@ Action Wizard::SelectAction()
 
 void Wizard::Cast(const Card& card, Wizard& target)
 {
-  int accuracy_modifier = UseAdditiveCharms(HangingEffectDomain::Accuracy);
+  int accuracy_modifier
+    = UseAdditiveCharms(HangingEffectDomain::Accuracy, card.school);
 
   if (rng::PercentChance(card.accuracy + accuracy_modifier))
   {
@@ -40,9 +41,11 @@ void Wizard::CastSuccess(const Card& card, Wizard& target)
   double heal_modifier = 1;
 
   if (card.HasDamage())
-    damage_modifier = UseMultiplicativeCharms(HangingEffectDomain::Damage);
+    damage_modifier
+    = UseMultiplicativeCharms(HangingEffectDomain::Damage, card.school);
   if (card.HasHealing())
-    heal_modifier = UseMultiplicativeCharms(HangingEffectDomain::Healing);
+    heal_modifier
+    = UseMultiplicativeCharms(HangingEffectDomain::Healing, card.school);
 
   ResolveCardEffects(card, target, damage_modifier, heal_modifier);
 }
@@ -118,7 +121,11 @@ static double MultiplicativeFold(double fold, int next)
 }
 
 template <typename T>
-T Wizard::UseCharms(HangingEffectDomain type, T (*NextFold)(T, int))
+T Wizard::UseCharms(
+  HangingEffectDomain type,
+  School school,
+  T (*NextFold)(T, int)
+)
 {
   std::set<std::string> used_ids;
   T fold = 1;
@@ -127,7 +134,10 @@ T Wizard::UseCharms(HangingEffectDomain type, T (*NextFold)(T, int))
 
   while (i < charms.end()) {
     auto& charm = *i;
-    if (charm->domain == type && used_ids.insert(charm->id).second) {
+    if (charm->domain == type
+      && charm->school == school
+      && used_ids.insert(charm->id).second
+      ) {
       fold = NextFold(fold, charm->strength);
       display::UsedCharmOrWard(*charm);
       i = charms.erase(i);
@@ -140,14 +150,14 @@ T Wizard::UseCharms(HangingEffectDomain type, T (*NextFold)(T, int))
   return fold;
 }
 
-double Wizard::UseMultiplicativeCharms(HangingEffectDomain type)
+double Wizard::UseMultiplicativeCharms(HangingEffectDomain type, School school)
 {
-  return UseCharms(type, &MultiplicativeFold);
+  return UseCharms(type, school, &MultiplicativeFold);
 }
 
-int Wizard::UseAdditiveCharms(HangingEffectDomain type)
+int Wizard::UseAdditiveCharms(HangingEffectDomain type, School school)
 {
-  return UseCharms(type, &AdditiveFold);
+  return UseCharms(type, school, &AdditiveFold);
 }
 
 void Wizard::OverTimeTick()
