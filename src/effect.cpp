@@ -4,6 +4,13 @@
 #include "rng.hpp"
 
 
+bool SchoolsMatch(School a, School b)
+{
+    return a == School::Any
+      || b == School::Any
+      || a == b;
+}
+
 bool IsDamageType(EffectType type)
 {
   return type == EffectType::Damage

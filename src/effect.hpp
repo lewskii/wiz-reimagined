@@ -3,6 +3,18 @@
 
 
 
+enum class School {
+  Fire,
+  Ice,
+  Storm,
+  Life,
+  Death,
+  Myth,
+  Any
+};
+
+bool SchoolsMatch(School a, School b);
+
 enum class EffectType {
   Damage,
   DoT,
