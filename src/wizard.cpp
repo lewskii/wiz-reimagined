@@ -72,7 +72,8 @@ void Wizard::ResolveCardEffects(
         const auto dot = std::dynamic_pointer_cast<DoT>(effect);
         const DoT modified_dot{
           std::lround(dot->strength * damage_modifier),
-          dot->turns
+          dot->turns,
+          dot->school
         };
         target.AddOverTimeEffect(std::make_shared<HangingDoT>(modified_dot));
       }

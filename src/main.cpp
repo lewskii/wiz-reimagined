@@ -35,15 +35,15 @@ int main()
     School::Fire,
     75,
     1,
-    {std::make_shared<VariableDamage>(80)}
+    {std::make_shared<VariableDamage>(80, School::Fire)}
     });
   red.deck.push_back({
     "fire elf",
     School::Fire,
     75,
     2,
-    {std::make_shared<FlatDamage>(30),
-    std::make_shared<DoT>(270)}
+    {std::make_shared<FlatDamage>(30, School::Fire),
+    std::make_shared<DoT>(270, School::Fire)}
     });
   red.deck.push_back(pixie);
   red.deck.push_back({
@@ -51,7 +51,7 @@ int main()
     School::Fire,
     100,
     0,
-    {std::make_shared<Charm>(35, HangingEffectDomain::Damage)}
+    {std::make_shared<Charm>(35, HangingEffectDomain::Damage, School::Fire)}
     });
   red.deck.push_back(sprite);
 
@@ -60,14 +60,14 @@ int main()
     School::Storm,
     70,
     1,
-    {std::make_shared<VariableDamage>(105)}
+    {std::make_shared<VariableDamage>(105, School::Storm)}
     });
   blue.deck.push_back({
     "lightning bats",
     School::Storm,
     70,
     2,
-    {std::make_shared<VariableDamage>(245)}
+    {std::make_shared<VariableDamage>(245, School::Storm)}
     });
   blue.deck.push_back(pixie);
   blue.deck.push_back({
@@ -75,7 +75,7 @@ int main()
     School::Storm,
     100,
     0,
-    {std::make_shared<Charm>(25, HangingEffectDomain::Accuracy)}
+    {std::make_shared<Charm>(25, HangingEffectDomain::Accuracy, School::Storm)}
     });
   blue.deck.push_back(sprite);
 
