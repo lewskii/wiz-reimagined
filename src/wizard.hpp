@@ -33,6 +33,15 @@ public:
 private:
   static const int kMaxPips = 7;
 
+  void CastSuccess(const Card& card, Wizard& target);
+
+  void ResolveCardEffects(
+    const Card& card,
+    Wizard& target,
+    double damage_modifier,
+    double heal_modifier
+  );
+
   void UsePips(int n) { pips_ = std::max(0, pips() - n); }
 
   int UseAdditiveCharms(HangingEffectDomain type);

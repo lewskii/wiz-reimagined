@@ -22,72 +22,87 @@ void Wizard::Cast(const Card& card, Wizard& target)
 
   if (rng::PercentChance(card.accuracy + accuracy_modifier))
   {
-    display::Cast(*this, card);
-
-    UsePips(card.pip_cost);
-
-    double damage_modifier = 1;
-    double heal_modifier = 1;
-    
-    if (card.HasDamage())
-      damage_modifier = UseMultiplicativeCharms(HangingEffectDomain::Damage);
-    if (card.HasHealing())
-      heal_modifier = UseMultiplicativeCharms(HangingEffectDomain::Healing);
-
-    for (auto i = card.effects.begin(); i < card.effects.end(); ++i) {
-      Card::EffectPtr effect = *i;
-
-      switch (effect->type) {
-
-      case EffectType::Damage: {
-        if (target.IsActive()) {
-          const auto damage = std::dynamic_pointer_cast<InstantEffect>(effect);
-          target.TakeDamage(std::lround(damage->strength() * damage_modifier));
-        }
-        break;
-      }
-
-      case EffectType::DoT: {
-        if (target.IsActive()) {
-          const auto dot = std::dynamic_pointer_cast<DoT>(effect);
-          const DoT modified_dot{
-            std::lround(dot->strength * damage_modifier),
-            dot->turns
-          };
-          target.AddOverTimeEffect(std::make_shared<HangingDoT>(modified_dot));
-        }
-        break;
-      }
-
-      case EffectType::Heal: {
-        const auto heal = std::dynamic_pointer_cast<InstantEffect>(effect);
-        Heal(heal->strength());
-        break;
-      }
-
-      case EffectType::HoT: {
-        const auto hot = std::dynamic_pointer_cast<HoT>(effect);
-        const HoT modified_hot{
-          std::lround(hot->strength * heal_modifier),
-          hot->turns
-        };
-        AddOverTimeEffect(std::make_shared<HangingHoT>(modified_hot));
-        break;
-      }
-      
-      case EffectType::Charm: {
-        const auto charm = std::dynamic_pointer_cast<Charm>(effect);
-        charms.push_front(std::make_shared<HangingCharm>(*charm, card.name));
-        break;
-      }
-
-      } // switch
-    } // for
+    CastSuccess(card, target);
   }
   else
   {
     display::Fizzle(*this);
   }
+}
+
+void Wizard::CastSuccess(const Card& card, Wizard& target)
+{
+  display::Cast(*this, card);
+
+  UsePips(card.pip_cost);
+
+  double damage_modifier = 1;
+  double heal_modifier = 1;
+
+  if (card.HasDamage())
+    damage_modifier = UseMultiplicativeCharms(HangingEffectDomain::Damage);
+  if (card.HasHealing())
+    heal_modifier = UseMultiplicativeCharms(HangingEffectDomain::Healing);
+
+  ResolveCardEffects(card, target, damage_modifier, heal_modifier);
+}
+
+void Wizard::ResolveCardEffects(
+  const Card& card,
+  Wizard& target,
+  double damage_modifier,
+  double heal_modifier
+)
+{
+  for (auto i = card.effects.begin(); i < card.effects.end(); ++i) {
+    Card::EffectPtr effect = *i;
+
+    switch (effect->type) {
+
+    case EffectType::Damage: {
+      if (target.IsActive()) {
+        const auto damage = std::dynamic_pointer_cast<InstantEffect>(effect);
+        target.TakeDamage(std::lround(damage->strength() * damage_modifier));
+      }
+      break;
+    }
+
+    case EffectType::DoT: {
+      if (target.IsActive()) {
+        const auto dot = std::dynamic_pointer_cast<DoT>(effect);
+        const DoT modified_dot{
+          std::lround(dot->strength * damage_modifier),
+          dot->turns
+        };
+        target.AddOverTimeEffect(std::make_shared<HangingDoT>(modified_dot));
+      }
+      break;
+    }
+
+    case EffectType::Heal: {
+      const auto heal = std::dynamic_pointer_cast<InstantEffect>(effect);
+      Heal(heal->strength());
+      break;
+    }
+
+    case EffectType::HoT: {
+      const auto hot = std::dynamic_pointer_cast<HoT>(effect);
+      const HoT modified_hot{
+        std::lround(hot->strength * heal_modifier),
+        hot->turns
+      };
+      AddOverTimeEffect(std::make_shared<HangingHoT>(modified_hot));
+      break;
+    }
+
+    case EffectType::Charm: {
+      const auto charm = std::dynamic_pointer_cast<Charm>(effect);
+      charms.push_front(std::make_shared<HangingCharm>(*charm, card.name));
+      break;
+    }
+
+    } // switch
+  } // for
 }
 
 double Wizard::UseMultiplicativeCharms(HangingEffectDomain type)
