@@ -132,6 +132,7 @@
     <ClCompile Include="src\card.cpp" />
     <ClCompile Include="src\display.cpp" />
     <ClCompile Include="src\effect.cpp" />
+    <ClCompile Include="src\input.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\rng.cpp" />
     <ClCompile Include="src\wizard.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="src\action.hpp" />
     <ClInclude Include="src\battle.hpp" />
     <ClInclude Include="src\display.hpp" />
+    <ClInclude Include="src\input.hpp" />
     <ClInclude Include="src\tools.hpp" />
     <ClInclude Include="src\effect.hpp" />
     <ClInclude Include="src\rng.hpp" />
