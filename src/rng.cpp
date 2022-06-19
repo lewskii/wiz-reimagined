@@ -9,12 +9,12 @@ namespace rng {
     const std::seed_seq ss{ rd(), rd(), rd(), rd(), rd(), rd(), rd(), rd() };
     std::mt19937 rng{ ss };
 
-    const std::uniform_int_distribution percent{ 1, 100 };
+    const std::uniform_int_distribution percent{ 0, 99 };
     const std::uniform_int_distribution damage_roll{ 0, 4 };
   }
 
   int PercentChance(int chance) {
-    return percent(rng) <= chance;
+    return percent(rng) < chance;
   }
 
   int DamageRoll(int step) {
