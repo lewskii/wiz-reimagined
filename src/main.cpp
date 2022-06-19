@@ -10,8 +10,8 @@
 int main()
 {
 
-  WizardStats red{ "red", School::Fire, 513, 10 };
-  WizardStats blue{ "blue", School::Storm, 465, 10 };
+  WizardStats red{ "red", School::Fire, 622, 10 };
+  WizardStats blue{ "blue", School::Storm, 547, 10 };
 
   Card pixie{
     "pixie",
@@ -54,6 +54,13 @@ int main()
     {std::make_shared<Charm>(35, HangingEffectDomain::Damage, School::Fire)}
     });
   red.deck.push_back(sprite);
+  red.deck.push_back({
+    "sunbird",
+    School::Fire,
+    75,
+    3,
+    {std::make_shared<VariableDamage>(295, 15, School::Fire)}
+    });
 
   blue.deck.push_back({
     "thunder snake",
@@ -78,6 +85,13 @@ int main()
     {std::make_shared<Charm>(25, HangingEffectDomain::Accuracy, School::Storm)}
     });
   blue.deck.push_back(sprite);
+  blue.deck.push_back({
+    "storm shark",
+    School::Storm,
+    70,
+    3,
+    {std::make_shared<VariableDamage>(375, 15, School::Storm)}
+    });
 
   Battle duel{ red, blue };
   duel.Play();
