@@ -10,8 +10,8 @@
 int main()
 {
 
-  WizardStats red{ "red", School::Fire, 513 };
-  WizardStats blue{ "blue", School::Storm, 465 };
+  WizardStats red{ "red", School::Fire, 513, 10 };
+  WizardStats blue{ "blue", School::Storm, 465, 10 };
 
   Card pixie{
     "pixie",
