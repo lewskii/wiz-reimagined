@@ -33,7 +33,7 @@ public:
   int total_pips()        const { return pips() + power_pips(); }
   int pips_for(School s)  const
   {
-    return s == school()
+    return HasMastery(s)
       ? pips() + 2 * power_pips()
       : pips() + power_pips();
   }
@@ -52,7 +52,8 @@ private:
     double heal_modifier
   );
 
-  void UsePips(int n) { pips_ = std::max(0, pips() - n); }
+  bool HasMastery(School s) const { return stats.school == s; }
+  void UsePips(int n, School school);
 
   template <typename T>
   T UseCharms(HangingEffectDomain type, School school, T(*NextFold)(T, int));

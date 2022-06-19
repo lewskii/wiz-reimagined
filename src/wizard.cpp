@@ -35,7 +35,7 @@ void Wizard::CastSuccess(const Card& card, Wizard& target)
 {
   display::Cast(*this, card);
 
-  UsePips(card.pip_cost);
+  UsePips(card.pip_cost, card.school);
 
   double damage_modifier = 1;
   double heal_modifier = 1;
@@ -107,6 +107,25 @@ void Wizard::ResolveCardEffects(
 
     } // switch
   } // for
+}
+
+void Wizard::UsePips(int n, School school)
+{
+  int remaining_cost = n;
+
+  if (HasMastery(school)) {
+    int max_used_power_pips = remaining_cost / 2;
+    int used_power_pips = std::min(max_used_power_pips, power_pips());
+    power_pips_ -= used_power_pips;
+    remaining_cost -= used_power_pips * 2;
+  }
+
+  int used_pips = std::min(remaining_cost, pips());
+  pips_ -= used_pips;
+  remaining_cost -= used_pips;
+
+  int used_power_pips = std::min(remaining_cost, power_pips());
+  power_pips_ -= used_power_pips;
 }
 
 
