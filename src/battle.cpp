@@ -29,7 +29,7 @@ void Battle::Play()
   while (players[0].health() > 0 && players[1].health() > 0)
   {
     RoundSetup();
-    display::Stats(players);
+    Display::Stats(players);
 
     SelectActions();
     PlayActions();
@@ -73,7 +73,7 @@ void Battle::PlayActions()
         w.Cast(a.card(), players[(i + 1) % player_count]);
       }
       else {
-        display::Pass(w);
+        Display::Pass(w);
       }
     }
   }

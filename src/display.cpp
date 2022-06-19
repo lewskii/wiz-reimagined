@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "display.hpp"
+#include "tools.hpp"
 
 static void PrintPips(int n, bool power = false)
 {
@@ -11,7 +12,7 @@ static void PrintPips(int n, bool power = false)
 }
 
 
-void display::Stats(const std::vector<Wizard>& players)
+void Display::Stats(const std::vector<Wizard>& players)
 {
   std::cout << '\n';
   for (size_t i = 0; i < players.size(); ++i) {
@@ -27,4 +28,10 @@ void display::Stats(const std::vector<Wizard>& players)
     std::cout << '\n';
   }
   std::cout << "\n";
+}
+
+void Display::UsedCharmOrWard(const HangingEffect& effect)
+{
+    std::cout << SignedNumString(effect.strength) << "% "
+        << effect.domain << "\n";
 }

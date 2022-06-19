@@ -2,48 +2,46 @@
 
 #include <vector>
 
-#include "tools.hpp"
 #include "wizard.hpp"
 
 
-namespace display {
+class Display {
+public:
+  Display() = delete;
 
-  void Stats(const std::vector<Wizard>& players);
 
-  inline void Cast(const Wizard& w, const Card& card)
+  static void Stats(const std::vector<Wizard>& players);
+
+  static void Cast(const Wizard& w, const Card& card)
   {
     std::cout << w.name() << " casts " << card.name << "!\n";
   }
-  inline void Fizzle(const Wizard& w)
+  static void Fizzle(const Wizard& w)
   {
     std::cout << w.name() << " fizzles!\n";
   }
-  inline void Pass(const Wizard& w)
+  static void Pass(const Wizard& w)
   {
     std::cout << w.name() << " passes.\n";
   }
 
-  inline void Damage(const Wizard& w, int damage)
+  static void Damage(const Wizard& w, int damage)
   {
     std::cout << w.name() << " takes " << damage << " damage!\n";
   }
-  inline void Healing(const Wizard& w, int heal)
+  static void Healing(const Wizard& w, int heal)
   {
     std::cout << w.name() << " recovers " << heal << " hp!\n";
   }
-  inline void Defeat(const Wizard& w)
+  static void Defeat(const Wizard& w)
   {
     std::cout << "\n" << w.name() << " has been defeated!\n";
   }
-  inline void Revive(const Wizard& w)
+  static void Revive(const Wizard& w)
   {
     std::cout << w.name() << " has been revived!\n";
   }
 
-  inline void UsedCharmOrWard(const HangingEffect& effect)
-  {
-    std::cout << SignedNumString(effect.strength) << "% "
-      << effect.domain << "\n";
-  }
+  static void UsedCharmOrWard(const HangingEffect& effect);
 
-}
+};

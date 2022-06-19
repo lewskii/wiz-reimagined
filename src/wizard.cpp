@@ -16,13 +16,13 @@ void Wizard::Cast(const Card& card, Wizard& target)
   }
   else
   {
-    display::Fizzle(*this);
+    Display::Fizzle(*this);
   }
 }
 
 void Wizard::CastSuccess(const Card& card, Wizard& target)
 {
-  display::Cast(*this, card);
+  Display::Cast(*this, card);
 
   UsePips(card.pip_cost, card.school);
 
@@ -147,7 +147,7 @@ T Wizard::UseCharms(
       && used_ids.insert(charm->id).second
       ) {
       fold = NextFold(fold, charm->strength);
-      display::UsedCharmOrWard(*charm);
+      Display::UsedCharmOrWard(*charm);
       i = charms.erase(i);
     }
     else {
@@ -205,7 +205,7 @@ void Wizard::AddPip()
 }
 
 int Wizard::TakeDamage(int damage) {
-  display::Damage(*this, damage);
+  Display::Damage(*this, damage);
   stats.health = std::max(0, health() - damage);
 
   if (health() == 0) {
@@ -217,7 +217,7 @@ int Wizard::TakeDamage(int damage) {
 
 void Wizard::Die()
 {
-  display::Defeat(*this);
+  Display::Defeat(*this);
   active_ = false;
   pips_ = 0;
   over_time_effects.clear();
@@ -225,7 +225,7 @@ void Wizard::Die()
 }
 
 int Wizard::Heal(int strength) {
-  display::Healing(*this, strength);
+  Display::Healing(*this, strength);
 
   if (health() == 0) {
     Revive();
@@ -237,7 +237,7 @@ int Wizard::Heal(int strength) {
 
 void Wizard::Revive()
 {
-  display::Revive(*this);
+  Display::Revive(*this);
   active_ = true;
 }
 
