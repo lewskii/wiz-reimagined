@@ -12,6 +12,7 @@ public:
     :
     stats{ stats },
     pips_{ 0 },
+    power_pips_{ 0 },
     active_{ true }
   {}
 
