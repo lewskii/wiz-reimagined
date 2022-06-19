@@ -6,6 +6,7 @@
 #include "wizardstats.hpp"
 
 
+
 class Wizard {
 public:
   Wizard(const WizardStats& stats)
@@ -16,7 +17,7 @@ public:
     active_{ true }
   {}
 
-  Action SelectAction();
+  friend class Input;
 
   void Cast(const Card& card, Wizard& target);
 

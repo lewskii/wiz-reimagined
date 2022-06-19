@@ -4,6 +4,7 @@
 
 #include "battle.hpp"
 #include "display.hpp"
+#include "input.hpp"
 
 Battle::Battle(Wizard red, Wizard blue)
   : player_count{ 2 }
@@ -53,7 +54,7 @@ void Battle::RoundSetup()
 void Battle::SelectActions()
 {
   for (size_t i = 0; i < player_count; ++i) {
-    actions.push_back(players[i].SelectAction());
+    actions.push_back(Input::SelectAction(players[i]));
   }
 }
 

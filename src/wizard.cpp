@@ -5,17 +5,6 @@
 #include "rng.hpp"
 #include "display.hpp"
 
-Action Wizard::SelectAction()
-{
-  char c;
-  std::cout << "select card for " << name() << ": ";
-  std::cin >> c;
-  if (isdigit(c) && c - '0' < stats.deck.size())
-    return Action(stats.deck[c - '0']);
-  else
-    return Pass::pass;
-}
-
 void Wizard::Cast(const Card& card, Wizard& target)
 {
   int accuracy_modifier
