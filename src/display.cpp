@@ -10,8 +10,12 @@ void display::Stats(const std::vector<Wizard>& players)
     Wizard w = players[i];
     std::cout << w.name() << ": "
       << w.health() << " hp, "
-      << w.pips() << " pip(s)"
-      << '\n';
+      << w.pips() << " pip(s)";
+
+    if (w.power_pips() > 0)
+      std::cout << ", " << w.power_pips() << " power pip(s)";
+
+    std::cout << '\n';
   }
   std::cout << "\n";
 }
