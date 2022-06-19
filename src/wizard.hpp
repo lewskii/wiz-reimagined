@@ -22,7 +22,7 @@ public:
 
   void OverTimeTick();
 
-  void AddPip() { pips_ = std::min(pips() + 1, kMaxPips); }
+  void AddPip();
 
   std::string name()      const { return stats.name; }
   School school()         const { return stats.school; }

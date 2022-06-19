@@ -186,6 +186,16 @@ void Wizard::OverTimeTick()
   }
 }
 
+void Wizard::AddPip()
+{
+  if (total_pips() < kMaxPips) {
+    if (rng::PercentChance(stats.pip_chance))
+      ++power_pips_;
+    else
+      ++pips_;
+  }
+}
+
 int Wizard::TakeDamage(int damage) {
   display::Damage(*this, damage);
   stats.health = std::max(0, health() - damage);
