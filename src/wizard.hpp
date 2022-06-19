@@ -23,20 +23,21 @@ public:
 
   void AddPip() { pips_ = std::min(pips() + 1, kMaxPips); }
 
-  int max_health() const { return stats.max_health; }
-  int health() const { return stats.health; }
-  int pips() const { return pips_; }
-  int power_pips() const { return power_pips_; }
-  int total_pips() const { return pips() + power_pips(); }
-  int pips_for(School s) const
+  std::string name()      const { return stats.name; }
+  School school()         const { return stats.school; }
+  int max_health()        const { return stats.max_health; }
+  int health()            const { return stats.health; }
+  int pips()              const { return pips_; }
+  int power_pips()        const { return power_pips_; }
+  int total_pips()        const { return pips() + power_pips(); }
+  int pips_for(School s)  const
   {
-    return s == stats.school
+    return s == school()
       ? pips() + 2 * power_pips()
       : pips() + power_pips();
   }
-  std::string name() const { return stats.name; }
 
-  bool IsActive() const { return active_; }
+  bool IsActive()         const { return active_; }
 
 private:
   static const int kMaxPips = 7;
