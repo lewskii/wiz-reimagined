@@ -26,7 +26,15 @@ public:
   int max_health() const { return stats.max_health; }
   int health() const { return stats.health; }
   int pips() const { return pips_; }
-  std::string name() const { return stats.name; };
+  int power_pips() const { return power_pips_; }
+  int total_pips() const { return pips() + power_pips(); }
+  int pips_for(School s) const
+  {
+    return s == stats.school
+      ? pips() + 2 * power_pips()
+      : pips() + power_pips();
+  }
+  std::string name() const { return stats.name; }
 
   bool IsActive() const { return active_; }
 
@@ -57,6 +65,7 @@ private:
   void Revive();
 
   int pips_;
+  int power_pips_;
   bool active_;
 
   std::deque<std::shared_ptr<HangingOverTime>> over_time_effects;
