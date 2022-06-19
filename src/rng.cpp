@@ -23,7 +23,7 @@ namespace rng {
 
   bool CoinToss()
   {
-    return percent(rng) > 50;
+    return PercentChance(50);
   }
 
 }
