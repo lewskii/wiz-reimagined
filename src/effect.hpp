@@ -26,15 +26,26 @@ enum class EffectType {
 bool IsDamageType(EffectType type);
 bool IsHealType(EffectType type);
 
+enum class Target {
+  Self,
+  Enemy,
+  Ally,
+  AllEnemies,
+  AllAllies
+};
+
+
 class CardEffect {
 public:
   virtual ~CardEffect() = default;
 
   const EffectType type;
   const School school;
+  const Target target;
 
 protected:
-  CardEffect(EffectType t, School school) : type{ t }, school{ school } {}
+  CardEffect(EffectType t, School s, Target tgt)
+    : type{ t }, school{ s }, target{ tgt } {}
 };
 
 
@@ -43,20 +54,34 @@ public:
   int strength() { return strength_(); }
 
 protected:
-  InstantEffect(EffectType t, School school) : CardEffect{ t, school } {}
+  InstantEffect(EffectType t, School s, Target tgt)
+    : CardEffect{ t, s, tgt } {}
 
   virtual int strength_() const = 0;
 };
 
 class VariableDamage final : public InstantEffect {
 public:
-  VariableDamage(int base, int step, School school)
-    : InstantEffect{ EffectType::Damage, school },
+  VariableDamage(int base, int step, School s, Target tgt)
+    : InstantEffect{ EffectType::Damage, s, tgt },
     base_{ base },
     step_{ step }
   {}
-  VariableDamage(int base, School school)
-    : InstantEffect{ EffectType::Damage, school },
+
+  VariableDamage(int base, int step, School s)
+    : InstantEffect{ EffectType::Damage, s, Target::Enemy },
+    base_{ base },
+    step_{ step }
+  {}
+
+  VariableDamage(int base, School s, Target tgt)
+    : InstantEffect{ EffectType::Damage, s, tgt },
+    base_{ base },
+    step_{ 10 }
+  {}
+
+  VariableDamage(int base, School s)
+    : InstantEffect{ EffectType::Damage, s, Target::Enemy },
     base_{ base },
     step_{ 10 }
   {}
@@ -70,8 +95,15 @@ private:
 
 class FlatDamage final : public InstantEffect {
 public:
-  FlatDamage(int damage, School school)
-    : InstantEffect{ EffectType::Damage, school }, damage_{ damage } {}
+  FlatDamage(int damage, School s, Target tgt)
+    : InstantEffect{ EffectType::Damage, s, tgt },
+    damage_{ damage }
+  {}
+
+  FlatDamage(int damage, School s)
+    : InstantEffect{ EffectType::Damage, s, Target::Enemy },
+    damage_{ damage }
+  {}
 
 private:
   int strength_() const override { return damage_; }
@@ -81,8 +113,15 @@ private:
 
 class Heal final : public InstantEffect {
 public:
+  Heal(int heal, Target tgt)
+    : InstantEffect{ EffectType::Heal, School::Any, tgt },
+    heal_{ heal }
+  {}
+
   Heal(int heal)
-    : InstantEffect{ EffectType::Heal, School::Any }, heal_{ heal } {}
+    : InstantEffect{ EffectType::Heal, School::Any, Target::Ally },
+    heal_{ heal }
+  {}
 
 private:
   int strength_() const override { return heal_; }
@@ -98,26 +137,33 @@ public:
   const int turns;
 
 protected:
-  OverTimeEffect(int strength, int turns, EffectType type, School school)
-    : CardEffect{ type, school }, strength{ strength }, turns{ turns }
+  OverTimeEffect(int strength, int turns, EffectType t, School s, Target tgt)
+    : CardEffect{ t, s, tgt }, strength{ strength }, turns{ turns }
   {}
 };
 
 class DoT final : public OverTimeEffect {
 public:
-  DoT(int damage, int turns, School school)
-    : OverTimeEffect{ damage, turns, EffectType::DoT, school } {}
-  DoT(int damage, School school)
-    : OverTimeEffect{ damage, 3, EffectType::DoT, school } {}
+  DoT(int damage, int turns, School s, Target tgt)
+    : OverTimeEffect{ damage, turns, EffectType::DoT, s, tgt } {}
+
+  DoT(int damage, School s, Target tgt)
+    : OverTimeEffect{ damage, 3, EffectType::DoT, s, tgt } {}
+
+  DoT(int damage, School s)
+    : OverTimeEffect{ damage, 3, EffectType::DoT, s, Target::Enemy } {}
 };
 
 class HoT final : public OverTimeEffect {
 public:
-  HoT(int heal, int turns)
-    : OverTimeEffect{ heal, turns, EffectType::HoT, School::Any } {}
+  HoT(int heal, int turns, Target tgt)
+    : OverTimeEffect{ heal, turns, EffectType::HoT, School::Any, tgt } {}
+
+  HoT(int heal, Target tgt)
+    : OverTimeEffect{ heal, 3, EffectType::HoT, School::Any, tgt } {}
 
   HoT(int heal)
-    : OverTimeEffect{ heal, 3, EffectType::HoT, School::Any } {}
+    : OverTimeEffect{ heal, 3, EffectType::HoT, School::Any, Target::Ally } {}
 };
 
 
@@ -132,8 +178,14 @@ std::ostream& operator<<(std::ostream& out, const HangingEffectDomain& t);
 
 class Charm final : public CardEffect {
 public:
-  Charm(int strength, HangingEffectDomain domain, School school)
-    : CardEffect{ EffectType::Charm, school },
+  Charm(int strength, HangingEffectDomain domain, School s, Target tgt)
+    : CardEffect{ EffectType::Charm, s, tgt },
+    strength{ strength },
+    domain{ domain }
+  {}
+
+  Charm(int strength, HangingEffectDomain domain, School s)
+    : CardEffect{ EffectType::Charm, s, Target::Ally },
     strength{ strength },
     domain{ domain }
   {}

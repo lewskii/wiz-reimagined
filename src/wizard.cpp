@@ -65,7 +65,8 @@ void Wizard::ResolveCardEffects(
         const DoT modified_dot{
           std::lround(dot->strength * damage_modifier),
           dot->turns,
-          dot->school
+          dot->school,
+          dot->target
         };
         target.AddOverTimeEffect(std::make_shared<HangingDoT>(modified_dot));
       }
@@ -82,7 +83,8 @@ void Wizard::ResolveCardEffects(
       const auto hot = std::dynamic_pointer_cast<HoT>(effect);
       const HoT modified_hot{
         std::lround(hot->strength * heal_modifier),
-        hot->turns
+        hot->turns,
+        hot->target
       };
       AddOverTimeEffect(std::make_shared<HangingHoT>(modified_hot));
       break;
