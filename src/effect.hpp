@@ -39,6 +39,9 @@ class CardEffect {
 public:
   virtual ~CardEffect() = default;
 
+  static constexpr int default_variable_step = 10;
+  static constexpr int default_over_time_length = 3;
+
   const EffectType type;
   const School school;
   const Target target;
@@ -47,6 +50,7 @@ protected:
   CardEffect(EffectType t, School s, Target tgt)
     : type{ t }, school{ s }, target{ tgt } {}
 };
+
 
 
 class InstantEffect : public CardEffect {
@@ -69,21 +73,15 @@ public:
   {}
 
   VariableDamage(int base, int step, School s)
-    : InstantEffect{ EffectType::Damage, s, Target::Enemy },
-    base_{ base },
-    step_{ step }
+    : VariableDamage{ base, step, s, Target::Enemy }
   {}
 
   VariableDamage(int base, School s, Target tgt)
-    : InstantEffect{ EffectType::Damage, s, tgt },
-    base_{ base },
-    step_{ 10 }
+    : VariableDamage{ base, default_variable_step, s, tgt }
   {}
 
   VariableDamage(int base, School s)
-    : InstantEffect{ EffectType::Damage, s, Target::Enemy },
-    base_{ base },
-    step_{ 10 }
+    : VariableDamage{ base, default_variable_step, s, Target::Enemy }
   {}
 
 private:
@@ -101,8 +99,7 @@ public:
   {}
 
   FlatDamage(int damage, School s)
-    : InstantEffect{ EffectType::Damage, s, Target::Enemy },
-    damage_{ damage }
+    : FlatDamage{ damage, s, Target::Enemy }
   {}
 
 private:
@@ -119,8 +116,7 @@ public:
   {}
 
   Heal(int heal)
-    : InstantEffect{ EffectType::Heal, School::Any, Target::Ally },
-    heal_{ heal }
+    : Heal{ heal, Target::Ally }
   {}
 
 private:
@@ -148,10 +144,10 @@ public:
     : OverTimeEffect{ damage, turns, EffectType::DoT, s, tgt } {}
 
   DoT(int damage, School s, Target tgt)
-    : OverTimeEffect{ damage, 3, EffectType::DoT, s, tgt } {}
+    : DoT{ damage, default_over_time_length, s, tgt } {}
 
   DoT(int damage, School s)
-    : OverTimeEffect{ damage, 3, EffectType::DoT, s, Target::Enemy } {}
+    : DoT{ damage, default_over_time_length, s, Target::Enemy } {}
 };
 
 class HoT final : public OverTimeEffect {
@@ -160,10 +156,10 @@ public:
     : OverTimeEffect{ heal, turns, EffectType::HoT, School::Any, tgt } {}
 
   HoT(int heal, Target tgt)
-    : OverTimeEffect{ heal, 3, EffectType::HoT, School::Any, tgt } {}
+    : HoT{ heal, default_over_time_length, tgt } {}
 
   HoT(int heal)
-    : OverTimeEffect{ heal, 3, EffectType::HoT, School::Any, Target::Ally } {}
+    : HoT{ heal, default_over_time_length, Target::Ally } {}
 };
 
 
@@ -185,14 +181,13 @@ public:
   {}
 
   Charm(int strength, HangingEffectDomain domain, School s)
-    : CardEffect{ EffectType::Charm, s, Target::Ally },
-    strength{ strength },
-    domain{ domain }
+    : Charm{ strength, domain, s, Target::Ally }
   {}
 
   const int strength;
   const HangingEffectDomain domain;
 };
+
 
 
 class HangingEffect {
@@ -224,7 +219,6 @@ public:
   HangingCharm(Charm c, std::string id)
     : HangingEffect{ EffectType::Charm, c.school, c.strength, c.domain, id } {}
 };
-
 
 
 
