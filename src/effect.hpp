@@ -164,28 +164,28 @@ public:
 
 
 
-enum class HangingEffectDomain {
+enum class ModifierDomain {
   Damage,
   Accuracy,
   Healing
 };
 
-std::ostream& operator<<(std::ostream& out, const HangingEffectDomain& t);
+std::ostream& operator<<(std::ostream& out, const ModifierDomain& t);
 
 class Charm final : public CardEffect {
 public:
-  Charm(int strength, HangingEffectDomain domain, School s, Target tgt)
+  Charm(int strength, ModifierDomain domain, School s, Target tgt)
     : CardEffect{ EffectType::Charm, s, tgt },
     strength{ strength },
     domain{ domain }
   {}
 
-  Charm(int strength, HangingEffectDomain domain, School s)
+  Charm(int strength, ModifierDomain domain, School s)
     : Charm{ strength, domain, s, Target::Ally }
   {}
 
   const int strength;
-  const HangingEffectDomain domain;
+  const ModifierDomain domain;
 };
 
 
@@ -195,7 +195,7 @@ public:
   const EffectType type;
   const School school;
   const int strength;
-  const HangingEffectDomain domain;
+  const ModifierDomain domain;
   std::string id;
 
 protected:
@@ -203,7 +203,7 @@ protected:
     EffectType type,
     School school,
     int strength,
-    HangingEffectDomain domain,
+    ModifierDomain domain,
     std::string id
   )
     : type{ type },

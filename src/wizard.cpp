@@ -8,7 +8,7 @@
 void Wizard::Cast(const Card& card, Wizard& target)
 {
   int accuracy_modifier
-    = UseAdditiveCharms(HangingEffectDomain::Accuracy, card.school);
+    = UseAdditiveCharms(ModifierDomain::Accuracy, card.school);
 
   if (rng::PercentChance(card.accuracy + accuracy_modifier))
   {
@@ -31,10 +31,10 @@ void Wizard::CastSuccess(const Card& card, Wizard& target)
 
   if (card.HasDamage())
     damage_modifier
-    = UseMultiplicativeCharms(HangingEffectDomain::Damage, card.school);
+    = UseMultiplicativeCharms(ModifierDomain::Damage, card.school);
   if (card.HasHealing())
     heal_modifier
-    = UseMultiplicativeCharms(HangingEffectDomain::Healing, card.school);
+    = UseMultiplicativeCharms(ModifierDomain::Healing, card.school);
 
   ResolveCardEffects(card, target, damage_modifier, heal_modifier);
 }
@@ -132,7 +132,7 @@ static double MultiplicativeFold(double fold, int next)
 
 template <typename T>
 T Wizard::UseCharms(
-  HangingEffectDomain type,
+  ModifierDomain type,
   School school,
   T (*NextFold)(T, int)
 )
@@ -160,12 +160,12 @@ T Wizard::UseCharms(
   return fold;
 }
 
-double Wizard::UseMultiplicativeCharms(HangingEffectDomain type, School school)
+double Wizard::UseMultiplicativeCharms(ModifierDomain type, School school)
 {
   return UseCharms(type, school, &MultiplicativeFold);
 }
 
-int Wizard::UseAdditiveCharms(HangingEffectDomain type, School school)
+int Wizard::UseAdditiveCharms(ModifierDomain type, School school)
 {
   return UseCharms(type, school, &AdditiveFold);
 }

@@ -23,16 +23,16 @@ bool IsHealType(EffectType type)
     || type == EffectType::HoT;
 }
 
-std::ostream& operator<<(std::ostream& out, const HangingEffectDomain& t)
+std::ostream& operator<<(std::ostream& out, const ModifierDomain& t)
 {
   switch (t) {
-  case HangingEffectDomain::Accuracy:
+  case ModifierDomain::Accuracy:
     return out << "accuracy";
     break;
-  case HangingEffectDomain::Damage:
+  case ModifierDomain::Damage:
     return out << "damage";
     break;
-  case HangingEffectDomain::Healing:
+  case ModifierDomain::Healing:
     return out << "healing";
     break;
   default:

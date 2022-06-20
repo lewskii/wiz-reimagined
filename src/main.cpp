@@ -51,7 +51,7 @@ int main()
     School::Fire,
     100,
     0,
-    {std::make_shared<Charm>(35, HangingEffectDomain::Damage, School::Fire)}
+    {std::make_shared<Charm>(35, ModifierDomain::Damage, School::Fire)}
     });
   red.deck.push_back(sprite);
   red.deck.push_back({
@@ -82,7 +82,7 @@ int main()
     School::Storm,
     100,
     0,
-    {std::make_shared<Charm>(25, HangingEffectDomain::Accuracy, School::Storm)}
+    {std::make_shared<Charm>(25, ModifierDomain::Accuracy, School::Storm)}
     });
   blue.deck.push_back(sprite);
   blue.deck.push_back({
