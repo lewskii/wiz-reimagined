@@ -7,6 +7,12 @@
 #include "effect.hpp"
 
 
+enum class TargetSelection {
+  None,
+  Ally,
+  Enemy
+};
+
 class Card {
 public:
   typedef std::shared_ptr<CardEffect> EffectPtr;
@@ -23,7 +29,8 @@ public:
     school{ school },
     accuracy{ accuracy },
     pip_cost{ pip_cost },
-    effects{ effects }
+    effects{ effects },
+    target{ DetermineTarget(effects) }
   {}
 
   bool HasDamage() const;
@@ -34,4 +41,8 @@ public:
   const int accuracy;
   const int pip_cost;
   const std::vector<EffectPtr> effects;
+  const TargetSelection target;
+
+private:
+  static TargetSelection DetermineTarget(std::initializer_list<EffectPtr> effects);
 };
