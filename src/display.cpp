@@ -15,15 +15,14 @@ static void PrintPips(int n, bool power = false)
 void Display::Stats(const std::vector<Wizard>& players)
 {
   std::cout << '\n';
-  for (size_t i = 0; i < players.size(); ++i) {
-    Wizard w = players[i];
-    std::cout << w.name() << ": " << w.health() << " hp";
+  for (auto w = players.begin(); w < players.end(); ++w) {
+    std::cout << w->name() << ": " << w->health() << " hp";
 
-    if (w.pips() > 0 || w.power_pips() == 0)
-      PrintPips(w.pips());
+    if (w->pips() > 0 || w->power_pips() == 0)
+      PrintPips(w->pips());
 
-    if (w.power_pips() > 0)
-      PrintPips(w.power_pips(), true);
+    if (w->power_pips() > 0)
+      PrintPips(w->power_pips(), true);
 
     std::cout << '\n';
   }
