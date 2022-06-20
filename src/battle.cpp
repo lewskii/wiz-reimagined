@@ -44,8 +44,7 @@ void Battle::Play()
 
 void Battle::RoundSetup()
 {
-  for (size_t i = 0; i < player_count; ++i) {
-    Wizard& w = players[i];
+  for (Wizard& w : players) {
     w.AddPip();
   }
   actions.clear();
@@ -53,8 +52,8 @@ void Battle::RoundSetup()
 
 void Battle::SelectActions()
 {
-  for (size_t i = 0; i < player_count; ++i) {
-    actions.push_back(Input::SelectAction(players[i]));
+  for (Wizard& w : players) {
+    actions.push_back(Input::SelectAction(w));
   }
 }
 

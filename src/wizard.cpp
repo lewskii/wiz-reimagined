@@ -46,9 +46,7 @@ void Wizard::ResolveCardEffects(
   double heal_modifier
 )
 {
-  for (auto i = card.effects.begin(); i < card.effects.end(); ++i) {
-    Card::EffectPtr effect = *i;
-
+  for (auto& effect : card.effects) {
     switch (effect->type) {
 
     case EffectType::Damage: {
@@ -174,7 +172,7 @@ void Wizard::OverTimeTick()
 {
   auto i = over_time_effects.begin();
   while (i < over_time_effects.end()) {
-    auto effect = *i;
+    auto& effect = *i;
 
     switch (effect->type) {
     case EffectType::DoT:
