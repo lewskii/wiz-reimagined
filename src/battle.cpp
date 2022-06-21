@@ -5,20 +5,16 @@
 #include "battle.hpp"
 #include "display.hpp"
 #include "input.hpp"
+#include "rng.hpp"
 
-Battle::Battle(Wizard red, Wizard blue)
+
+Battle::Battle(const Wizard& red, const Wizard& blue)
   : player_count{ 2 }
 {
-  if (rng::CoinToss())
-  {
-    players.push_back(blue);
-    players.push_back(red);
-  }
-  else
-  {
-    players.push_back(red);
-    players.push_back(blue);
-  }
+  auto order = rng::RandomOrder(red, blue);
+
+  players.push_back(order.first);
+  players.push_back(order.second);
 
   actions.reserve(player_count);
 }
