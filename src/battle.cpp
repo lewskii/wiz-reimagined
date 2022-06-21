@@ -13,6 +13,9 @@ Battle::Battle(const Wizard& red, const Wizard& blue)
 {
   auto order = rng::RandomOrder(red, blue);
 
+  players_new.at(0).emplace(order.first);
+  players_new.at(team_size).emplace(order.second);
+
   players.push_back(order.first);
   players.push_back(order.second);
 
