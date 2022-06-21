@@ -7,11 +7,6 @@
 #include "effect.hpp"
 
 
-enum class TargetSelection {
-  None,
-  Ally,
-  Enemy
-};
 
 class Card {
 public:
@@ -30,7 +25,8 @@ public:
     accuracy{ accuracy },
     pip_cost{ pip_cost },
     effects{ effects },
-    target{ DetermineTarget(effects) }
+    needs_ally_target{ HasTarget(effects, Target::Ally) },
+    needs_enemy_target{ HasTarget(effects, Target::Enemy) }
   {}
 
   bool HasDamage() const;
@@ -41,8 +37,11 @@ public:
   const int accuracy;
   const int pip_cost;
   const std::vector<EffectPtr> effects;
-  const TargetSelection target;
+  const bool needs_ally_target;
+  const bool needs_enemy_target;
 
 private:
-  static TargetSelection DetermineTarget(std::initializer_list<EffectPtr> effects);
+  static bool HasTarget(
+    std::initializer_list<EffectPtr> effects, Target target
+  );
 };
