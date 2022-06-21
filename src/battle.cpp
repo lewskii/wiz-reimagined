@@ -8,10 +8,10 @@
 #include "rng.hpp"
 
 
-Battle::Battle(const Wizard& red, const Wizard& blue)
+Battle::Battle(const Wizard& blue, const Wizard& red)
   : player_count{ 2 }
 {
-  auto order = rng::RandomOrder(red, blue);
+  auto order = rng::RandomOrder(blue, red);
 
   players_new.at(0).emplace(order.first);
   players_new.at(team_size).emplace(order.second);
@@ -24,8 +24,9 @@ Battle::Battle(const Wizard& red, const Wizard& blue)
 
 void Battle::Play()
 {
+  Winner winner = Winner::None;
 
-  while (players[0].health() > 0 && players[1].health() > 0)
+  for (; winner == Winner::None; winner = CheckWinner())
   {
     RoundSetup();
     Display::Stats(players);
@@ -34,10 +35,12 @@ void Battle::Play()
     PlayActions();
   }
 
-  if (players[0].health() > 0)
+  if (winner == Winner::Blue)
     std::cout << '\n' << players[0].name() << " wins!\n";
-  else
+  else if (winner == Winner::Red)
     std::cout << '\n' << players[1].name() << " wins!\n";
+  else
+    std::cout << '\n' << "draw!\n";
 }
 
 
@@ -75,4 +78,13 @@ void Battle::PlayActions()
       }
     }
   }
+}
+
+Battle::Winner Battle::CheckWinner() const
+{
+  int result = 0;
+  if (!players.at(0).IsActive()) result += 1;
+  if (!players.at(1).IsActive()) result += 2;
+  auto test = static_cast<Winner>(result);
+  return test;
 }
