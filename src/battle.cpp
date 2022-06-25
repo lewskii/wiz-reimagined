@@ -47,7 +47,11 @@ void Battle::Play()
 void Battle::RoundSetup()
 {
   for (Wizard& w : players) {
-    w.AddPip();
+    if (w.health() > 0)
+      w.Activate();
+
+    if (w.IsActive())
+      w.AddPip();
   }
   actions.clear();
 }

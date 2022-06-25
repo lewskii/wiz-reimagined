@@ -14,7 +14,7 @@ public:
     stats{ stats },
     pips_{ 0 },
     power_pips_{ 0 },
-    active_{ true }
+    active_{ false }
   {}
 
   friend class Input;
@@ -29,6 +29,7 @@ public:
   School school()         const { return stats.school; }
   int max_health()        const { return stats.max_health; }
   int health()            const { return stats.health; }
+  
   int pips()              const { return pips_; }
   int power_pips()        const { return power_pips_; }
   int total_pips()        const { return pips() + power_pips(); }
@@ -40,6 +41,8 @@ public:
   }
 
   bool IsActive()         const { return active_; }
+  
+  void Activate() { active_ = true; }
 
 private:
   static const int kMaxPips = 7;
