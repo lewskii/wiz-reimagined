@@ -10,7 +10,7 @@
 
 class Card {
 public:
-  typedef std::shared_ptr<CardEffect> EffectPtr;
+  typedef std::shared_ptr<Effect> EffectPtr;
 
   Card(
     const std::string name,

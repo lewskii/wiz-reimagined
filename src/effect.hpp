@@ -35,9 +35,9 @@ enum class Target {
 };
 
 
-class CardEffect {
+class Effect {
 public:
-  virtual ~CardEffect() = default;
+  virtual ~Effect() = default;
 
   static constexpr int default_variable_step = 10;
   static constexpr int default_over_time_length = 3;
@@ -47,19 +47,19 @@ public:
   const Target target;
 
 protected:
-  CardEffect(EffectType t, School s, Target tgt)
+  Effect(EffectType t, School s, Target tgt)
     : type{ t }, school{ s }, target{ tgt } {}
 };
 
 
 
-class InstantEffect : public CardEffect {
+class InstantEffect : public Effect {
 public:
   int strength() { return strength_(); }
 
 protected:
   InstantEffect(EffectType t, School s, Target tgt)
-    : CardEffect{ t, s, tgt } {}
+    : Effect{ t, s, tgt } {}
 
   virtual int strength_() const = 0;
 };
@@ -127,14 +127,14 @@ private:
 
 
 
-class OverTimeEffect : public CardEffect {
+class OverTimeEffect : public Effect {
 public:
   const int strength;
   const int turns;
 
 protected:
   OverTimeEffect(int strength, int turns, EffectType t, School s, Target tgt)
-    : CardEffect{ t, s, tgt }, strength{ strength }, turns{ turns }
+    : Effect{ t, s, tgt }, strength{ strength }, turns{ turns }
   {}
 };
 
@@ -172,10 +172,10 @@ enum class ModifierDomain {
 
 std::ostream& operator<<(std::ostream& out, const ModifierDomain& t);
 
-class Charm final : public CardEffect {
+class Charm final : public Effect {
 public:
   Charm(int strength, ModifierDomain domain, School s, Target tgt)
-    : CardEffect{ EffectType::Charm, s, tgt },
+    : Effect{ EffectType::Charm, s, tgt },
     strength{ strength },
     domain{ domain }
   {}
