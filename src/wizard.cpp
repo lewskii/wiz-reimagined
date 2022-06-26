@@ -49,7 +49,7 @@ void Wizard::ResolveCardEffects(
   for (auto& effect : card.effects) {
     switch (effect->type) {
 
-    case EffectType::Damage: {
+    case Effect::Type::Damage: {
       if (target.IsActive()) {
         const auto damage = std::dynamic_pointer_cast<InstantEffect>(effect);
         target.TakeDamage(std::lround(damage->strength() * damage_modifier));
@@ -57,7 +57,7 @@ void Wizard::ResolveCardEffects(
       break;
     }
 
-    case EffectType::DoT: {
+    case Effect::Type::DoT: {
       if (target.IsActive()) {
         const auto dot = std::dynamic_pointer_cast<DoT>(effect);
         const DoT modified_dot{
@@ -71,13 +71,13 @@ void Wizard::ResolveCardEffects(
       break;
     }
 
-    case EffectType::Heal: {
+    case Effect::Type::Heal: {
       const auto heal = std::dynamic_pointer_cast<InstantEffect>(effect);
       Heal(heal->strength());
       break;
     }
 
-    case EffectType::HoT: {
+    case Effect::Type::HoT: {
       const auto hot = std::dynamic_pointer_cast<HoT>(effect);
       const HoT modified_hot{
         std::lround(hot->strength * heal_modifier),
@@ -88,7 +88,7 @@ void Wizard::ResolveCardEffects(
       break;
     }
 
-    case EffectType::Charm: {
+    case Effect::Type::Charm: {
       const auto charm = std::dynamic_pointer_cast<Charm>(effect);
       charms.push_front(std::make_shared<HangingCharm>(*charm, card.name));
       break;
@@ -175,10 +175,10 @@ void Wizard::OverTimeTick()
     auto& effect = *i;
 
     switch (effect->type) {
-    case EffectType::DoT:
+    case Effect::Type::DoT:
       TakeDamage(effect->per_turn);
       break;
-    case EffectType::HoT:
+    case Effect::Type::HoT:
       Heal(effect->per_turn);
       break;
     }

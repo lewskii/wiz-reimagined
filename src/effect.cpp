@@ -11,16 +11,16 @@ bool SchoolsMatch(School a, School b)
       || a == b;
 }
 
-bool IsDamageType(EffectType type)
+bool IsDamageType(Effect::Type type)
 {
-  return type == EffectType::Damage
-    || type == EffectType::DoT;
+  return type == Effect::Type::Damage
+    || type == Effect::Type::DoT;
 }
 
-bool IsHealType(EffectType type)
+bool IsHealType(Effect::Type type)
 {
-  return type == EffectType::Heal
-    || type == EffectType::HoT;
+  return type == Effect::Type::Heal
+    || type == Effect::Type::HoT;
 }
 
 std::ostream& operator<<(std::ostream& out, const ModifierDomain& t)
