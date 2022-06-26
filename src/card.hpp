@@ -25,8 +25,8 @@ public:
     accuracy{ accuracy },
     pip_cost{ pip_cost },
     effects{ effects },
-    needs_ally_target{ HasTarget(effects, Target::Ally) },
-    needs_enemy_target{ HasTarget(effects, Target::Enemy) }
+    needs_ally_target{ HasTarget(effects, Effect::Target::Ally) },
+    needs_enemy_target{ HasTarget(effects, Effect::Target::Enemy) }
   {}
 
   bool HasDamage() const;
@@ -42,6 +42,6 @@ public:
 
 private:
   static bool HasTarget(
-    std::initializer_list<EffectPtr> effects, Target target
+    std::initializer_list<EffectPtr> effects, Effect::Target target
   );
 };

@@ -26,17 +26,17 @@ enum class EffectType {
 bool IsDamageType(EffectType type);
 bool IsHealType(EffectType type);
 
-enum class Target {
-  Self,
-  Enemy,
-  Ally,
-  AllEnemies,
-  AllAllies
-};
-
 
 class Effect {
 public:
+  enum class Target {
+    Self,
+    Enemy,
+    Ally,
+    AllEnemies,
+    AllAllies
+  };
+
   virtual ~Effect() = default;
 
   static constexpr int default_variable_step = 10;

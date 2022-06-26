@@ -20,8 +20,9 @@ bool Card::HasHealing() const
   return false;
 }
 
-bool Card::HasTarget(std::initializer_list<EffectPtr> effects, Target target)
-{
+bool Card::HasTarget(
+  std::initializer_list<EffectPtr> effects, Effect::Target target
+) {
   for (auto& effect : effects) {
     if (effect->target == target) return true;
   }

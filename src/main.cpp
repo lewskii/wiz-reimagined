@@ -18,7 +18,7 @@ int main()
     School::Life,
     100,
     2,
-    {std::make_shared<Heal>(400, Target::Self)}
+    {std::make_shared<Heal>(400, Effect::Target::Self)}
   };
 
   Card sprite{
