@@ -12,6 +12,12 @@ class Card {
 public:
   typedef std::shared_ptr<Effect> EffectPtr;
 
+  enum class Target {
+    None,
+    Enemy,
+    Ally
+  };
+
   Card(
     const std::string name,
     const School school,
@@ -25,8 +31,7 @@ public:
     accuracy{ accuracy },
     pip_cost{ pip_cost },
     effects{ effects },
-    needs_ally_target{ HasTarget(effects, Effect::Target::Ally) },
-    needs_enemy_target{ HasTarget(effects, Effect::Target::Enemy) }
+    required_target{ RequiredTarget(effects) }
   {}
 
   bool HasDamage() const;
@@ -37,11 +42,8 @@ public:
   const int accuracy;
   const int pip_cost;
   const std::vector<EffectPtr> effects;
-  const bool needs_ally_target;
-  const bool needs_enemy_target;
+  const Target required_target;
 
 private:
-  static bool HasTarget(
-    std::initializer_list<EffectPtr> effects, Effect::Target target
-  );
+  static Target RequiredTarget(std::initializer_list<EffectPtr> effects);
 };

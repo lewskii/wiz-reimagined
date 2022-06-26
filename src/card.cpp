@@ -20,11 +20,14 @@ bool Card::HasHealing() const
   return false;
 }
 
-bool Card::HasTarget(
-  std::initializer_list<EffectPtr> effects, Effect::Target target
-) {
-  for (auto& effect : effects) {
-    if (effect->target == target) return true;
+Card::Target Card::RequiredTarget(std::initializer_list<EffectPtr> effects)
+{
+  for (auto& e : effects) {
+    if (e->target == Effect::Target::Enemy)
+      return Card::Target::Enemy;
+    if (e->target == Effect::Target::Ally)
+      return Card::Target::Ally;
   }
-  return false;
+
+  return Target::None;
 }
