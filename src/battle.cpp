@@ -75,7 +75,7 @@ void Battle::PlayActions()
     if (w.IsActive()) {
       Action a = actions[i];
       if (a.IsSpell()) {
-        w.Cast(a.card(), players[(i + 1) % player_count]);
+        Cast(w, a.card(), players[(i + 1) % player_count]);
       }
       else {
         Display::Pass(w);
@@ -83,6 +83,104 @@ void Battle::PlayActions()
     }
   }
 }
+
+
+
+void Battle::Cast(Wizard& caster, const Card& card, Wizard& target)
+{
+  int accuracy_modifier
+    = caster.UseAdditiveCharms(ModifierDomain::Accuracy, card.school);
+
+  if (rng::PercentChance(card.accuracy + accuracy_modifier))
+  {
+    CastSuccess(caster, card, target);
+  }
+  else
+  {
+    Display::Fizzle(caster);
+  }
+}
+
+void Battle::CastSuccess(Wizard& caster, const Card& card, Wizard& target)
+{
+  Display::Cast(caster, card);
+
+  caster.UsePips(card.pip_cost, card.school);
+
+  double damage_modifier = 1;
+  double heal_modifier = 1;
+
+  if (card.HasDamage())
+    damage_modifier
+    = caster.UseMultiplicativeCharms(ModifierDomain::Damage, card.school);
+  if (card.HasHealing())
+    heal_modifier
+    = caster.UseMultiplicativeCharms(ModifierDomain::Healing, card.school);
+
+  ResolveCardEffects(caster, card, target, damage_modifier, heal_modifier);
+}
+
+void Battle::ResolveCardEffects(
+  Wizard& caster,
+  const Card& card,
+  Wizard& target,
+  double damage_modifier,
+  double heal_modifier
+)
+{
+  for (auto& effect : card.effects) {
+    switch (effect->type) {
+
+    case Effect::Type::Damage: {
+      if (target.IsActive()) {
+        const auto damage = std::dynamic_pointer_cast<InstantEffect>(effect);
+        target.TakeDamage(std::lround(damage->strength() * damage_modifier));
+      }
+      break;
+    }
+
+    case Effect::Type::DoT: {
+      if (target.IsActive()) {
+        const auto dot = std::dynamic_pointer_cast<DoT>(effect);
+        const DoT modified_dot{
+          std::lround(dot->strength * damage_modifier),
+          dot->turns,
+          dot->school,
+          dot->target
+        };
+        target.AddOverTimeEffect(std::make_shared<HangingDoT>(modified_dot));
+      }
+      break;
+    }
+
+    case Effect::Type::Heal: {
+      const auto heal = std::dynamic_pointer_cast<InstantEffect>(effect);
+      caster.Heal(heal->strength());
+      break;
+    }
+
+    case Effect::Type::HoT: {
+      const auto hot = std::dynamic_pointer_cast<HoT>(effect);
+      const HoT modified_hot{
+        std::lround(hot->strength * heal_modifier),
+        hot->turns,
+        hot->target
+      };
+      caster.AddOverTimeEffect(std::make_shared<HangingHoT>(modified_hot));
+      break;
+    }
+
+    case Effect::Type::Charm: {
+      const auto charm = std::dynamic_pointer_cast<Charm>(effect);
+      caster.charms.push_front(std::make_shared<HangingCharm>(*charm, card.name));
+      break;
+    }
+
+    } // switch
+  } // for
+}
+
+
 
 Battle::Winner Battle::CheckWinner() const
 {

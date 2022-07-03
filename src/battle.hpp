@@ -31,7 +31,21 @@ private:
   void SelectSpells();
   void PlayActions();
 
+
+  void Cast(Wizard& caster, const Card& card, Wizard& target);
+  void CastSuccess(Wizard& caster, const Card& card, Wizard& target);
+
+  void ResolveCardEffects(
+    Wizard& caster,
+    const Card& card,
+    Wizard& target,
+    double damage_modifier,
+    double heal_modifier
+  );
+
+
   Winner CheckWinner() const;
+
 
   size_t player_count;
   PlayerArray players_new;
