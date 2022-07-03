@@ -55,6 +55,13 @@ private:
   int UseAdditiveCharms(ModifierDomain type, School school);
   double UseMultiplicativeCharms(ModifierDomain type, School school);
 
+  void ResolveIncomingEffect(
+    const Card::EffectPtr& effect,
+    double dmg_mod,
+    double heal_mod,
+    std::string id
+  );
+
   void AddOverTimeEffect(std::shared_ptr<HangingOverTime> effect);
 
   int TakeDamage(int damage);

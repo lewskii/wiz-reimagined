@@ -70,6 +70,59 @@ double Wizard::UseMultiplicativeCharms(ModifierDomain type, School school)
   return UseCharms(type, school, &MultiplicativeFold);
 }
 
+void Wizard::ResolveIncomingEffect(
+  const Card::EffectPtr& effect,
+  double dmg_mod,
+  double heal_mod,
+  std::string id
+  )
+{
+  switch (effect->type) {
+
+  case Effect::Type::Damage: {
+    const auto damage = std::dynamic_pointer_cast<InstantEffect>(effect);
+    TakeDamage(std::lround(damage->strength() * dmg_mod));
+    break;
+  }
+
+  case Effect::Type::DoT: {
+    const auto dot = std::dynamic_pointer_cast<DoT>(effect);
+    const DoT modified_dot{
+      std::lround(dot->strength * dmg_mod),
+      dot->turns,
+      dot->school,
+      dot->target
+    };
+    AddOverTimeEffect(std::make_shared<HangingDoT>(modified_dot));
+    break;
+  }
+
+  case Effect::Type::Heal: {
+    const auto heal = std::dynamic_pointer_cast<InstantEffect>(effect);
+    Heal(heal->strength());
+    break;
+  }
+
+  case Effect::Type::HoT: {
+    const auto hot = std::dynamic_pointer_cast<HoT>(effect);
+    const HoT modified_hot{
+      std::lround(hot->strength * heal_mod),
+      hot->turns,
+      hot->target
+    };
+    AddOverTimeEffect(std::make_shared<HangingHoT>(modified_hot));
+    break;
+  }
+
+  case Effect::Type::Charm: {
+    const auto charm = std::dynamic_pointer_cast<Charm>(effect);
+    charms.push_front(std::make_shared<HangingCharm>(*charm, id));
+    break;
+  }
+
+  } // switch
+}
+
 int Wizard::UseAdditiveCharms(ModifierDomain type, School school)
 {
   return UseCharms(type, school, &AdditiveFold);

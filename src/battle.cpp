@@ -124,60 +124,24 @@ void Battle::ResolveCardEffects(
   Wizard& caster,
   const Card& card,
   Wizard& target,
-  double damage_modifier,
-  double heal_modifier
+  double dmg_mod,
+  double heal_mod
 )
 {
   for (auto& effect : card.effects) {
-    switch (effect->type) {
+    switch (effect->target) {
 
-    case Effect::Type::Damage: {
-      if (target.IsActive()) {
-        const auto damage = std::dynamic_pointer_cast<InstantEffect>(effect);
-        target.TakeDamage(std::lround(damage->strength() * damage_modifier));
-      }
+    case Effect::Target::Ally:
+    case Effect::Target::Self:
+      caster.ResolveIncomingEffect(effect, dmg_mod, heal_mod, card.name);
       break;
-    }
 
-    case Effect::Type::DoT: {
-      if (target.IsActive()) {
-        const auto dot = std::dynamic_pointer_cast<DoT>(effect);
-        const DoT modified_dot{
-          std::lround(dot->strength * damage_modifier),
-          dot->turns,
-          dot->school,
-          dot->target
-        };
-        target.AddOverTimeEffect(std::make_shared<HangingDoT>(modified_dot));
-      }
+    case Effect::Target::Enemy:
+      target.ResolveIncomingEffect(effect, dmg_mod, heal_mod, card.name);
       break;
-    }
-
-    case Effect::Type::Heal: {
-      const auto heal = std::dynamic_pointer_cast<InstantEffect>(effect);
-      caster.Heal(heal->strength());
-      break;
-    }
-
-    case Effect::Type::HoT: {
-      const auto hot = std::dynamic_pointer_cast<HoT>(effect);
-      const HoT modified_hot{
-        std::lround(hot->strength * heal_modifier),
-        hot->turns,
-        hot->target
-      };
-      caster.AddOverTimeEffect(std::make_shared<HangingHoT>(modified_hot));
-      break;
-    }
-
-    case Effect::Type::Charm: {
-      const auto charm = std::dynamic_pointer_cast<Charm>(effect);
-      caster.charms.push_front(std::make_shared<HangingCharm>(*charm, card.name));
-      break;
-    }
 
     } // switch
-  } // for
+  }
 }
 
 
