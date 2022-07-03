@@ -28,7 +28,7 @@ public:
 
 private:
   void RoundSetup();
-  void SelectActions();
+  void SelectSpells();
   void PlayActions();
 
   Winner CheckWinner() const;

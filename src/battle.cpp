@@ -31,7 +31,7 @@ void Battle::Play()
     RoundSetup();
     Display::Stats(players);
 
-    SelectActions();
+    SelectSpells();
     PlayActions();
   }
 
@@ -56,10 +56,10 @@ void Battle::RoundSetup()
   actions.clear();
 }
 
-void Battle::SelectActions()
+void Battle::SelectSpells()
 {
   for (Wizard& w : players) {
-    actions.push_back(Input::SelectAction(w));
+    actions.push_back(Action(Input::SelectSpell(w)));
   }
 }
 

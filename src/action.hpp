@@ -11,8 +11,8 @@ public:
     : card_{ c }
   {}
 
-  Action(std::nullopt_t _)
-    : card_{ std::nullopt }
+  Action(const std::optional<Card>& c)
+    : card_{ c }
   {}
 
   bool IsSpell() const { return card_.has_value(); }
