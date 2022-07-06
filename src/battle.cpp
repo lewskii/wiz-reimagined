@@ -129,15 +129,19 @@ void Battle::ResolveCardEffects(
 )
 {
   for (auto& effect : card.effects) {
+    double modifier = 1;
+    if (IsDamageType(effect->type)) modifier = dmg_mod;
+    if (IsHealType(effect->type)) modifier = heal_mod;
+
     switch (effect->target) {
 
     case Effect::Target::Ally:
     case Effect::Target::Self:
-      caster.ResolveIncomingEffect(effect, dmg_mod, heal_mod, card.name);
+      caster.ResolveIncomingEffect(effect, modifier, card.name);
       break;
 
     case Effect::Target::Enemy:
-      target.ResolveIncomingEffect(effect, dmg_mod, heal_mod, card.name);
+      target.ResolveIncomingEffect(effect, modifier, card.name);
       break;
 
     } // switch

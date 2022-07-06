@@ -57,8 +57,7 @@ private:
 
   void ResolveIncomingEffect(
     const Card::EffectPtr& effect,
-    double dmg_mod,
-    double heal_mod,
+    double modifier,
     std::string id
   );
 

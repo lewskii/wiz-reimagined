@@ -72,8 +72,7 @@ double Wizard::UseMultiplicativeCharms(ModifierDomain type, School school)
 
 void Wizard::ResolveIncomingEffect(
   const Card::EffectPtr& effect,
-  double dmg_mod,
-  double heal_mod,
+  double modifier,
   std::string id
   )
 {
@@ -81,14 +80,14 @@ void Wizard::ResolveIncomingEffect(
 
   case Effect::Type::Damage: {
     const auto damage = std::dynamic_pointer_cast<InstantEffect>(effect);
-    TakeDamage(std::lround(damage->strength() * dmg_mod));
+    TakeDamage(std::lround(damage->strength() * modifier));
     break;
   }
 
   case Effect::Type::DoT: {
     const auto dot = std::dynamic_pointer_cast<DoT>(effect);
     const DoT modified_dot{
-      std::lround(dot->strength * dmg_mod),
+      std::lround(dot->strength * modifier),
       dot->turns,
       dot->school,
       dot->target
@@ -99,14 +98,14 @@ void Wizard::ResolveIncomingEffect(
 
   case Effect::Type::Heal: {
     const auto heal = std::dynamic_pointer_cast<InstantEffect>(effect);
-    Heal(heal->strength());
+    this->Heal(std::lround(heal->strength() * modifier));
     break;
   }
 
   case Effect::Type::HoT: {
     const auto hot = std::dynamic_pointer_cast<HoT>(effect);
     const HoT modified_hot{
-      std::lround(hot->strength * heal_mod),
+      std::lround(hot->strength * modifier),
       hot->turns,
       hot->target
     };
