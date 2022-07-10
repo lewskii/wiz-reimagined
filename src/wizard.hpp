@@ -2,7 +2,6 @@
 
 #include <deque>
 
-#include "action.hpp"
 #include "wizardstats.hpp"
 
 

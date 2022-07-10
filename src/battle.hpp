@@ -4,6 +4,7 @@
 #include <array>
 #include <optional>
 
+#include "action.hpp"
 #include "wizard.hpp"
 
 
